@@ -12,7 +12,8 @@
 ---
 1. List all functionalities (see api features folder)
 2. Map out app logic / anatomy (uml diagram)
-3. Place Redux within this logic
+   + Place Redux within this logic
+3. Design a model for user object
 4. Design app architecture ( components hierarchy )
 5. Create app : 
     - import existing static code from api 
@@ -44,8 +45,11 @@
         > - reducer(s) for handling application state changes
 ---
 
-2. / .3  APP DIAGRAM with REDUX
+2. APP DIAGRAM with REDUX
 ```
+                ┼
+
+
                                             ┌─────┐
                                 ┌───────────► DB  ├──USERS
                                 │           └─────┘
@@ -64,17 +68,17 @@
          │┼┼┼┼┼┼┼┼│    └───────┬───────┘      │
    ┌─────┼┼┼┼┼┼┼┼┼│            │              │
 ┌──┴──────────┼┼┼┼│            │              │
-│     REDUX   │┼┼┼│            │              │
+│*** REDUX ***│┼┼┼│            │              │
 │             │┼┼┼│    ┌───────▼───────┐      │
-│keep user    │┼┼┼│    │  PROFILE PAGE ├──────┼───────────GET (3 endpoints)
+│Keep user    │┼┼┼│    │  PROFILE PAGE ├──────┼───────────GET (3 endpoints)
 │connected    │┼┼┼│    └───────┬───────┘      │           edit profile: PUT
-└───┬─────────┼┼┼┼│            │              │
-    └─────┼┼┼┼┼┼┼┼│            │              │
-          │┼┼┼┼┼┼┼│            │              │
-          │┼┼┼┼┼┼┼│    ┌───────▼─────────┐    │
-          └────┼┼┼│    │TRANSACTIONS PAGE├────┼───────────GET  (1 enpoint)
-               │┼┼│    └───────┬─────────┘    │           edit category/notes: PUT
-               │┼┼│            │              │
+│             │┼┼┼│            │              │
+│Handle user  │┼┼┼│            │              │
+│data         │┼┼┼│            │              │
+│             │┼┼┼│    ┌───────▼─────────┐    │
+│             │┼┼┼│    │TRANSACTIONS PAGE├────┼───────────GET  (1 enpoint)
+└───┬─────────┼┼┼┼│    └───────┬─────────┘    │           edit category/notes: PUT
+    └──────────┼┼┼│            │              │
                │┼┼│            │              │
                │┼┼│            │              │
                │┼┼│    ┌───────▼───────┐      │
@@ -88,8 +92,76 @@
                └─────────────────┘
 
 
+
+
 # diagram created using asciiflow
 ```
+
+3. USER OBJECT MODEL
+
+````
+user personal infos
+{
+    id : String,
+    email: String,
+    password: String,
+    firstName: String,
+    lastName: String
+}
+
+user accounts infos
+{
+    id : String,
+    accounts: [
+        account1: {
+            type : checking,
+            balance: int,
+            transactions: [
+                {   id : int,
+                    date: dateString,
+                    transactionType : String ( select in transaction Types array )
+                    category: String ( select in categories array ),
+                    description: String,
+                    amount: int,
+                    notes: String
+                }
+            ]
+        },
+        account2: {
+            type : savings,
+            balance: int,
+            transactions: [
+                {   id : int,
+                    date: dateString,
+                    transactionType : String ( select in transaction Types array )
+                    category: String ( select in categories array ),
+                    description: String,
+                    amount: int,
+                    notes: String
+                }
+            ]
+        },
+        account3: {
+            type : creditCard,
+            balance: int,
+            transactions: [
+                {   id : int,
+                    date: dateString,
+                    transactionType : String ( select in transaction Types array )
+                    category: String ( select in categories array ),
+                    description: String,
+                    amount: int,
+                    notes: String
+                }
+            ]
+        }
+    ]
+}
+
+
+````
+
+
 
 
 
