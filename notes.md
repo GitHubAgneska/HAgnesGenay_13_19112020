@@ -86,3 +86,63 @@ npm install
 
 ----
 
+
+
+### JSDOCS syntax
+https://jsdoc.app/about-getting-started.html
+
+```bash
+#example
+    /**
+    * Represents a book.
+    * @constructor
+    * @param {string} title - The title of the book.
+    * @param {string} author - The author of the book.
+    */
+
+
+/**  */
+
+@author
+@async
+#intended to be called with the "new" keyword
+@class 
+
+@constant
+@default 
+@example
+@function 
+@param
+@property 
+@returns
+
+@see
+
+#shorter version of the full description
+@summary
+
+#type of an object
+@type
+
+@todo
+
+#What does the 'this' keyword refer to here
+@this
+
+#Link to another item in the documentation
+{@link}
+
+#Link to a tutorial
+{@tutorial}
+
+
+```
+
+
+Running the documentation generator on the command line
+ creates a directory named out/
+ where generated HTML pages live 
+
+``` jsdoc <book.js> ```
+
+

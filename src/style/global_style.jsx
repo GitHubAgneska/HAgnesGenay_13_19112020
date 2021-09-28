@@ -9,18 +9,24 @@ export const GlobalStyle = createGlobalStyle`
     }
     html {
         font-size: 100%; /* = 16px default */
+        font-family: Avenir, Helvetica, Arial, sans-serif;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
     }
     body {
-        font-family: 'Roboto', Helvetica, sans-serif;
         margin: 0;
-        
-        a { text-decoration: none; }
-        input { border: transparent; }
-        ul { margin: 0; padding: 0;}
-        ul li { list-style: none; }
-        button { display: block; border: none; }
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
+    a { text-decoration: none; }
+    input { border: transparent; }
+    ul { margin: 0; padding: 0;}
+    ul li { list-style: none; }
+    button { display: block; border: none; }
+
+    
 `
