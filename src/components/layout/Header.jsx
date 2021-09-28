@@ -3,10 +3,16 @@ import logo_main from '../../assets/logo/argentBankLogo.png'
 // import NavMain from './Nav_main'
 import styled from 'styled-components'
 import {createMediaQueries} from '../../style/media-queries'
+import Userstatus from '../elements/User-status';
+import {SrOnlyH1 } from '../../style/global_style'
 
-const Wrapper = styled.div(
+const HeaderWrapper = styled.div(
     {
-        border: "2px solid red"
+        border: "2px solid red",
+        display: "flex",
+        flexFlow: "row nowrap",
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     ({width}) => ({
         ...createMediaQueries([
@@ -18,16 +24,6 @@ const Wrapper = styled.div(
     })
 );
 
-
-/* const Wrapper = styled.div `
-    width: 100%;
-    background-color:black;
-    position: fixed; z-index:3;
-`; */
-const StyledHeader = styled.header `
-    display: flex; flex-flow: row nowrap;
-    align-items: center;
-`;
 const MainLogoWrapper = styled.div`
     width: 12.500vw; // 180px in 1440
     min-width: 135px;
@@ -37,18 +33,18 @@ const MainLogo = styled.img`
     max-width: 100%;
 `
 
+
+
 const Header = () => { 
     return(
-        <Wrapper width={['100%', '50%', 'auto']}>
-            <StyledHeader>
-                <MainLogoWrapper>
-                    <Link to="/"><MainLogo src={logo_main} alt="main logo" /></Link>
-                </MainLogoWrapper>
-                {/* <NavMain /> */}
-            </StyledHeader>
-        </Wrapper>
+        <HeaderWrapper width={['100%', '50%', 'auto']}>
+            <MainLogoWrapper>
+                <Link to="/"><MainLogo src={logo_main} alt="Argent Bank Logo" /></Link>
+                <SrOnlyH1>Argent Bank</SrOnlyH1>
+            </MainLogoWrapper>
+            <Userstatus />
+        </HeaderWrapper>
     )
 }
-
 
 export default Header
