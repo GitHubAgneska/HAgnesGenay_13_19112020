@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
+import Userstatus from '../elements/User-status';
 import logo_main from '../../assets/logo/argentBankLogo.png'
-// import NavMain from './Nav_main'
 import styled from 'styled-components'
 import {createMediaQueries} from '../../style/media-queries'
-import Userstatus from '../elements/User-status';
 import {SrOnlyH1 } from '../../style/global_style'
 
-const HeaderWrapper = styled.div(
+const HeaderWrapper = styled.nav(
     {
         border: "2px solid red",
+        padding: "5px 20px",
         display: "flex",
         flexFlow: "row nowrap",
         justifyContent: "space-between",
@@ -25,15 +25,13 @@ const HeaderWrapper = styled.div(
 );
 
 const MainLogoWrapper = styled.div`
-    width: 12.500vw; // 180px in 1440
+    width: 12.5rem; // 200px;
     min-width: 135px;
 `;
+
 const MainLogo = styled.img`
-    max-height:60px;  // - 4.167vw; // in viewport 1440
     max-width: 100%;
 `
-
-
 
 const Header = () => { 
     return(

@@ -5,7 +5,6 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons'
 
 const StatusWrapper = styled.div`
-    
     border: 4px dotted green;
     display: flex; flex-flow: row nowrap;
     justify-content: space-between;
@@ -18,8 +17,11 @@ const UserId = styled(StatusWrapper)`
     margin-right:1%;
     min-width:70px; flex-basis:20%;
     p {
-        white-space: nowrap;margin-left:1%;
+        white-space: nowrap;
+        margin: 0;
+        font-weight: bold;
     }
+    svg { margin-right:1%; }
 `;
 
 const SignInWrapper = styled(StatusWrapper)`
@@ -27,7 +29,14 @@ const SignInWrapper = styled(StatusWrapper)`
     justify-content: end;
     min-width:70px;
     margin-left:1%;
-    p { margin-right:1%; }
+    p { 
+        margin: 0;
+        font-weight: bold;
+        &:hover { 
+            text-decoration: underline;
+        }
+    }
+    svg { margin-right:1%; }
 `;
 
 const Userstatus = () => { 
@@ -39,7 +48,7 @@ const Userstatus = () => { 
             </UserId>
             <SignInWrapper>
                 <FontAwesomeIcon icon={faArrowRight} />
-                <p>SignIn</p>
+                <p>Sign In</p>
             </SignInWrapper>
         </StatusWrapper>
     )
