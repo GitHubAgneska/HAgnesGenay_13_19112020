@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 import Home from './components/containers/Home';
 // import Footer from './components/layout/Footer';
 // import Home from ''
@@ -26,6 +27,7 @@ const App = () => {
                         </Fragment> */}
 
                     </Router>
+                    <Footer />
             </div>
         </div>
     )

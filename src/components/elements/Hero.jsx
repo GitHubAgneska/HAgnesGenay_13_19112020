@@ -12,12 +12,16 @@ const WrapperDiv = styled.div(
         backgroundPosition: "0 -50px",
         backgroundSize: "cover"
     },
-    ({backgroundPosition}) => ({
+    ({backgroundPosition, height}) => ({
         ...createMediaQueries([
             
             {
                 property: "backgroundPosition",
                 values: backgroundPosition
+            },
+            {
+                property: "height",
+                values: height
             }
         ])
     })
@@ -25,7 +29,7 @@ const WrapperDiv = styled.div(
 
 const Hero = () => {
     return (
-        <WrapperDiv  backgroundPosition={['0 -50px', '0 -50px', '0 33%']}>
+        <WrapperDiv  backgroundPosition={['0 -50px', '0 -50px', '0 33%']} height={['300px','350px','400px' ]}>
             <HeroContent />
         </WrapperDiv>
     )
