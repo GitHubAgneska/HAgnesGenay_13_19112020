@@ -1,6 +1,6 @@
 /**  {@tutorial}  https://paulie.dev/posts/2020/08/styled-components-responsive-array-syntax/ */
 
-const breakpoints = [576, 768, 992, 1200];
+const breakpoints = [576, 768, 992];
 
 /**
  * @function createMediaQueries

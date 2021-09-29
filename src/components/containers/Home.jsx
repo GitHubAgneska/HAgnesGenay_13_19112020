@@ -1,15 +1,10 @@
-import HeroBanner from '../elements/Hero-banner'
-import styled from 'styled-components'
-
-/* const HomeMain = styled.main */
+import Hero from '../elements/Hero'
 
 const Home = () => { 
     return (
 
         <main>
-            <HeroBanner></HeroBanner>
-
-
+            <Hero></Hero>
         </main>
 
     )
