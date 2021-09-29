@@ -16,8 +16,11 @@
 3. Design a model for user object
 4. Design app architecture ( components hierarchy )
 5. Create app : 
-    - import existing static code from api 
-    - implement all above
+    - static code : adapt/implement html/css code from api 
+    - add props and event handlers
+    - implement CRUD with api calls via services
+    - implement authentication
+    - implement state with Redux
 6. Create api models using Swagger
 
 ---
