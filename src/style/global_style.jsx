@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
         min-height: 100vh;
     }
     a { text-decoration: none; }
-    input { border: transparent; }
+    /* input { border: transparent; } */
     ul { margin: 0; padding: 0;}
     ul li { list-style: none; }
     button { display: block; border: none; }

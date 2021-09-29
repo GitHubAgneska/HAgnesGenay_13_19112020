@@ -1,12 +1,14 @@
 import React, {Fragment} from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {Redirect} from 'react-router-dom/cjs/react-router-dom.min';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import Home from './components/containers/Home';
-import UserProfile from './components/containers/UserProfile';
+import Header from './components/layout/Header'
+import Footer from './components/layout/Footer'
+import Home from './components/containers/Home'
+import UserProfile from './components/containers/UserProfile'
+import SignIn from './components/containers/SignIn';
 
-import { GlobalStyle } from './style/global_style';
+import { GlobalStyle } from './style/global_style'
+
 
 
 const App = () => {
