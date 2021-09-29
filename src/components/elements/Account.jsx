@@ -4,6 +4,7 @@ const AccountSection = styled.section`
     width: 80%;
     display: flex;
     flex-direction: column;
+    @media(min-width: 720px) { flex-direction: row; }
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
@@ -14,6 +15,7 @@ const AccountSection = styled.section`
     padding: 1.5rem;
     box-sizing: border-box;
     text-align: left;
+
 `;
 const AccountContentWrapper = styled.div`
     width: 100%;
@@ -34,6 +36,7 @@ const AccountContentWrapper = styled.div`
 const AccountContentWrapperBottom = styled.div`
     width: 100%;
     flex: 1;
+    @media(min-width: 720px) { flex: 0;}
     button {
         display: block;
         width: 100%;
@@ -48,6 +51,9 @@ const AccountContentWrapperBottom = styled.div`
         &:hover { 
             background-color: #00bc99;
             color: #12002b;
+        }
+        @media(min-width: 720px) {
+            width: 200px;
         }
     }
 `;

@@ -1,13 +1,11 @@
 import React, {Fragment} from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {Redirect} from 'react-router-dom/cjs/react-router-dom.min';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/containers/Home';
 import UserProfile from './components/containers/UserProfile';
-// import Footer from './components/layout/Footer';
-// import Home from ''
-import {Redirect} from 'react-router-dom/cjs/react-router-dom.min';
-// import NavSide from './components/layout/Nav_side';
+
 import { GlobalStyle } from './style/global_style';
 
 
@@ -25,10 +23,11 @@ const App = () => {
                                 <Route exact path="/" render={() => <Redirect to="/home" />} />
                                 <Route exact path="/home" component={Home} />
                                 <Route exact path="/user" component={UserProfile} />
+                                <Route exact path="/signIn" component={SignIn} />
                             </Switch>
                         </Fragment>
 
-                    </Router>
+                        </Router>
                     <Footer />
             </div>
         </div>
