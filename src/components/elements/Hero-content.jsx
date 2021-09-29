@@ -3,7 +3,6 @@ import {SrOnlyH2} from '../../style/global_style'
 
 const HeroSection = styled.section`
     position: relative;
-    width: 200px;
     top: 2rem;
     width: 300px;
     background: white;
