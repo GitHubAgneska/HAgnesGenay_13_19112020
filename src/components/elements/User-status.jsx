@@ -3,55 +3,71 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react';
 
+
+let isConnected = false;
 const StatusWrapper = styled.div`
-    border: 4px dotted green;
+    /* border: 2px dotted green; */
     display: flex; flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
 `;
 
 const UserId = styled(StatusWrapper)`
-    border: 1px solid yellow;
     justify-content: start;
     margin-right:1%;
-    min-width:70px; flex-basis:20%;
+    flex-basis:20%;
+    
+    ${() => isConnected && `min-width:70px`}
+    ${() => !isConnected && `min-width:0px`}
+        
     p {
         white-space: nowrap;
         margin: 0;
         font-weight: bold;
     }
-    svg { margin-right:1%; }
+    svg { margin-right:2%; }
 `;
 
 const SignInWrapper = styled(StatusWrapper)`
-    border: 1px solid blue;
     justify-content: end;
-    min-width:70px;
     margin-left:1%;
+    white-space: nowrap;
     p { 
         margin: 0;
+        white-space: nowrap;
         font-weight: bold;
-        &:hover { 
-            text-decoration: underline;
-        }
+        &:hover { text-decoration: underline; }
     }
-    svg { margin-right:1%; }
+    svg { margin-right:2%; }
 `;
 
-const Userstatus = () => { 
+
+const Userstatus = ({isConnected}) => { 
+    
     return (
         <StatusWrapper>
-            <UserId>
+            
+            <UserId $connected>
                 <FontAwesomeIcon icon={faUserCircle} />
-                <p>User name</p>
+                { isConnected? <p>User name</p> : null }
             </UserId>
-            <SignInWrapper>
-                <FontAwesomeIcon icon={faArrowRight} />
-                <p>Sign In</p>
-            </SignInWrapper>
+
+            { isConnected?
+                    <SignInWrapper>
+                        <FontAwesomeIcon icon={faArrowRight} />
+                        <p>Sign out</p>
+                    </SignInWrapper>
+
+                    :  <SignInWrapper><p>Sign In</p></SignInWrapper>
+            }
+
         </StatusWrapper>
     )
 }
 
+Userstatus.defaultProps = { 
+    isConnected :false
+}
 export default Userstatus
