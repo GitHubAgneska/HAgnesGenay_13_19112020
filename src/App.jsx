@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/containers/Home';
+import UserProfile from './components/containers/UserProfile';
 // import Footer from './components/layout/Footer';
 // import Home from ''
 import {Redirect} from 'react-router-dom/cjs/react-router-dom.min';
@@ -18,13 +19,14 @@ const App = () => {
                 <GlobalStyle />
                     <Router>
                         <Header /> {/* INSIDE router because contains NAV with 'LINK TO'  */}
-                        <Home />
-                        {/*  <Fragment>
+
+                        <Fragment>
                             <Switch>
                                 <Route exact path="/" render={() => <Redirect to="/home" />} />
-                                <Route exact path="/userProfile/:id" component={Home} />
+                                <Route exact path="/home" component={Home} />
+                                <Route exact path="/user" component={UserProfile} />
                             </Switch>
-                        </Fragment> */}
+                        </Fragment>
 
                     </Router>
                     <Footer />
