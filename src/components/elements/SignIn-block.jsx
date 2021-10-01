@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { validate } from "../../utils/form_validation";
 import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -57,23 +58,81 @@ const SignInBlock = () => {
     */
     const checkFormValid = (userName,pw) => { return userName && pw ? isFormValid = true: isFormValid = false; }
     //const activateValidators = (userName,pw) => {   }
+    const [ errors, setErrors ] = useState({});
+    const [ touched, setTouched ] = useState({});
 
-    /**  handling input data altogether (! issue : submit = partial object )   */
+    /**  HANDLING INPUT DATA ALTOGETHER  */
+    /** ---------------------------------------------------------------------  */
     const [values, setValues] = useState({userName: '', pw:'', rememberMe: false})
     
     const handleInputChange = (event) => {
-        const target = event.target;
+/*      const target = event.target;
         const value = target.type === 'checkbox'?
         target.checked: target.value; console.log(value)
         const name = target.name; console.log(name);
     
-        setValues({ [name]: value });
-        console.log(values);
-    }
-    const handleSubmit = (event)  => { event.preventDefault(); console.log('submitting'); console.log(values)}
-    
+        setValues({ ...values, [name]: value });
+        console.log(values); */
 
-    /**  handling input data individually */
+        const { name, value: newValue, type } = event.target;
+        const value = event.target.type === 'checkbox'? event.target.checked : event.target.value;
+
+        setValues({ ...values, [name]: value });
+        setTouched({ ...touched, [name]: true });
+    }
+
+    const handleBlur = (event) => { 
+        const { name, value } = event.target;
+
+        // remove error msg if any
+        const { [name]: removedError, ...rest } = errors;
+
+        // check new error
+        const error = validate[name](value);
+
+        // validate field if val touched
+        setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) });
+    }
+
+    // const handleSubmit = (event)  => { event.preventDefault(); console.log('submitting'); console.log(values)}
+    const handleSubmit = (event) => { 
+        event.preventDefault();
+
+        // validate form
+        const formValidation = Object.keys(values).reduce(
+            (acc, key) => {
+                const newError = validate[key](values[key]);
+                const newTouched = { [key]: true };
+                return { 
+                    errors: {
+                        ...acc.errors,
+                        ...(newError && { [key]: newError })
+                    },
+                    touched: {
+                        ...acc.touched,
+                        ...newTouched
+                    }
+                };
+            },
+            {
+                errors: { ...errors },
+                touched: { ...touched }
+            }
+        );
+        setErrors(formValidation.errors);
+        setTouched(formValidation.touched);
+
+        if (
+            !Object.values(formValidation.errors).length // errors object = empty
+            && Object.values(formValidation.touched).length === Object.values(values).length // all fields were touched
+            && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
+        ) {
+            alert(JSON.stringify(values, null, 2));
+        }
+    }
+
+    /**   HANDLING INPUT DATA INDIVIDUALLY */
+    /** ---------------------------------------------------------------------  */
     const [userName, setUserName] = useState('');
     const [pw, setPw] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
@@ -95,9 +154,14 @@ const SignInBlock = () => {
 
             <FontAwesomeIcon icon={faUserCircle} />
             <h1>Sign In</h1>
-            <form 
-                onSubmit={handleSubmit2}
-                /* onSubmit={handleSubmit} */
+            <form
+                errors={errors}
+                touched={touched}
+                onBlur={handleBlur}
+                onChange={handleInputChange}
+                onSubmit={handleSubmit}
+
+                /* onSubmit={handleSubmit2} */
                 autoComplete="off"
             >
                 <InputWrapper>
@@ -107,20 +171,20 @@ const SignInBlock = () => {
                             name="userName"
                             id="userName-input"
                             required
-                            onBlur={handleUserNameChange}
+                            /* onBlur={handleUserNameChange} */
                             /* onChange={handleInputChange} */
-                            >    
-                        </input>
+                        />    
+                        {/* {touched.userName && errors.userName} */}
                     </label>
                 </InputWrapper>
                 <InputWrapper>
                     <label htmlFor="pw-input">Password
                         <input 
                             type="text" 
-                            name="pw"
+                            name="userPassword"
                             id="pw-input"
                             required
-                            onBlur={handleUserPwChange}
+                            /* onBlur={handleUserPwChange} */
                             /* onChange={handleInputChange} */
                             >
                         </input>
@@ -132,7 +196,7 @@ const SignInBlock = () => {
                         <input 
                             type="checkbox" 
                             name="rememberMe"
-                            onChange={handleRememberMe}
+                            /* onChange={handleRememberMe} */
                             /* onChange={handleInputChange} */
                             >
                         </input>
