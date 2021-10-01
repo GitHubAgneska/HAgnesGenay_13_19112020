@@ -12,21 +12,28 @@
 */
 
 
-const userNameValidation = (fieldName, fieldValue) => {
-    if (fieldValue && fieldValue.trim() === '') {
-        return `${fieldName} is required`;
+const userNameValidation = userName => {
+    if (userName.trim() === '') {
+        return `userName is required`;
     }
     return null;
 }
 
-const passwordValidation = (fieldName, fieldValue) => {
-    if (fieldValue.trim() === '') {
-        return `${fieldName} is required`;
+const passwordValidation = userPassword => {
+
+    if (userPassword.trim() === '') {
+        return `userPassword is required`;
     }
     return null;
 }
 
+// fake validator for checkbox ---- to review
+const rememberMeValidation = rememberMe => {
+    return null;
+}
 
+
+/*  Currently unused fields validations  */
 const nameValidation = (fieldName, fieldValue) => {
     if (fieldValue.trim() === '') {
         return `${fieldName} is required`;
@@ -70,11 +77,23 @@ const createPasswordValidation = password => {
     return null;
 };
 
+
+/** 
+* @Object Validate
+* with:
+* @property {userName} : is a @method : 
+*       * taking as @param name  ( = fieldName)
+*       * and @calls @function userNameValidation(@param fieldName, @param fieldValue)
+*
+*   @example validate[userName]('someName')
+*/
 export const validate = {
 
-    userName: name =>  userNameValidation('userName', name),
-    password: name => passwordValidation('userPassword', name)
+    userName: userNameValidation,
+    userPassword: passwordValidation,
+    rememberMe: rememberMeValidation
 
+/*  Currently unused fields validations  */
 /*  firstName: name => nameValidation('First Name', name),
     lastName: name => nameValidation('Last Name', name),
     email: emailValidation,

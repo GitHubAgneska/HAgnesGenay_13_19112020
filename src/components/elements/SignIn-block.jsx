@@ -42,6 +42,7 @@ const InputWrapper = styled.div`
         padding: 5px;
         font-size: 1.2rem;
     }
+    span { color: red; height: 50px;width:100%;}
 `;
 const RememberInput = styled.div` display: flex; label { margin-left: 0.25rem;}`;
 
@@ -56,14 +57,14 @@ const SignInBlock = () => {
      * @param {string} pw - state
      * @returns {boolean} isFormValid
     */
-    const checkFormValid = (userName,pw) => { return userName && pw ? isFormValid = true: isFormValid = false; }
+    //const checkFormValid = (userName,pw) => { return userName && pw ? isFormValid = true: isFormValid = false; }
     //const activateValidators = (userName,pw) => {   }
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
 
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
-    const [values, setValues] = useState({userName: '', pw:'', rememberMe: false})
+    const [values, setValues] = useState({userName: '', userPassword:'', rememberMe: false})
     
     const handleInputChange = (event) => {
 /*      const target = event.target;
@@ -99,20 +100,29 @@ const SignInBlock = () => {
         event.preventDefault();
 
         // validate form
+        console.log('FORM values=',values); // { userName: "agnes", userPassword: "xxxx", rememberMe: true }
+        console.log('FORM Object.keys(values)=', Object.keys(values)); // [ "userName", "userPassword", "rememberMe" ]
+        console.log('FORM Object.entries(values)=', Object.entries(values)); // [ [ "userName", "agnes" ], [ "userPassword", xxxx" ],[ "rememberMe", true" ] ]
+        
         const formValidation = Object.keys(values).reduce(
             (acc, key) => {
-                const newError = validate[key](values[key]);
-                const newTouched = { [key]: true };
-                return { 
-                    errors: {
-                        ...acc.errors,
-                        ...(newError && { [key]: newError })
-                    },
-                    touched: {
-                        ...acc.touched,
-                        ...newTouched
-                    }
-                };
+
+                    console.log('key=>',key, 'values[key]=>', values[key]);
+                    let fieldName = key, fieldVal = values[key];
+                    
+                    const newError = validate[key](values[key]);
+                    console.log('newError==', newError);
+                    const newTouched = { [key]: true };
+                    return { 
+                        errors: {
+                            ...acc.errors,
+                            ...(newError && { [key]: newError })
+                        },
+                        touched: {
+                            ...acc.touched,
+                            ...newTouched
+                        }
+                }
             },
             {
                 errors: { ...errors },
@@ -130,23 +140,22 @@ const SignInBlock = () => {
             alert(JSON.stringify(values, null, 2));
         }
     }
+    
 
     /**   HANDLING INPUT DATA INDIVIDUALLY */
     /** ---------------------------------------------------------------------  */
     const [userName, setUserName] = useState('');
-    const [pw, setPw] = useState('');
+    const [userPassword, setPw] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     
     const handleUserNameChange = (event) => { setUserName({userName: event.target.value}); console.log('userName:',event.target.value); }
-    const handleUserPwChange = (event) => { setPw({pw: event.target.value}); console.log('pw:',event.target.value);}
-    const handleRememberMe = (event) => { setRememberMe({rememberMe: event.target.value}); console.log('pw:',event.target.value);}
+    const handleUserPwChange = (event) => { setPw({userPassword: event.target.value}); console.log('userPassword:',event.target.value);}
+    const handleRememberMe = (event) => { setRememberMe({rememberMe: event.target.value}); console.log('rememberMe:',event.target.value);}
     
     const handleSubmit2 = (event)  => {
         event.preventDefault(); 
-        isFormValid = checkFormValid();
-        
-        // isFormValid? console.log('submitting:', userName,pw, rememberMe) : activateValidators();
     }
+    /** ---------------------------------------------------------------------  */
     
 
     return (
@@ -155,12 +164,9 @@ const SignInBlock = () => {
             <FontAwesomeIcon icon={faUserCircle} />
             <h1>Sign In</h1>
             <form
-                errors={errors}
-                touched={touched}
-                onBlur={handleBlur}
-                onChange={handleInputChange}
+                /* errors={errors}
+                touched={touched} */
                 onSubmit={handleSubmit}
-
                 /* onSubmit={handleSubmit2} */
                 autoComplete="off"
             >
@@ -171,10 +177,16 @@ const SignInBlock = () => {
                             name="userName"
                             id="userName-input"
                             required
+                            onBlur={handleBlur}
+                            onChange={handleInputChange}
                             /* onBlur={handleUserNameChange} */
-                            /* onChange={handleInputChange} */
+                            touched={touched}
+                            errors={errors}
                         />    
-                        {/* {touched.userName && errors.userName} */}
+                        { touched.userName && errors.userName?
+                            <span>Please enter a valid user name</span>
+                            : null 
+                            }
                     </label>
                 </InputWrapper>
                 <InputWrapper>
@@ -184,10 +196,16 @@ const SignInBlock = () => {
                             name="userPassword"
                             id="pw-input"
                             required
+                            onBlur={handleBlur}
+                            onChange={handleInputChange}
+                            touched={touched}
+                            errors={errors}
                             /* onBlur={handleUserPwChange} */
-                            /* onChange={handleInputChange} */
-                            >
-                        </input>
+                            />
+                            { touched.userPassword && errors.userPassword ?
+                                <span>Please enter a valid password</span>
+                                : null 
+                            }
                     </label>
                 </InputWrapper>
 
@@ -196,6 +214,7 @@ const SignInBlock = () => {
                         <input 
                             type="checkbox" 
                             name="rememberMe"
+                            onChange={handleInputChange}
                             /* onChange={handleRememberMe} */
                             /* onChange={handleInputChange} */
                             >
