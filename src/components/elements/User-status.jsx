@@ -1,5 +1,5 @@
+import { useHistory } from "react-router-dom";
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons'
@@ -44,7 +44,11 @@ const SignInWrapper = styled(StatusWrapper)`
 `;
 
 
-const Userstatus = ({isConnected}) => { 
+const Userstatus = ({isConnected}) => {
+    const history = useHistory();
+    
+    function signIn () { history.push("/signIn");}
+    function signOut () { console.log('user requested to sign out'); }
     
     return (
         <StatusWrapper>
@@ -55,12 +59,12 @@ const Userstatus = ({isConnected}) => { 
             </UserId>
 
             { isConnected?
-                    <SignInWrapper>
+                    <SignInWrapper onClick={() => signOut()}>
                         <FontAwesomeIcon icon={faArrowRight} />
                         <p>Sign out</p>
                     </SignInWrapper>
 
-                    :  <SignInWrapper><p>Sign In</p></SignInWrapper>
+                    :  <SignInWrapper onClick={() => signIn()}><p>Sign In</p></SignInWrapper>
             }
 
         </StatusWrapper>

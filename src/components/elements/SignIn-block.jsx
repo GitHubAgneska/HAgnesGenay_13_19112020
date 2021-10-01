@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -44,24 +45,98 @@ const InputWrapper = styled.div`
 const RememberInput = styled.div` display: flex; label { margin-left: 0.25rem;}`;
 
 const SignInBlock = () => {
+
+    let isFormValid = false;
+    let isFieldValid = true;
+
+    /**  
+     * @function checkFormValid 
+     * @param {string} userName - state
+     * @param {string} pw - state
+     * @returns {boolean} isFormValid
+    */
+    const checkFormValid = (userName,pw) => { return userName && pw ? isFormValid = true: isFormValid = false; }
+    //const activateValidators = (userName,pw) => {   }
+
+    /**  handling input data altogether (! issue : submit = partial object )   */
+    const [values, setValues] = useState({userName: '', pw:'', rememberMe: false})
+    
+    const handleInputChange = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox'?
+        target.checked: target.value; console.log(value)
+        const name = target.name; console.log(name);
+    
+        setValues({ [name]: value });
+        console.log(values);
+    }
+    const handleSubmit = (event)  => { event.preventDefault(); console.log('submitting'); console.log(values)}
+    
+
+    /**  handling input data individually */
+    const [userName, setUserName] = useState('');
+    const [pw, setPw] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+    
+    const handleUserNameChange = (event) => { setUserName({userName: event.target.value}); console.log('userName:',event.target.value); }
+    const handleUserPwChange = (event) => { setPw({pw: event.target.value}); console.log('pw:',event.target.value);}
+    const handleRememberMe = (event) => { setRememberMe({rememberMe: event.target.value}); console.log('pw:',event.target.value);}
+    
+    const handleSubmit2 = (event)  => {
+        event.preventDefault(); 
+        isFormValid = checkFormValid();
+        
+        // isFormValid? console.log('submitting:', userName,pw, rememberMe) : activateValidators();
+    }
+    
+
     return (
         <SignInSection>
 
             <FontAwesomeIcon icon={faUserCircle} />
             <h1>Sign In</h1>
-            <form>
+            <form 
+                onSubmit={handleSubmit2}
+                /* onSubmit={handleSubmit} */
+                autoComplete="off"
+            >
                 <InputWrapper>
-                    <label for="username">UserName</label>
-                    <input type="text" id="username"></input>
+                    <label htmlFor="userName-input">UserName
+                        <input 
+                            type="text"
+                            name="userName"
+                            id="userName-input"
+                            required
+                            onBlur={handleUserNameChange}
+                            /* onChange={handleInputChange} */
+                            >    
+                        </input>
+                    </label>
                 </InputWrapper>
                 <InputWrapper>
-                    <label for="password">Password</label>
-                    <input type="text" id="password"></input>
+                    <label htmlFor="pw-input">Password
+                        <input 
+                            type="text" 
+                            name="pw"
+                            id="pw-input"
+                            required
+                            onBlur={handleUserPwChange}
+                            /* onChange={handleInputChange} */
+                            >
+                        </input>
+                    </label>
                 </InputWrapper>
 
                 <RememberInput>
-                    <input type="checkbox" id="remember-me"></input>
-                    <label for="remember-me">Remember me</label>
+                    <label>Remember me
+                        <input 
+                            type="checkbox" 
+                            name="rememberMe"
+                            onChange={handleRememberMe}
+                            /* onChange={handleInputChange} */
+                            >
+                        </input>
+                    </label>
                 </RememberInput>
 
                 <button>Sign In</button>
