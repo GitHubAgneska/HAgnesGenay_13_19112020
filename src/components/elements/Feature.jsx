@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import iconchat from '../../assets/icons/icon-chat.png'
+import iconChat from '../../assets/icons/icon-chat.png'
+import iconMoney from '../../assets/icons/icon-money.png'
+import iconSecurity from '../../assets/icons/icon-security.png'
 
 const FeatureItem = styled.div`
 
@@ -25,12 +27,16 @@ const FeatureItem = styled.div`
     }
 `;
 
-const Feature = () => { 
+const Feature = ({feature}) => {
+
     return (
         <FeatureItem>
-            <img src={iconchat} alt="" ></img>
-            <h3>You are our #1 priority</h3>
-            <p>Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes</p>
+            { feature.icon === 'iconChat' ?  <img src={iconChat} alt="chat icon" /> 
+                :feature.icon === 'iconMoney' ?  <img src={iconMoney} alt="chat icon" />
+                :  <img src={iconSecurity} alt="security icon" />
+            }
+            <h3>{feature.title}</h3>
+            <p>{feature.text}</p>
         </FeatureItem>
 
     )
