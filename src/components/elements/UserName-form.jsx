@@ -17,7 +17,7 @@ const FormWrapper = styled.div`
     margin-top: 2%;
     animation: ${formTransition} 0.2s linear forwards;
     z-index:2;
-    background-color:black;
+    background-color: #12002b;
 `;
 
 
@@ -35,6 +35,7 @@ const FormBtnsWrapper = styled.div`
     flex-direction: row;
     width: 45%;
     margin: auto;
+    button:nth-child(1) { background-color:orange ; &:hover { background-color: salmon; }; transition: background-color 0.2s; }
 `;
 
 const InputWrapper = styled.div`

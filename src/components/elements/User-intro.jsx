@@ -28,7 +28,8 @@ const UserIntroDiv = styled.div`
             background-color: #00bc99;
             color: #12002b;
         }
-        &:active { background-color: black;}
+        &:active { background-color: #12002b;}
+        transition: background-color 2s;
     }
 `;
 
