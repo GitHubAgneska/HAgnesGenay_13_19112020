@@ -1,23 +1,45 @@
-import styled from "styled-components"
+import styled, {keyframes} from "styled-components"
+
+const formTransition = keyframes`
+    from {
+        transform: opacity(0);
+        transform: translateY(-20px);
+    }
+    to {
+        transform: opacity(1);
+        transform: translateY(-55px);
+    }
+`;
 
 const FormWrapper = styled.div`
-    border: 1px dotted yellow;
-    padding: 5%;
+    padding: 2%;
+    border: 1px solid white;
+    margin-top: 2%;
+    animation: ${formTransition} 0.2s linear forwards;
+    z-index:2;
+    background-color:black;
 `;
+
 
 const FormInputsWrapper = styled.div`
     display: flex;
     flex-direction: row;
+    @media screen and (max-width:600px) {flex-direction: column;}
     justify-content: center;
+    width: 65%;
+    margin: auto;
 `;
 
 const FormBtnsWrapper = styled.div`
     display: flex;
     flex-direction: row;
+    width: 45%;
+    margin: auto;
 `;
 
 const InputWrapper = styled.div`
-    text-align: left;
+    width: 100%;
+    
     margin: 1rem;
     input {
         padding: 5px;
@@ -34,6 +56,7 @@ const UserNameform = ({firstName,lastName} ) => {
     const handleBlur = (event) => { }
     
     return (
+
         <FormWrapper>
             <form onSubmit={handleSubmit} autoComplete="off">
                 <FormInputsWrapper>

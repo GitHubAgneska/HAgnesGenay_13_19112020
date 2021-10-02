@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components"
-import UserNameform from "./UserName-form";
-
+import UserNameform from "./UserName-form"
 
 const UserIntroDiv = styled.div`
     flex: 1;
@@ -29,6 +28,7 @@ const UserIntroDiv = styled.div`
             background-color: #00bc99;
             color: #12002b;
         }
+        &:active { background-color: black;}
     }
 `;
 
@@ -36,26 +36,25 @@ let user = { firstName:'Bojack' , lastName:'Horseman' };
 
 const UserIntro = ({props}) => {
 
-    const [formDisplay, SetFormDisplay ] = useState();
+    const [ formDisplay, SetFormDisplay ] = useState();
+    const toggleForm = () => { SetFormDisplay(!formDisplay);}
     
-    const toggleForm = () => { if ( formDisplay === false ) { SetFormDisplay(true)} else { SetFormDisplay(false)} 
-    }
-
     return (
 
         <UserIntroDiv>
             <h1>Welcome back <br /> {user.firstName} {user.lastName}!</h1>
+            
             <button onClick={toggleForm}>Edit name</button>
 
             { formDisplay &&
-                <UserNameform firstName={user.firstName} lastName={user.lastName}/>
+                    <UserNameform firstName={user.firstName} lastName={user.lastName}/>
             }
 
         </UserIntroDiv>
     )
 }
 UserIntro.defaultProps = {
-    formDisplay: false
+    formDisplay: false,
 }
 export default UserIntro
 
