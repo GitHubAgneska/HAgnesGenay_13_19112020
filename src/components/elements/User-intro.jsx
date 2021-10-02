@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components"
 import UserNameform from "./UserName-form";
 
@@ -31,15 +32,30 @@ const UserIntroDiv = styled.div`
     }
 `;
 
-let user = 'Bojack Horseman'
+let user = { firstName:'Bojack' , lastName:'Horseman' };
 
-const UserIntro = () => {
-    return(
+const UserIntro = ({props}) => {
+
+    const [formDisplay, SetFormDisplay ] = useState();
+    
+    const toggleForm = () => { if ( formDisplay === false ) { SetFormDisplay(true)} else { SetFormDisplay(false)} 
+    }
+
+    return (
 
         <UserIntroDiv>
-            <h1>Welcome back <br /> {user}!</h1>
-            <button>Edit name</button>
+            <h1>Welcome back <br /> {user.firstName} {user.lastName}!</h1>
+            <button onClick={toggleForm}>Edit name</button>
+
+            { formDisplay &&
+                <UserNameform firstName={user.firstName} lastName={user.lastName}/>
+            }
+
         </UserIntroDiv>
     )
 }
+UserIntro.defaultProps = {
+    formDisplay: false
+}
 export default UserIntro
+
