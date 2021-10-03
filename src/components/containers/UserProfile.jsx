@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import UserIntro from "../elements/User-intro";
 import { SrOnlyH2 } from "../../style/global_style";
-import Account from "../elements/Account"
+import Accounts from "../elements/Accounts"
 
 const UserPageSection = styled.main`
     background-color: #12002b;
@@ -13,7 +13,7 @@ const UserProfile = () => {
         <UserPageSection>
             <UserIntro />
             <SrOnlyH2>Accounts</SrOnlyH2>
-            <Account />
+            <Accounts />
         </UserPageSection>
 
     )

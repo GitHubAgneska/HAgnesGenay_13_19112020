@@ -58,13 +58,12 @@ const AccountContentWrapperBottom = styled.div`
     }
 `;
 
-
-const Account = () => { 
+const Account = ({type, balance}) => { 
     return (
         <AccountSection>
             <AccountContentWrapper>
-                <h3>Argent Bank Checking (x8349)</h3>
-                <p>$2,082.79</p>
+                <h3>Argent Bank {type} (x8349)</h3>
+                <p>${balance}</p>
                 <p>Available Balance</p>
             </AccountContentWrapper>
 
