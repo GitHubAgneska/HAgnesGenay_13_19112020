@@ -18,7 +18,7 @@
 5. Create app : 
     - static code : adapt/implement html/css code from api 
     - add props and event handlers
-    - add form logic (signIn)
+    - add form logic (signIn / edit userName)
     - implement CRUD with api calls via services
     - implement authentication
     - implement state with Redux

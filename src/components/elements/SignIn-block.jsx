@@ -4,7 +4,6 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
-
 const SignInSection = styled.section`
     box-sizing: border-box;
     background-color: white;
@@ -48,32 +47,15 @@ const RememberInput = styled.div` display: flex; label { margin-left: 0.25rem;}`
 
 const SignInBlock = () => {
 
-    let isFormValid = false;
-    let isFieldValid = true;
-
-    /**  
-     * @function checkFormValid 
-     * @param {string} userName - state
-     * @param {string} pw - state
-     * @returns {boolean} isFormValid
-    */
-    //const checkFormValid = (userName,pw) => { return userName && pw ? isFormValid = true: isFormValid = false; }
-    //const activateValidators = (userName,pw) => {   }
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
 
+    /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
     const [values, setValues] = useState({userName: '', userPassword:'', rememberMe: false})
     
     const handleInputChange = (event) => {
-/*      const target = event.target;
-        const value = target.type === 'checkbox'?
-        target.checked: target.value; console.log(value)
-        const name = target.name; console.log(name);
-    
-        setValues({ ...values, [name]: value });
-        console.log(values); */
 
         const { name, value: newValue, type } = event.target;
         const value = event.target.type === 'checkbox'? event.target.checked : event.target.value;
@@ -84,34 +66,20 @@ const SignInBlock = () => {
 
     const handleBlur = (event) => { 
         const { name, value } = event.target;
-
-        // remove error msg if any
-        const { [name]: removedError, ...rest } = errors;
-
-        // check new error
-        const error = validate[name](value);
-
+        const { [name]: removedError, ...rest } = errors; // remove error msg if any
+        const error = validate[name](value); // check new error
         // validate field if val touched
         setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) });
     }
 
-    // const handleSubmit = (event)  => { event.preventDefault(); console.log('submitting'); console.log(values)}
     const handleSubmit = (event) => { 
         event.preventDefault();
-
-        // validate form
-        console.log('FORM values=',values); // { userName: "agnes", userPassword: "xxxx", rememberMe: true }
-        console.log('FORM Object.keys(values)=', Object.keys(values)); // [ "userName", "userPassword", "rememberMe" ]
-        console.log('FORM Object.entries(values)=', Object.entries(values)); // [ [ "userName", "agnes" ], [ "userPassword", xxxx" ],[ "rememberMe", true" ] ]
+        //console.log('FORM values=',values); // { userName: "agnes", userPassword: "xxxx", rememberMe: true }
         
         const formValidation = Object.keys(values).reduce(
             (acc, key) => {
-
-                    console.log('key=>',key, 'values[key]=>', values[key]);
-                    let fieldName = key, fieldVal = values[key];
                     
-                    const newError = validate[key](values[key]);
-                    console.log('newError==', newError);
+                    const newError = validate[key](values[key]); // key = fieldName / values[key] = fieldValue
                     const newTouched = { [key]: true };
                     return { 
                         errors: {
@@ -140,8 +108,8 @@ const SignInBlock = () => {
             alert(JSON.stringify(values, null, 2));
         }
     }
-    
 
+    /** ---------------------------------------------------------------------  */    
     /**   HANDLING INPUT DATA INDIVIDUALLY */
     /** ---------------------------------------------------------------------  */
     const [userName, setUserName] = useState('');
@@ -151,10 +119,6 @@ const SignInBlock = () => {
     const handleUserNameChange = (event) => { setUserName({userName: event.target.value}); console.log('userName:',event.target.value); }
     const handleUserPwChange = (event) => { setPw({userPassword: event.target.value}); console.log('userPassword:',event.target.value);}
     const handleRememberMe = (event) => { setRememberMe({rememberMe: event.target.value}); console.log('rememberMe:',event.target.value);}
-    
-    const handleSubmit2 = (event)  => {
-        event.preventDefault(); 
-    }
     /** ---------------------------------------------------------------------  */
     
 
@@ -164,10 +128,7 @@ const SignInBlock = () => {
             <FontAwesomeIcon icon={faUserCircle} />
             <h1>Sign In</h1>
             <form
-                /* errors={errors}
-                touched={touched} */
                 onSubmit={handleSubmit}
-                /* onSubmit={handleSubmit2} */
                 autoComplete="off"
             >
                 <InputWrapper>
@@ -182,11 +143,8 @@ const SignInBlock = () => {
                             /* onBlur={handleUserNameChange} */
                             touched={touched}
                             errors={errors}
-                        />    
-                        { touched.userName && errors.userName?
-                            <span>Please enter a valid user name</span>
-                            : null 
-                            }
+                            />    
+                            { touched.userName && errors.userName? <span>Please enter a valid user name</span>: null }
                     </label>
                 </InputWrapper>
                 <InputWrapper>
@@ -202,10 +160,7 @@ const SignInBlock = () => {
                             errors={errors}
                             /* onBlur={handleUserPwChange} */
                             />
-                            { touched.userPassword && errors.userPassword ?
-                                <span>Please enter a valid password</span>
-                                : null 
-                            }
+                            { touched.userPassword && errors.userPassword ? <span>Please enter a valid password</span> : null }
                     </label>
                 </InputWrapper>
 
@@ -228,4 +183,5 @@ const SignInBlock = () => {
         </SignInSection>
     )
 }
+SignInBlock.propTypes = {}
 export default SignInBlock
