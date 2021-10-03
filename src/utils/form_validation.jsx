@@ -11,7 +11,9 @@
 * @type {Object} 'initialValues' as a PROP 
 */
 
+const error = { type: ['emptyField','invalidChars','length', 'unsafePw']};
 
+/*  Currently used in : SignIn feature  */
 const userNameValidation = userName => {
     if (userName.trim() === '') {
         return `userName is required`;
@@ -20,9 +22,9 @@ const userNameValidation = userName => {
 }
 
 const passwordValidation = userPassword => {
-
     if (userPassword.trim() === '') {
-        return `userPassword is required`;
+        return error.type[0];
+        // return `userPassword is required`;
     }
     return null;
 }
@@ -33,20 +35,29 @@ const rememberMeValidation = rememberMe => {
 }
 
 
-/*  Currently unused fields validations  */
+
+/*  Currently used in : Edit UserName feature  */
 const nameValidation = (fieldName, fieldValue) => {
+
     if (fieldValue.trim() === '') {
-        return `${fieldName} is required`;
+        console.log( `${fieldName} is required`);
+        //return error.type = 'emptyField';
     }
     if (/[^a-zA-Z -]/.test(fieldValue)) {
-        return 'Invalid characters';
+        console.log('Invalid characters');
+        //return error.type = 'invalidChars';
     }
     if (fieldValue.trim().length < 3) {
-        return `${fieldName} needs to be at least three characters`;
+        console.log(`${fieldName} needs to be at least three characters`);
+        //return error.type = 'length';
     }
-    return null;
+    else return null;
 };
 
+
+
+
+/*  Currently unused  fields validations */
 const emailValidation = email => {
     if (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email,)) {
         return null;
@@ -100,6 +111,11 @@ export const validate = {
     age: ageValidation 
 */
 };
+
+export const validateEdit = {
+    firstName: name => nameValidation('First Name', name),
+    lastName: name => nameValidation('Last Name', name)
+}
 
 
 export const initialValues = {

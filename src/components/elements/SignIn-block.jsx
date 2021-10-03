@@ -1,49 +1,9 @@
 import { useState } from "react";
 import { validate } from "../../utils/form_validation";
-import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
 
-const SignInSection = styled.section`
-    box-sizing: border-box;
-    background-color: white;
-    width: 300px;
-    margin: 0 auto;
-        margin-top: 0px;
-    margin-top: 3rem;
-    padding: 2rem;
-    h1 {
-        display: block;
-        font-size: 1.5em;
-        font-weight: bold;
-        margin-block-start: .83em;
-        margin-block-end: .83em;
-    }
-    button { 
-        display: block;
-        width: 100%;
-        padding: 8px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        margin-top: 1rem;
-        border-color: #00bc77;
-        background-color: #00bc77;
-        color: #fff;
-    }
-`;
-const InputWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-bottom: 1rem;
-    label { font-weight: bold; }
-    input {
-        padding: 5px;
-        font-size: 1.2rem;
-    }
-    span { color: red; height: 50px;width:100%;}
-`;
-const RememberInput = styled.div` display: flex; label { margin-left: 0.25rem;}`;
 
 const SignInBlock = () => {
 
@@ -56,10 +16,8 @@ const SignInBlock = () => {
     const [values, setValues] = useState({userName: '', userPassword:'', rememberMe: false})
     
     const handleInputChange = (event) => {
-
         const { name, value: newValue, type } = event.target;
         const value = event.target.type === 'checkbox'? event.target.checked : event.target.value;
-
         setValues({ ...values, [name]: value });
         setTouched({ ...touched, [name]: true });
     }
@@ -68,6 +26,7 @@ const SignInBlock = () => {
         const { name, value } = event.target;
         const { [name]: removedError, ...rest } = errors; // remove error msg if any
         const error = validate[name](value); // check new error
+        if ( error )console.log('error ==', error)
         // validate field if val touched
         setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) });
     }
@@ -177,11 +136,12 @@ const SignInBlock = () => {
                     </label>
                 </RememberInput>
 
-                <button>Sign In</button>
+                <button /* enabled={signInBtnEnabled} */>Sign In</button>
             </form>
 
         </SignInSection>
     )
 }
 SignInBlock.propTypes = {}
+SignInBlock.defaultProps = { signInBtnEnabled: false }
 export default SignInBlock
