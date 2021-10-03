@@ -1,6 +1,6 @@
 import styled, {keyframes} from "styled-components"
 
-const formTransition = keyframes`
+const formTransitionOpen = keyframes`
     from {
         transform: opacity(0);
         transform: translateY(-20px);
@@ -15,9 +15,12 @@ const FormWrapper = styled.div`
     padding: 2%;
     border: 1px solid white;
     margin-top: 2%;
-    animation: ${formTransition} 0.2s linear forwards;
+    animation: ${formTransitionOpen} 0.2s linear forwards;
     z-index:2;
     background-color: #12002b;
+    ${(formDisplay) => formDisplay && `opacity:1`}
+    ${(formDisplay) => !formDisplay && `opacity:0`}
+    transition: fade-out 300ms ease-in-out;
 `;
 
 
@@ -50,7 +53,7 @@ const InputWrapper = styled.div`
     span { color: red; height: 50px;width:100%;}
 `;
 
-const UserNameform = ({firstName,lastName} ) => {
+const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
 
     const handleSubmit = (event) => { }
     const handleChange = (event) => { }
@@ -83,7 +86,7 @@ const UserNameform = ({firstName,lastName} ) => {
 
                 <FormBtnsWrapper>
                     <button>Save</button>
-                    <button>Cancel</button>
+                    <button onClick={() => toggleForm()}>Cancel</button>
                 </FormBtnsWrapper>
             </form>
         </FormWrapper>

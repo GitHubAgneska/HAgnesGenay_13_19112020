@@ -48,7 +48,7 @@ const UserIntro = ({props}) => {
             <button onClick={toggleForm}>Edit name</button>
 
             { formDisplay &&
-                    <UserNameform firstName={user.firstName} lastName={user.lastName}/>
+                    <UserNameform firstName={user.firstName} lastName={user.lastName} toggleForm={toggleForm} $formDisplay />
             }
 
         </UserIntroDiv>
