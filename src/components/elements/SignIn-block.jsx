@@ -6,18 +6,13 @@ import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_styl
 import { useFetchForLogin } from '../../utils/hooks'
 
 
-const apiBaseUrl = 'localhost:3001/api/v1';
-const loginEndpoint = '/user/login';
-
-let url = apiBaseUrl+loginEndpoint;
-
 const SignInBlock = () => {
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
     // const [token, setToken ] = useState({});
     
-    const [postData, isLoading, token ] = useFetchForLogin();
+    const [ postData, isLoading, token ] = useFetchForLogin();
 
 
     /** ---------------------------------------------------------------------  */  
@@ -78,7 +73,7 @@ const SignInBlock = () => {
             console.log(JSON.stringify(values, null, 2));
             // alert(JSON.stringify(values, null, 2));
             postData(values);
-        
+            console.log('TOKEN=', token);
         }
     }
 

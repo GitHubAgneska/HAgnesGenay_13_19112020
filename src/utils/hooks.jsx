@@ -1,8 +1,5 @@
-import { useState, useEffect } from "react"
-
-const apiBaseUrl = 'localhost:3001/api/v1';
-const loginEndpoint = '/user/login';
-const bearer = 'tempAccess';
+import { useState } from "react"
+import { devEnvironment } from '../utils/environment-dev'
 
 /**
 *  APP CRUD OPERATIONS
@@ -11,22 +8,22 @@ const bearer = 'tempAccess';
 * @function useFetchForLogin
 * @param {string} url - API endpoint
 * @param {object} values - payload : values from form  @example { email:'xxxxx', password:'xxxxx', rememberMe:true } : The user to be identified
-* @returns {string} token - will allow the login and then keep user connected 
+* @returns {object} token - will allow the login and then keep user connected 
 */
 
 export function useFetchForLogin(url, user) {
     
-    url = 'http://localhost:3001/api/v1/user/login';
+    url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
+    let bearer = devEnvironment.bearer;
 
     const [token, setToken ] = useState('');
     const [isLoading, setLoading ] = useState(true);
     const [error, setError ] = useState(false);
 
     const postData = async (user) => {
-       //  if ( !url) return;
+        if ( !url) return;
         setLoading(true);
-        console.log('USER IN USEFETCH==', user);
-        console.log('URL==', url);
+
         try {
             const response = await fetch(url, { 
                 method: 'POST',
@@ -35,15 +32,15 @@ export function useFetchForLogin(url, user) {
                 // mode: 'cors',
                 headers: {
                     'Authorization': bearer,
-                    'x-api-key': 'tempAccess',
-                    Accept: "text/html",
+                    'x-api-key': 'tempAccess',          // necessary ?
+                    Accept: "text/html",                //  ---- "
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*'  //  ---- "
                 },
                 body: JSON.stringify(user)
             });
 
-            const token = await response.json(); console.log('TOKEN=', token);
+            const token = await response.json();
             setToken(token);
         }
         catch(err) {
@@ -51,36 +48,6 @@ export function useFetchForLogin(url, user) {
             setError(true);
         }
         finally { setLoading(false);}
-
     }
     return [ postData, isLoading, token ]
 }
-
-    /*  useEffect(() => {
-        if ( !url) return;
-        setLoading(true);
-
-        async function postData() {
-            try{
-                const response = await fetch(url, { 
-                    method: 'POST',
-                    data: user,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(user) });
-
-                const token = await response.json(); console.log('TOKEN=', token);
-                setToken(token);
-            }
-            catch(err) {
-                console.log(err);
-                setError(true);
-            }
-            finally {
-                setLoading(false);
-            }
-        }
-        postData()
-    }, [url, user]) 
-
-    return { isLoading, token, error }
-    */
