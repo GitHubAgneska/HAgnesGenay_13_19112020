@@ -77,9 +77,8 @@ const SignInBlock = () => {
         ) {
             console.log(JSON.stringify(values, null, 2));
             // alert(JSON.stringify(values, null, 2));
-           //  postData(values);
-        postData({  "email": "bj@horseman.com",
-                        "password": "password789"});
+            postData(values);
+        
         }
     }
 

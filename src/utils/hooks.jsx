@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 
 const apiBaseUrl = 'localhost:3001/api/v1';
 const loginEndpoint = '/user/login';
+const bearer = 'tempAccess';
 
 /**
 *  APP CRUD OPERATIONS
@@ -15,22 +16,30 @@ const loginEndpoint = '/user/login';
 
 export function useFetchForLogin(url, user) {
     
-    url = 'localhost:3001/api/v1/user/login';
+    url = 'http://localhost:3001/api/v1/user/login';
 
     const [token, setToken ] = useState('');
     const [isLoading, setLoading ] = useState(true);
     const [error, setError ] = useState(false);
 
     const postData = async (user) => {
-        if ( !url) return;
+       //  if ( !url) return;
         setLoading(true);
         console.log('USER IN USEFETCH==', user);
+        console.log('URL==', url);
         try {
             const response = await fetch(url, { 
                 method: 'POST',
-                mode: 'cors',
+                withCredentials: true,
                 credentials: "include",
-                headers: {Accept: "text/html",'Content-Type': 'application/json' },
+                // mode: 'cors',
+                headers: {
+                    'Authorization': bearer,
+                    'x-api-key': 'tempAccess',
+                    Accept: "text/html",
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: JSON.stringify(user)
             });
 
@@ -45,7 +54,6 @@ export function useFetchForLogin(url, user) {
 
     }
     return [ postData, isLoading, token ]
-
 }
 
     /*  useEffect(() => {
