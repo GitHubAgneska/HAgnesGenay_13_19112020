@@ -5,22 +5,17 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
 import { useFetchForLogin } from '../../utils/hooks'
 
-
 const SignInBlock = () => {
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
-    // const [token, setToken ] = useState({});
-    
     const [ postData, isLoading, token ] = useFetchForLogin();
-
 
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
     const [values, setValues] = useState({email: '', password:'', rememberMe: false})
 
-    
     const handleInputChange = (event) => {
         const { name, value: newValue, type } = event.target;
         const value = event.target.type === 'checkbox'? event.target.checked : event.target.value;
@@ -76,7 +71,6 @@ const SignInBlock = () => {
             console.log('TOKEN=', token);
         }
     }
-
     /** ---------------------------------------------------------------------  */    
     /**   HANDLING INPUT DATA INDIVIDUALLY */
     /** ---------------------------------------------------------------------  */
@@ -89,7 +83,6 @@ const SignInBlock = () => {
     // const handleRememberMe = (event) => { setRememberMe({rememberMe: event.target.value}); console.log('rememberMe:',event.target.value);}
     /** ---------------------------------------------------------------------  */
     
-
     return (
         <SignInSection>
 
@@ -145,12 +138,11 @@ const SignInBlock = () => {
                     </label>
                 </RememberInput>
 
-                <button /* enabled={signInBtnEnabled} */>Sign In</button>
+                <button>Sign In</button>
             </form>
 
         </SignInSection>
     )
 }
 SignInBlock.propTypes = {}
-SignInBlock.defaultProps = { signInBtnEnabled: false }
 export default SignInBlock

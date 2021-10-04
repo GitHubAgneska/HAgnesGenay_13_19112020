@@ -25,4 +25,4 @@ yarn-error.log*
 notes.md
 .vscode
 
-src/utils/environment.dev.jsx
+/src/utils/environment.dev.jsx
