@@ -85,7 +85,7 @@ export function useFetchUserProfile(url, token) {
     
     url = devEnvironment.apiBaseUrl + devEnvironment.userProfileEndpoint;
 
-    const [userData, setUserData ] = useState(new userModel({}));
+    const [userData, setUserData ] = useState(new userModel());
     const [isLoading, setLoading ] = useState(true);
     const [error, setError ] = useState(false);
 

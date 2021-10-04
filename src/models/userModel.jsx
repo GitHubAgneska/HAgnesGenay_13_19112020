@@ -1,10 +1,11 @@
 
-export const userModel = {
-
-    "id": "",
-    "email": "",
-    "firstName": "",
-    "lastName": "",
-    "createdAt": "",
-    "updatedAt": "",
+export class userModel {
+    constructor(email,firstName,lastName) {
+        this.id = null
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.createdAt = "" ;
+        this.updatedAt = "";
+    }
 }
