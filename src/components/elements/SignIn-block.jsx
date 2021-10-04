@@ -3,17 +3,28 @@ import { validate } from "../../utils/form_validation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
+import { useFetchForLogin } from '../../utils/hooks'
 
+
+const apiBaseUrl = 'localhost:3001/api/v1';
+const loginEndpoint = '/user/login';
+
+let url = apiBaseUrl+loginEndpoint;
 
 const SignInBlock = () => {
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
+    // const [token, setToken ] = useState({});
+    
+    const [postData, isLoading, token ] = useFetchForLogin();
+
 
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
-    const [values, setValues] = useState({userName: '', userPassword:'', rememberMe: false})
+    const [values, setValues] = useState({email: '', password:'', rememberMe: false})
+
     
     const handleInputChange = (event) => {
         const { name, value: newValue, type } = event.target;
@@ -64,20 +75,24 @@ const SignInBlock = () => {
             && Object.values(formValidation.touched).length === Object.values(values).length // all fields were touched
             && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
         ) {
-            alert(JSON.stringify(values, null, 2));
+            console.log(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+           //  postData(values);
+        postData({  "email": "bj@horseman.com",
+                        "password": "password789"});
         }
     }
 
     /** ---------------------------------------------------------------------  */    
     /**   HANDLING INPUT DATA INDIVIDUALLY */
     /** ---------------------------------------------------------------------  */
-    const [userName, setUserName] = useState('');
-    const [userPassword, setPw] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
+    // const [userName, setUserName] = useState('');
+    // const [userPassword, setPw] = useState('');
+    // const [rememberMe, setRememberMe] = useState(false);
     
-    const handleUserNameChange = (event) => { setUserName({userName: event.target.value}); console.log('userName:',event.target.value); }
-    const handleUserPwChange = (event) => { setPw({userPassword: event.target.value}); console.log('userPassword:',event.target.value);}
-    const handleRememberMe = (event) => { setRememberMe({rememberMe: event.target.value}); console.log('rememberMe:',event.target.value);}
+    // const handleUserNameChange = (event) => { setUserName({userName: event.target.value}); console.log('userName:',event.target.value); }
+    // const handleUserPwChange = (event) => { setPw({userPassword: event.target.value}); console.log('userPassword:',event.target.value);}
+    // const handleRememberMe = (event) => { setRememberMe({rememberMe: event.target.value}); console.log('rememberMe:',event.target.value);}
     /** ---------------------------------------------------------------------  */
     
 
@@ -94,7 +109,7 @@ const SignInBlock = () => {
                     <label htmlFor="userName-input">UserName
                         <input 
                             type="text"
-                            name="userName"
+                            name="email"
                             id="userName-input"
                             required
                             onBlur={handleBlur}
@@ -103,14 +118,14 @@ const SignInBlock = () => {
                             touched={touched}
                             errors={errors}
                             />    
-                            { touched.userName && errors.userName? <span>Please enter a valid user name</span>: null }
+                            { touched.email && errors.email? <span>Please enter a valid user name(email)</span>: null }
                     </label>
                 </InputWrapper>
                 <InputWrapper>
                     <label htmlFor="pw-input">Password
                         <input 
                             type="text" 
-                            name="userPassword"
+                            name="password"
                             id="pw-input"
                             required
                             onBlur={handleBlur}
@@ -119,7 +134,7 @@ const SignInBlock = () => {
                             errors={errors}
                             /* onBlur={handleUserPwChange} */
                             />
-                            { touched.userPassword && errors.userPassword ? <span>Please enter a valid password</span> : null }
+                            { touched.password && errors.password ? <span>Please enter a valid password</span> : null }
                     </label>
                 </InputWrapper>
 

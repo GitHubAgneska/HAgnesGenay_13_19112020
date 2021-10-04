@@ -6,22 +6,49 @@ const loginEndpoint = '/user/login';
 /**
 *  APP CRUD OPERATIONS
 * --------------------
-* => 1 - LOGIN : POST request 
+* => 1 - LOGIN : POST request  ( custom hook )
 * @function useFetchForLogin
 * @param {string} url - API endpoint
-* @param {object} user - payload : The user to be identified
+* @param {object} values - payload : values from form  @example { email:'xxxxx', password:'xxxxx', rememberMe:true } : The user to be identified
 * @returns {string} token - will allow the login and then keep user connected 
 */
 
 export function useFetchForLogin(url, user) {
     
-    url = apiBaseUrl+loginEndpoint;
-    
-    const [token, setToken ] = useState({});
+    url = 'localhost:3001/api/v1/user/login';
+
+    const [token, setToken ] = useState('');
     const [isLoading, setLoading ] = useState(true);
     const [error, setError ] = useState(false);
 
-    useEffect(() => {
+    const postData = async (user) => {
+        if ( !url) return;
+        setLoading(true);
+        console.log('USER IN USEFETCH==', user);
+        try {
+            const response = await fetch(url, { 
+                method: 'POST',
+                mode: 'cors',
+                credentials: "include",
+                headers: {Accept: "text/html",'Content-Type': 'application/json' },
+                body: JSON.stringify(user)
+            });
+
+            const token = await response.json(); console.log('TOKEN=', token);
+            setToken(token);
+        }
+        catch(err) {
+            console.log(err, err.type);
+            setError(true);
+        }
+        finally { setLoading(false);}
+
+    }
+    return [ postData, isLoading, token ]
+
+}
+
+    /*  useEffect(() => {
         if ( !url) return;
         setLoading(true);
 
@@ -45,7 +72,7 @@ export function useFetchForLogin(url, user) {
             }
         }
         postData()
-    }, [url, user])
+    }, [url, user]) 
 
     return { isLoading, token, error }
-}
+    */

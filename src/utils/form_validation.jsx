@@ -14,15 +14,26 @@
 const error = { type: ['emptyField','invalidChars','length', 'unsafePw']};
 
 /*  Currently used in : SignIn feature  */
-const userNameValidation = userName => {
+
+const emailValidation = email => {
+    if (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email,)) {
+        return null;
+    }
+    if (email.trim() === '') {
+        return 'Email is required';
+    }
+    return 'Please enter a valid email';
+};
+
+/* const userNameValidation = userName => {
     if (userName.trim() === '') {
         return `userName is required`;
     }
     return null;
-}
+} */
 
-const passwordValidation = userPassword => {
-    if (userPassword.trim() === '') {
+const passwordValidation = password => {
+    if (password.trim() === '') {
         return error.type[0];
         // return `userPassword is required`;
     }
@@ -58,15 +69,6 @@ const nameValidation = (fieldName, fieldValue) => {
 
 
 /*  Currently unused  fields validations */
-const emailValidation = email => {
-    if (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email,)) {
-        return null;
-    }
-    if (email.trim() === '') {
-        return 'Email is required';
-    }
-    return 'Please enter a valid email';
-};
 
 const ageValidation = age => {
     if (!age) {
@@ -99,9 +101,8 @@ const createPasswordValidation = password => {
 *   @example validate[userName]('someName')
 */
 export const validate = {
-
-    userName: userNameValidation,
-    userPassword: passwordValidation,
+    email: emailValidation,
+    password: passwordValidation,
     rememberMe: rememberMeValidation
 
 /*  Currently unused fields validations  */
