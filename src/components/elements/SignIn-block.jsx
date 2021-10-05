@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { validate } from "../../utils/form_validation";
 import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
-import { useFetchForLogin, useFetchUserProfile } from '../../utils/hooks'
+import { useFetchForLogin } from '../../utils/hooks'
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -11,7 +11,6 @@ const SignInBlock = () => {
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
     const [ postData, isLoading, token ] = useFetchForLogin();
-    const [ getUserProfile, userData ] = useFetchUserProfile();
     const history = useHistory();
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
@@ -68,11 +67,8 @@ const SignInBlock = () => {
             && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
         ) {
             console.log(JSON.stringify(values, null, 2));
-            // alert(JSON.stringify(values, null, 2));
             postData(values);
-            // console.log('TOKEN after signIn=', token);
-            getUserProfile(token);
-            // console.log('userData after signIn=', userData);
+            console.log('TOKEN after signIn=', token);
             history.push("/user");
         }
     }
