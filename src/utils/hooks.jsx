@@ -57,7 +57,7 @@ export function useFetchForSignUp(url, user) {
 /**
 *  APP CRUD OPERATIONS
 * --------------------
-* => 1 - LOGIN : POST request
+* => 2 - LOGIN : POST request
 * @function useFetchForLogin : custom hook
 * @param {string} url - API endpoint
 * @param {object} values - payload : values from form  @example of params => { email:'xxxxx', password:'xxxxx', rememberMe:true } : The user to be identified
@@ -110,7 +110,7 @@ export function useFetchForLogin(url, user) {
 /**
 *  APP CRUD OPERATIONS
 * --------------------
-* => 2 - RETRIEVE USER PROFILE : POST request ( custom hook )
+* => 3 - RETRIEVE USER PROFILE : POST request ( custom hook )
 * @function useFetchUserProfile
 * @param {string} url - API endpoint
 * @param {string} token - user token to identify request to api
@@ -177,7 +177,7 @@ export function useFetchUserProfile(url, token) {
 /**
 *  APP CRUD OPERATIONS
 * --------------------
-* => 3 - EDIT USER NAME : PUT request ( custom hook )
+* => 4 - EDIT USER NAME : PUT request ( custom hook )
 * @function useFetchEditUserName
 * @param {string} url - API endpoint
 * @param {string} token - user token to identify request to api

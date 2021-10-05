@@ -68,13 +68,13 @@
 │                                                  ┌──────────────▼───────────────┐   ├─────────────────────┐
 │    ┌─────────────────┐                           │                              │   │                     │
 │    │     LOGIN       │ Form : triggers ──────────┼─►  POST(=> response= token)  │   │                     │
-│    └────────┬────────┘ Triggers request          │                              │   │    REDUX STORE      │
-│             │          for all user data: ───────┼─►  GET user data             │   │    ***********      │
+│    └────────┬────────┘                           │                              │   │    REDUX STORE      │
+│             │                                    │                              │   │    ***********      │
 │             │                                    │                              │   │    Keep user        │
 │             │                                    │                              │   │    connected        │
-│    ┌────────▼────────┐                           │                              │   │                     │
-│    │  PROFILE PAGE   │ Edit profile──────────────┼─►  PUT                       │   │    Handle user      │
-│    └────────┬────────┘                           │                              │   │    data             │
+│    ┌────────▼────────┐ Triggers request  |───────┼─►  GET user data             │   │                     │
+│    │  PROFILE PAGE   │ for all user data |       │                              │   │    Handle user      │
+│    └────────┬────────┘ Edit profile──────────────┼─►  PUT                       │   │    data state       │
 │             │                                    │                              │   │                     │
 │             │                                    │                              │   │                     │
 │             │                                    │                              │   │                     │

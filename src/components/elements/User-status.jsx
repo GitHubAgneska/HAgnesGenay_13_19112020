@@ -1,9 +1,9 @@
 import { useHistory } from "react-router-dom";
+import { useState } from 'react';
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react';
 
 
 let isConnected = false;
@@ -48,7 +48,9 @@ const Userstatus = ({isConnected}) => {
     const history = useHistory();
     
     function signIn () { history.push("/signIn");}
-    function signOut () { console.log('user requested to sign out'); }
+    function signOut () {
+        // requestLogout()
+        console.log('user requested to sign out'); }
     
     return (
         <StatusWrapper>
