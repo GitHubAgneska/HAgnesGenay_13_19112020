@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { useStore } from "react-redux";
+import { setToken  } from '../store'
 import { devEnvironment } from '../utils/environment-dev'
 import { userModel } from '../models/userModel'
+
 /**
 *  APP CRUD OPERATIONS
 * --------------------
@@ -66,13 +69,15 @@ export function useFetchForSignUp(url, user) {
 * @returns {object} token - will allow the login and then keep user connected 
 */
 export function useFetchForLogin(url, user) {
-    
+
     url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
     let bearer = devEnvironment.bearer;
-    
-    const [token, setToken ] = useState('');
-    const [isLoading, setLoading ] = useState(true);
-    const [error, setError ] = useState(false);
+
+    const store = useStore();
+    // const token = store.getState().token;
+
+    const [ isLoading, setLoading ] = useState(true);
+    const [ error, setError ] = useState(false);
 
     const postData = async (user) => {
         if ( !url) return;
@@ -94,8 +99,13 @@ export function useFetchForLogin(url, user) {
                 body: JSON.stringify(user)
             });
 
-            const token = await response.json();
-            setToken(token);
+            const apiResponse = await response.json();
+            console.log('api response=', apiResponse);
+
+            if ( apiResponse.status === 200 ) {
+                const token = apiResponse.body.token;
+                store.dispatch(setToken(token));
+            }
         }
         catch(err) {
             console.log(err, err.type);
@@ -103,7 +113,7 @@ export function useFetchForLogin(url, user) {
         }
         finally { setLoading(false);}
     }
-    return [ postData, isLoading, token ];
+    return [ postData, isLoading, error ];
 }
 
 

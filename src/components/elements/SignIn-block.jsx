@@ -5,8 +5,13 @@ import { useFetchForLogin } from '../../utils/hooks'
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { useStore } from "react-redux";
+import { setConnected  } from "../../store";
 
 const SignInBlock = () => {
+
+    const store = useStore();
+    const isConnected = store.getState().isConnected;
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
@@ -68,6 +73,7 @@ const SignInBlock = () => {
         ) {
             console.log(JSON.stringify(values, null, 2));
             postData(values);
+            
             console.log('TOKEN after signIn=', token);
             history.push("/user");
         }
