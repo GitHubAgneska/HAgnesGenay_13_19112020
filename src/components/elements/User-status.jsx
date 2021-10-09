@@ -1,20 +1,14 @@
 import { useHistory } from "react-router-dom";
-import { useState } from 'react';
-import styled from 'styled-components'
+import { useStore } from "react-redux";
+import { StatusWrapper, SignInWrapper} from './User-status_style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
 
+const Userstatus = () => {
 
-let isConnected = false;
-const StatusWrapper = styled.div`
-    /* border: 2px dotted green; */
-    display: flex; flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const UserId = styled(StatusWrapper)`
+    const UserId = styled(StatusWrapper)`
     justify-content: start;
     margin-right:1%;
     flex-basis:20%;
@@ -29,22 +23,10 @@ const UserId = styled(StatusWrapper)`
     }
     svg { margin-right:2%; }
 `;
+    
+    const store = useStore();
+    const isConnected = store.getState().isConnected;
 
-const SignInWrapper = styled(StatusWrapper)`
-    justify-content: end;
-    margin-left:1%;
-    white-space: nowrap;
-    p { 
-        margin: 0;
-        white-space: nowrap;
-        font-weight: bold;
-        &:hover { text-decoration: underline; }
-    }
-    svg { margin-right:2%; }
-`;
-
-
-const Userstatus = ({isConnected}) => {
     const history = useHistory();
     
     function signIn () { history.push("/signIn");}
@@ -55,7 +37,7 @@ const Userstatus = ({isConnected}) => {
     return (
         <StatusWrapper>
             
-            <UserId $connected>
+            <UserId $isConnected>
                 <FontAwesomeIcon icon={faUserCircle} />
                 { isConnected? <p>User name</p> : null }
             </UserId>

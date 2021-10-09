@@ -1,0 +1,10 @@
+export const SET_TOKEN = 'SET_TOKEN';
+export const SET_CONNECTED = 'SET_CONNECTED';
+export const SET_ID = 'SET_ID';
+export const SET_EMAIL = 'SET_EMAIL';
+export const SET_PW = 'SET_PW';
+export const SET_FIRSTNAME = 'SET_FIRSTNAME';
+export const SET_LASTNAME = 'SET_LASTNAME';
+export const SET_TOTALACCOUNTS = 'SET_TOTALACCOUNTS';
+export const SET_ACCOUNTS = 'SET_ACCOUNTS';
+

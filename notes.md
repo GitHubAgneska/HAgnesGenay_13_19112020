@@ -145,4 +145,13 @@ Running the documentation generator on the command line
 
 ``` jsdoc <book.js> ```
 
+---
+### NPM react-scripts issue
+76 vulnerabilities (2 critical) with base react npm install + redux / react-redux
+
+Workaround:
+using package.json from `npx create-react-app <xxx> --template redux` (producing a 0 vulnerability audit), use all npm verions needed from there,
+
++ use `react-scripts@5.0.0-next.47` (latest)
++ `yarn add @babel/runtime`
 

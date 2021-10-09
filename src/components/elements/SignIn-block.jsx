@@ -15,7 +15,7 @@ const SignInBlock = () => {
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
-    const [ postData, isLoading, token ] = useFetchForLogin();
+    const [ postData, isLoading, token ] = useFetchForLogin([]);
     const history = useHistory();
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
@@ -73,8 +73,6 @@ const SignInBlock = () => {
         ) {
             console.log(JSON.stringify(values, null, 2));
             postData(values);
-            
-            console.log('TOKEN after signIn=', token);
             history.push("/user");
         }
     }
