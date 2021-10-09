@@ -3,7 +3,7 @@ import produce from "immer";
 import loginReducer from './reducers/login-reducer'
 import userPersonalDataReducer from './reducers/userPersonalData-reducer'
 import userAccountsDataReducer from './reducers/userAccountsData-reducer'
-
+import thunk from 'redux-thunk'
 
 // INITIAL STATE ( sliced into features )
 export const initialState = {
@@ -31,6 +31,10 @@ export const initialState = {
         }
     }
 }
+export const loginState = (initialState) => initialState.Login;
+export const userDataState = (initialState) => initialState.UserPersonalData;
+export const userAccountsDataState = (initialState) => initialState.UserAccountsData;
+
 
 const reducers = combineReducers({
     login: loginReducer,

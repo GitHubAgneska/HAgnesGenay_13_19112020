@@ -3,7 +3,7 @@ import {
     SET_TOKEN, SET_CONNECTED,
     SET_ID, SET_EMAIL, SET_PW, SET_FIRSTNAME, SET_LASTNAME,
     SET_TOTALACCOUNTS, SET_ACCOUNTS
-} from '../ActionTypes'
+} from './ActionTypes'
 
 // ......................................................
 // ACTIONS CREATORS : LOGIN 

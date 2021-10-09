@@ -1,6 +1,6 @@
 import { SET_ID, SET_EMAIL, SET_PW, SET_FIRSTNAME, SET_LASTNAME } from '../ActionTypes'
 import { initialState } from '../store'
-
+import produce from 'immer'
 // ......................................................
 //  USER PERSONAL DATA REDUCER (takes care of state for user personal data)
 // ......................................................

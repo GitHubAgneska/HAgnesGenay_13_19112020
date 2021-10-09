@@ -155,3 +155,21 @@ using package.json from `npx create-react-app <xxx> --template redux` (producing
 + use `react-scripts@5.0.0-next.47` (latest)
 + `yarn add @babel/runtime`
 
+---
+### REACT REDUX  (official doc recommendations)
+
+- Evaluate Where Each Piece of State Should Live (global => store ≠ local)
+
+- Prefer using the React-Redux hooks API (useSelector and useDispatch) as the default way to interact with a Redux store from your React components ( ≠ connect api)
+
+- Prefer having more UI components subscribed to the Redux store and reading data  (performances)
+
+- Prefer calling useSelector many times and retrieving smaller amounts of data, instead of having a single larger useSelector call that returns multiple results in an object
+
+- Prefer dispatching a single "event"-type action that results in all of the appropriate state updates at once, or consider use of action batching addons to dispatch multiple actions with only a single UI update at the end ( ≠ dispatching many actions in a row to accomplish a larger conceptual "transaction")
+
+- Allow Many Reducers to Respond to the Same Action: have many reducer functions all handle the same action separately
+meaning  => each action is being dispatched to all the reducers, the reducers may decide whether they wish to use the action to update something or not - ?
+
+
+

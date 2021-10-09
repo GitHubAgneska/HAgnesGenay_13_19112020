@@ -5,13 +5,26 @@ import { useFetchForLogin } from '../../utils/hooks'
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import { useStore } from "react-redux";
-import { setConnected  } from "../../store";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from '../../state/index'
 
 const SignInBlock = () => {
 
-    const store = useStore();
-    const isConnected = store.getState().isConnected;
+    // const token = useSelector( (token) => token);
+    const isConnected = useSelector( (isConnected) => isConnected);
+    const email = useSelector( (email) => email);
+    const password = useSelector( (password) => password);
+
+    const dispatch = useDispatch();
+    // AC = Action Creators
+    const AC = bindActionCreators(actionCreators, dispatch);
+    console.log('AC==', AC);
+    // AC destructured : 
+    const { setToken, setConnected } = bindActionCreators(actionCreators, dispatch);
+
+    // const store = useStore(); // ==> Prefer useSelector() as primary choice
+    // const isConnected = store.getState().isConnected;
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});

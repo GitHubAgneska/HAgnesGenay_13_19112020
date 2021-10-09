@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { useStore } from "react-redux";
-import { setToken  } from '../store'
+import { useStore, useSelector } from "react-redux";
+import { setToken  } from '../state/Actions'
 import { devEnvironment } from '../utils/environment-dev'
 import { userModel } from '../models/userModel'
 
@@ -22,6 +22,7 @@ export function useFetchForSignUp(url, user) {
     url = devEnvironment.apiBaseUrl + devEnvironment.signUpEndpoint;
     let bearer = devEnvironment.bearer; // api access authorization
     
+    const token = useSelector( (token) => token);
     const [isLoading, setLoading ] = useState(true);
     const [creationSuccessful, setCreationSuccessful ] = useState(false);
     const [error, setError ] = useState(false);
@@ -78,6 +79,7 @@ export function useFetchForLogin(url, user) {
 
     const [ isLoading, setLoading ] = useState(true);
     const [ error, setError ] = useState(false);
+    const token = useSelector( (token) => token);
 
     const postData = async (user) => {
         if ( !url) return;
