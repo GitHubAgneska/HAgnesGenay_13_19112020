@@ -20,7 +20,7 @@
     - add props and event handlers
     - add form logic (signIn / edit userName)
     - implement CRUD with api calls via services
-    - implement authentication (JWT - JSON Web Token)
+    - implement authentication (JWT - JSON Web Token) + secure routing
     - implement state with Redux
 6. Create api models using Swagger
 

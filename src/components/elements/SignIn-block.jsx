@@ -78,7 +78,7 @@ const SignInBlock = () => {
             console.log(JSON.stringify(values, null, 2));
             postData(values);
             // history.push("/user");   // ===> !! memory leak (see https://morioh.com/p/1ab552fdf028)
-            setTimeout(() => history.push("/user") ,2000);  // ===> dirty workaround 
+            setTimeout(() => history.push("/user") ,2000);  // ===> dirty workaround ==> instead: setState with callback as 2d argument? --| TO REVIEW
         }
     }
 
