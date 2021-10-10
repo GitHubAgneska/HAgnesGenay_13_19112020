@@ -160,7 +160,7 @@ using package.json from `npx create-react-app <xxx> --template redux` (producing
 
 - Evaluate Where Each Piece of State Should Live (global => store ≠ local)
 
-- Prefer using the React-Redux hooks API (useSelector and useDispatch) as the default way to interact with a Redux store from your React components ( ≠ connect api)
+- Prefer using the React-Redux hooks API (useSelector and useDispatch) as the default way to interact with a Redux store from your React components ( ≠ connect api ) <==> + mapStateToProp 
 
 - Prefer having more UI components subscribed to the Redux store and reading data  (performances)
 

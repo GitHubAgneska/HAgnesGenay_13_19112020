@@ -69,26 +69,26 @@
 │    ┌─────────────────┐                           │                              │   │                              │
 │    │     LOGIN       │ Form : triggers ──────────┼─►  POST(=> response= token) ─┼───┼─── loginReducer              │
 │    └────────┬────────┘                           │                              │   │                              │
-│             │                                    │                              │   │                              │
-│             │                                    │                              │   │                              │
+│             │                                    │                              │   │        │-setToken            │
+│             │                                    │                              │   │        │-setConnected        │
 │             │                                    │                ──┐           │   │                              │
 │    ┌────────▼────────┐ Triggers request  |───────┼─►  GET user data │           │   │                              │
 │    │  PROFILE PAGE   │ for all user data |       │                  ├───────────┼───┼─── userPersonalDataReducer   │
-│    └────────┬────────┘ Edit profile──────────────┼─►  PUT           │           │   │                              │
-│             │                                    │                ──┘           │   │                              │
-│             │                                    │                              │   │                              │
-│             │                                    │                              │   │                              │
+│    └────────┬────────┘ Edit profile──────────────┼─►  PUT           │           │   │        │-setEmail            │
+│             │                                    │                ──┘           │   │        │-setPw               │
+│             │                                    │                              │   │        │-setFirstName        │
+│             │                                    │                              │   │        │- ...                │
 │    ┌────────▼────────┐                           │                              │   │                              │
 │    │TRANSACTIONS PAGE│ Edit category/notes───────┼─►  PUT ──────────────────────┼───┼────userAccountsDataReducer   │
 │    └────────┬────────┘                           │                              │   │                              │
-│             │                                    │                              │   │                              │
-│             │                                    │                              │   │                              │
+│             │                                    │                              │   │        │-setTotalAccounts    │
+│             │                                    │                              │   │        │-setAccounts         │
 │             │                                    │                              │   │                              │
 │    ┌────────▼────────┐                           │                              │   │                              │
 │    │    SIGN OUT     ├───────────────────────────┼─►  Destroy token ────────────┼───┼──── loginReducer             │
 │    └─────────────────┘                           │                              │   │                              │
-│                                                  │                              │   │                              │
-│                                                  │                              │   │                              │
+│                                                  │                              │   │        │-setToken            │
+│                                                  │                              │   │        │-setConnected        │
 │                                                  └──────────────────────────────┘   │                              │
 │                                                                                     │                              │
 └─────────────────────────────────────────────────────────────────────────────────────┤                              │

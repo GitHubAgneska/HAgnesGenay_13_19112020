@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useStore, useSelector } from "react-redux";
-import { setToken  } from '../state/Actions'
+import { setToken, setConnected, setId, setEmail, setPassword, setFirstName, setLastName, setTotalAccounts, setAccounts } from '../state/Actions'
 import { devEnvironment } from '../utils/environment-dev'
 import { userModel } from '../models/userModel'
 
@@ -22,7 +22,6 @@ export function useFetchForSignUp(url, user) {
     url = devEnvironment.apiBaseUrl + devEnvironment.signUpEndpoint;
     let bearer = devEnvironment.bearer; // api access authorization
     
-    const token = useSelector( (token) => token);
     const [isLoading, setLoading ] = useState(true);
     const [creationSuccessful, setCreationSuccessful ] = useState(false);
     const [error, setError ] = useState(false);
@@ -75,13 +74,13 @@ export function useFetchForLogin(url, user) {
     let bearer = devEnvironment.bearer;
 
     const store = useStore();
-    // const token = store.getState().token;
+    const token = useSelector( (token) => token);
 
     const [ isLoading, setLoading ] = useState(true);
     const [ error, setError ] = useState(false);
-    const token = useSelector( (token) => token);
-
+    
     const postData = async (user) => {
+        
         if ( !url) return;
         setLoading(true);
 
@@ -107,13 +106,15 @@ export function useFetchForLogin(url, user) {
             if ( apiResponse.status === 200 ) {
                 const token = apiResponse.body.token;
                 store.dispatch(setToken(token));
+                store.dispatch(setConnected(true));
             }
         }
         catch(err) {
             console.log(err, err.type);
             setError(true);
         }
-        finally { setLoading(false);}
+        finally { 
+            setLoading(false);}
     }
     return [ postData, isLoading, error ];
 }

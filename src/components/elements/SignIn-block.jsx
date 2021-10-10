@@ -5,31 +5,22 @@ import { useFetchForLogin } from '../../utils/hooks'
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators } from '../../state/index'
 
 const SignInBlock = () => {
 
-    // const token = useSelector( (token) => token);
-    const isConnected = useSelector( (isConnected) => isConnected);
-    const email = useSelector( (email) => email);
-    const password = useSelector( (password) => password);
-
-    const dispatch = useDispatch();
-    // AC = Action Creators
-    const AC = bindActionCreators(actionCreators, dispatch);
-    console.log('AC==', AC);
-    // AC destructured : 
-    const { setToken, setConnected } = bindActionCreators(actionCreators, dispatch);
-
-    // const store = useStore(); // ==> Prefer useSelector() as primary choice
-    // const isConnected = store.getState().isConnected;
+    // all following = delegated to custom hook 'useFetchForLogin'
+        // const dispatch = useDispatch();
+        // AC = Action Creators
+        // const AC = bindActionCreators(actionCreators, dispatch);
+        // console.log('AC==', AC);
+        // AC destructured : 
+        // const { setToken, setConnected } = bindActionCreators(actionCreators, dispatch);
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
     const [ postData, isLoading, token ] = useFetchForLogin([]);
     const history = useHistory();
+    // const _isMounted = useRef(true);  // tests for memory leak issue on navigate after state updated
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
@@ -86,9 +77,11 @@ const SignInBlock = () => {
         ) {
             console.log(JSON.stringify(values, null, 2));
             postData(values);
-            history.push("/user");
+            // history.push("/user");   // ===> !! memory leak (see https://morioh.com/p/1ab552fdf028)
+            setTimeout(() => history.push("/user") ,2000);  // ===> dirty workaround 
         }
     }
+
     /** ---------------------------------------------------------------------  */    
     /**   HANDLING INPUT DATA INDIVIDUALLY */
     /** ---------------------------------------------------------------------  */
