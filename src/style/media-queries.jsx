@@ -45,7 +45,7 @@ export const createMediaQueries = (css) => {
     }))
     // .slice(0, -1); // remove last breakpoint
 
-    console.log(JSON.stringify(cssToBreakpoints, null, 2)); 
+    // console.log(JSON.stringify(cssToBreakpoints, null, 2)); 
 
     // 3
     const cssMediaQueries = cssToBreakpoints.reduce((items, item) => {
@@ -57,7 +57,7 @@ export const createMediaQueries = (css) => {
 
         return items;
     }, {});
-    console.log(JSON.stringify(cssMediaQueries, null, 2));
+    // console.log(JSON.stringify(cssMediaQueries, null, 2));
     return { ...cssMediaQueries };
 }
 
