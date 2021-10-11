@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import UserProfile from '../components/containers/UserProfile'
 
 
-// Authenticated routes
+// Authenticated routes -- draft : unused atm
 const routes = [
     {
         path: 'user',

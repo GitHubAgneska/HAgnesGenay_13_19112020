@@ -1,22 +1,23 @@
 import React, {Fragment} from 'react'
+import { useSelector } from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {Redirect} from 'react-router-dom/cjs/react-router-dom.min';
+import PrivateRoute from './routing/private-route'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Home from './components/containers/Home'
 import UserProfile from './components/containers/UserProfile'
 import SignIn from './components/containers/SignIn'
-
+import NotFoundPage from './components/containers/404'
 import { GlobalStyle } from './style/global_style'
-import { useSelector } from 'react-redux';
-import PublicRoute from './routing/public-route'
-import PrivateRoute from './routing/private-route'
-import ProtectedRoutes from './routing/protected-routes'
 
 
 const App = () => {
-    const isConnected = useSelector((isConnected) => isConnected);
-    console.log('isConnected=', isConnected);
+    const allState = useSelector((state ) => state);
+    console.log('allState=', allState);
+
+    const isConnected = useSelector((state ) => state.login.isConnected);
+    console.log('isConnected', isConnected);
 
     return (
         <div className="App">
@@ -27,15 +28,11 @@ const App = () => {
 
                         <Fragment>
                             <Switch>
-                                <PublicRoute exact path="/" isConnected={isConnected} render={() => <Redirect to="/home" />} />
-                                <PublicRoute exact path="/home" isConnected={isConnected} component={Home} />
-                                {/* <Route exact path="/user" component={UserProfile} /> */}
-                                <PublicRoute exact path="/signIn" isConnected={isConnected} component={SignIn} />
-
-                                <PrivateRoute path="/user" isConnected={isConnected} >
-                                    <ProtectedRoutes />
-                                </PrivateRoute>
-
+                                <Route exact path="/"  render={() => <Redirect to="/home" />} />
+                                <Route exact path="/home"  component={Home} />
+                                <Route exact path="/signIn"  component={SignIn} />
+                                <PrivateRoute path="/user" component={UserProfile} isConnected={isConnected} />
+                                <Route component={NotFoundPage} />
                             </Switch>
                         </Fragment>
 

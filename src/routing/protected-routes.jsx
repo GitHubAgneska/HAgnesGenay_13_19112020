@@ -3,14 +3,15 @@ import { Route, Switch } from 'react-router-dom';
 import routes from './routes'; // Route list
 // import Loader from 'sharedComponent/Loader';
 
-const ProtectedRoutes = () => (
+// -- draft : unused atm
+const ProtectedRoutes = ( ) => (
     <Switch>
         <Suspense fallback={"loading.."}>
        {/*  <Suspense fallback={<Loader />}> */}
 
-        { routes.map(({ component: Component, path, exact }) => (
+        { routes.map(({ component: UserProfile, path, exact }) => (
             <Route  path={`/${path}`} key={path}  exact={exact} >
-                <Component />
+                <UserProfile />
             </Route>
         ))}
         </Suspense>

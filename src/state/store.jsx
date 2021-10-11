@@ -36,11 +36,12 @@ export const userDataState = (initialState) => initialState.UserPersonalData;
 export const userAccountsDataState = (initialState) => initialState.UserAccountsData;
 
 
-const reducers = combineReducers({
+export const reducers = combineReducers({
     login: loginReducer,
     userData: userPersonalDataReducer,
     userAccount : userAccountsDataReducer
 })
+
 
 export const store = createStore(reducers, {}, applyMiddleware(thunk));
 
