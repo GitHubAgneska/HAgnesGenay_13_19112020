@@ -82,7 +82,20 @@ npm uninstall -g <package-name>
 rm -rf node_modules/
 npm install
 
+#-> Uninstalling ALL npm packages  + re-install
+
+rm -rf node_modules/
+rm -rf yarn.lock
+rm -rf package-lock.json
+yarn test --clearCache
+
+npm i --package-lock-only
+npm i
+yarn
+
+
 ```
+
 
 ----
 

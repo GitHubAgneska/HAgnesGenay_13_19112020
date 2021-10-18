@@ -3,6 +3,7 @@ import { useStore, useSelector } from "react-redux";
 import { setToken, setConnected, setId, setEmail, setPassword, setFirstName, setLastName, setTotalAccounts, setAccounts } from '../state/Actions'
 import { devEnvironment } from '../utils/environment-dev'
 import { userModel } from '../models/userModel'
+import { store } from "../state/store";
 
 /**
 *  APP CRUD OPERATIONS
@@ -74,7 +75,7 @@ export function useFetchForLogin(url, user) {
     let bearer = devEnvironment.bearer;
 
     const store = useStore();
-    const token = useSelector( (token) => token);
+    // const token = useSelector( (token) => token);
 
     const [ isLoading, setLoading ] = useState(true);
     const [ error, setError ] = useState(false);
@@ -101,7 +102,7 @@ export function useFetchForLogin(url, user) {
             });
 
             const apiResponse = await response.json();
-            console.log('api response=', apiResponse);
+            // console.log('api response=', apiResponse);
 
             if ( apiResponse.status === 200 ) {
                 const token = apiResponse.body.token;
@@ -147,15 +148,16 @@ export function useFetchForLogin(url, user) {
 */
 export function useFetchUserProfile(url, token) {
     
-    url = devEnvironment.apiBaseUrl + devEnvironment.userProfileEndpoint;
-
+    // let url = devEnvironment.apiBaseUrl + devEnvironment.userProfileEndpoint;
+    let bearer = devEnvironment.bearer;
     const [userData, setUserData ] = useState(new userModel());
     const [isLoading, setLoading ] = useState(true);
     const [error, setError ] = useState(false);
 
-    const getUserProfile = async (token) => {
-        if ( !url) return;
+    const getUserProfile = async (token, url) => {
         setLoading(true);
+        if ( !url) { url = devEnvironment.apiBaseUrl + devEnvironment.userProfileEndpoint;}
+        
         try {
             const response = await fetch(url, { 
                 method: 'POST',
@@ -163,7 +165,8 @@ export function useFetchUserProfile(url, token) {
                 credentials: "include",
                 // mode: 'cors',
                 headers: {
-                    'Authorization': token,
+                    'Authorization': 'Bearer' + token,
+                    /* 'Authorization': bearer + token, */
                     'x-api-key': 'tempAccess',          // necessary ?
                      Accept: "text/html",                //  ---- "
                     'Content-Type': 'application/json',
@@ -172,11 +175,16 @@ export function useFetchUserProfile(url, token) {
             });
             const apiResponse = await response.json();
             console.log('apiResponse=', apiResponse);
-            const apiBodyUser = apiResponse.body;
-            console.log('apiBodyUser=', apiBodyUser);
-            let newUser =  new userModel();  // -------- to review 
-            setUserData(apiBodyUser);        // --------   " 
-            console.log('state userData=', userData);
+
+            if ( apiResponse.status === 200 ) {
+                const apiBodyUser = apiResponse.body;
+                setUserData({userData:apiBodyUser})
+                // console.log('apiBodyUser=', apiBodyUser);
+                store.dispatch(setEmail(apiBodyUser.email));
+                store.dispatch(setId(apiBodyUser.id));
+                store.dispatch(setFirstName(apiBodyUser.firstName));
+                store.dispatch(setLastName(apiBodyUser.lastName));
+            }
         }
         catch(err) {
             console.log(err, err.type);

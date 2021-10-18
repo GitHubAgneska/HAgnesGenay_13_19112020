@@ -4,6 +4,8 @@ import styled from "styled-components"
 import UserIntro from "../elements/User-intro"
 import { SrOnlyH2 } from "../../style/global_style"
 import Accounts from "../elements/Accounts"
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 const UserPageSection = styled.main`
     background-color: #12002b;
@@ -11,11 +13,20 @@ const UserPageSection = styled.main`
 `;
 
 const UserProfile = () => {
-    const [ token, setToken ] = useState({});
-    const [ getUserProfile, userData ] = useFetchUserProfile(token);
+    
+    const [ getUserProfile, isLoading, userData ] = useFetchUserProfile();
+    const state = useSelector(state=>(state));
+    const token = state.login.token;
 
-    console.log(userData);
+    useEffect(() => { 
+        if (token) { 
+            getUserProfile(token);
+        } else { setTimeout(() => {getUserProfile(token); }, 2000)}
+        console.log('userData=', userData);
+    }, [token]);
 
+    console.log('STATE after fetch==>', state)
+    
     return (
         <UserPageSection>
             <UserIntro />
