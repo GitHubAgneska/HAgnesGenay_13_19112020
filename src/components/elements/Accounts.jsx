@@ -18,7 +18,6 @@ const mockAccountsData = [
 const Accounts = () => { 
 
     return (
-
         mockAccountsData.map(account => (
             <Account key={Math.random()} type={account.type} balance={account.balance} />
         ))

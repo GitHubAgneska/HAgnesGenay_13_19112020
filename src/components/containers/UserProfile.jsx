@@ -1,12 +1,14 @@
-import { useFetchUserProfile } from '../../utils/hooks'
+// import { useFetchUserProfile } from '../../utils/hooks'
 // import { useState } from "react"
+import { fetchUserData } from '../../features/userData-feature'
 import styled from "styled-components"
 import UserIntro from "../elements/User-intro"
 import { SrOnlyH2 } from "../../style/global_style"
 import Accounts from "../elements/Accounts"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-// import { loginState, userDataState } from '../../state/store'
+import { store } from '../../state/store'
+import { userDataState } from "../../state/store"
 
 const UserPageSection = styled.main`
     background-color: #12002b;
@@ -15,32 +17,30 @@ const UserPageSection = styled.main`
 
 const UserProfile = () => {
     
-    const [ getUserProfile, isLoading, userData ] = useFetchUserProfile();
     const state = useSelector((state) => state);
-    const token = useSelector((state) => state.login.token);
+    // const token = useSelector((state) => state.login.token);
 
     // launch api request at component load
     useEffect(() => { 
-        getUserProfile(token);
-        /* if (token) { 
-            getUserProfile(token);
-        } else { setTimeout(() => {getUserProfile(token); }, 2000)}
-        console.log('userData=', userData); */
-    }, [token]);
+        fetchUserData(store).then(
+            userDataState.data ?
+                console.log(userDataState.data): 'hhj'
+        )
+    });
 
-    console.log('STATE after fetch==>', state)
     
-    const firstName = useSelector(userDataState => userDataState.firstName)
-    const lastName = useSelector(userDataState => userDataState.lastName)
-    
+/*   const userInfos = userData.data;
+    const { firstName, lastName } = userInfos; */
+    let firstName = 'fdfdfd', lastName= 'hjjqs';
+
     return (
-        (firstName && lastName) ?
+
         <UserPageSection>
             <UserIntro firstName={firstName} lastName={lastName} />
             <SrOnlyH2>Accounts</SrOnlyH2>
             <Accounts />
         </UserPageSection>
-        : 'loading'
+
     )
 }
 export default UserProfile

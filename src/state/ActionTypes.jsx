@@ -12,3 +12,6 @@ export const LOGINFETCHING = 'login/fetching'; // syntax logic ? ----
 export const LOGINRESOLVED = 'login/resolved';
 export const LOGINREJECTED = 'login/rejected';
 
+export const USERPERSDATAFETCHING = 'userPersonalData/fetching';
+export const USERPERSDATARESOLVED = 'userPersonalData/resolved';
+export const USERPERSDATAREJECTED = 'userPersonalData/rejected';

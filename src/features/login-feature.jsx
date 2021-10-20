@@ -1,6 +1,6 @@
 import { devEnvironment } from '../utils/environment-dev'
 import { loginState } from "../state/store"
-import { loginFetching, loginResolved, loginRejected, setToken, setConnected, } from '../state/Actions'
+import { loginFetching, loginResolved, loginRejected } from '../state/Actions'
 
 /**
 *  LOGIN : POST request
@@ -10,8 +10,8 @@ import { loginFetching, loginResolved, loginRejected, setToken, setConnected, } 
 */
 export async function fetchLogin(store, user) {
 
-    let url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
-    let bearer = devEnvironment.bearer;
+    const url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
+    const bearer = devEnvironment.bearer;
     const status = loginState(store.getState()).status;
     
     if ( status === 'pending' || status === 'updating' ) { return }
@@ -25,7 +25,7 @@ export async function fetchLogin(store, user) {
             // mode: 'cors',
             headers: {
                 'Authorization': bearer,
-                'x-api-key': 'tempAccess',          // necessary ?
+                'x-api-key': bearer,                // necessary ?
                 Accept: "text/html",                //  ---- "
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'  //  ---- "

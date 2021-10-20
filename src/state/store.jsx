@@ -44,8 +44,8 @@ export const initialState = {
 
 // SELECTORS
 export const loginState = (state) => state.login;
-export const userDataState = (state) => state.userPersonalData;
-export const userAccountsDataState = (state) => state.userAccountsData;
+export const userDataState = (state) => state.userData;
+export const userAccountsDataState = (state) => state.userAccount;
 
 
 export const reducers = combineReducers({

@@ -1,4 +1,4 @@
-import { /* SET_TOKEN, SET_CONNECTED, */ LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED} from '../ActionTypes'
+import { LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED } from '../ActionTypes'
 import { initialState } from '../store'
 import produce from 'immer'
 // ......................................................

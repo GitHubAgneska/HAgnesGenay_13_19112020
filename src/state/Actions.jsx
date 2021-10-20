@@ -3,7 +3,8 @@ import {
     SET_TOKEN, SET_CONNECTED,
     SET_ID, SET_EMAIL, SET_PW, SET_FIRSTNAME, SET_LASTNAME,
     SET_TOTALACCOUNTS, SET_ACCOUNTS,
-    LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED
+    LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED,
+    USERPERSDATAFETCHING, USERPERSDATARESOLVED, USERPERSDATAREJECTED
 } from './ActionTypes'
 
 // ......................................................
@@ -28,6 +29,10 @@ export const setEmail = (email) => (dispatch) => (dispatch({ type: SET_EMAIL, pa
 export const setPassword = (password) => (dispatch) => (dispatch({ type: SET_PW, payload: password}))
 export const setFirstName = (firstName) => (dispatch) => (dispatch({ type: SET_FIRSTNAME, payload: firstName }));
 export const setLastName = (lastName) => (dispatch) => (dispatch({ type: SET_LASTNAME, payload: lastName }));
+// .... fetch userData actions ...
+export const userPersDataFetching = () => ({ type: USERPERSDATAFETCHING });
+export const userPersDataResolved = (data) => ({ type: USERPERSDATARESOLVED, payload: data });
+export const userPersDataRejected = (error) => ({ type: USERPERSDATAREJECTED , payload: error });
 
 // ......................................................
 // ACTIONS CREATORS : USER ACCOUNTS DATA
