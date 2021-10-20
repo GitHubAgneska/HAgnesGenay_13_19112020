@@ -33,25 +33,26 @@ const UserIntroDiv = styled.div`
     }
 `;
 
-let user = { firstName:'Bojack' , lastName:'Horseman' };
+// let user = { firstName:'Bojack' , lastName:'Horseman' };
 
-const UserIntro = ({props}) => {
+const UserIntro = ({firstName, lastName}) => {
 
     const [ formDisplay, SetFormDisplay ] = useState();
     const toggleForm = () => { SetFormDisplay(!formDisplay);}
-    
+
     return (
 
         <UserIntroDiv>
-            <h1>Welcome back <br /> {user.firstName} {user.lastName}!</h1>
+            <h1>Welcome back <br /> {firstName} {lastName}!</h1>
             
             <button onClick={toggleForm}>Edit name</button>
 
             { formDisplay &&
-                    <UserNameform firstName={user.firstName} lastName={user.lastName} toggleForm={toggleForm} $formDisplay />
+                    <UserNameform firstName={firstName} lastName={lastName} toggleForm={toggleForm} $formDisplay />
             }
 
         </UserIntroDiv>
+
     )
 }
 UserIntro.defaultProps = {

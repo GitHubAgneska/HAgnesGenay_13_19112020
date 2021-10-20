@@ -1,26 +1,21 @@
 import { useState } from "react";
 import { validate } from "../../utils/form_validation";
 import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
-import { useFetchForLogin } from '../../utils/hooks'
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { useStore } from "react-redux";
+import { fetchLogin } from '../../features/login-feature'
+import { loginState } from "../../state/store";
 
 const SignInBlock = () => {
 
-    // all following = delegated to custom hook 'useFetchForLogin'
-        // const dispatch = useDispatch();
-        // AC = Action Creators
-        // const AC = bindActionCreators(actionCreators, dispatch);
-        // console.log('AC==', AC);
-        // AC destructured : 
-        // const { setToken, setConnected } = bindActionCreators(actionCreators, dispatch);
-
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
-    const [ postData, isLoading, token ] = useFetchForLogin([]);
     const history = useHistory();
+    const store = useStore();
     // const _isMounted = useRef(true);  // tests for memory leak issue on navigate after state updated
+    
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
@@ -76,9 +71,11 @@ const SignInBlock = () => {
             && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
         ) {
             console.log(JSON.stringify(values, null, 2));
-            postData(values);
+            // postData(values);
             // history.push("/user");   // ===> !! memory leak (see https://morioh.com/p/1ab552fdf028)
-            setTimeout(() => history.push("/user") ,2000);  // ===> dirty workaround ==> instead: setState with callback as 2d argument? --| TO REVIEW
+            fetchLogin(store, values).then(
+                loginState.isConnected ?  history.push("/user"): (setTimeout(() => history.push("/user") ,2000))
+            )
         }
     }
 

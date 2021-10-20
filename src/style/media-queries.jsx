@@ -29,7 +29,7 @@ export const createMediaQueries = (css) => {
         return items;
     }, []);
 
-    console.log(JSON.stringify(cssKeyValuePairs, null, 2));
+    // console.log(JSON.stringify(cssKeyValuePairs, null, 2));
 
     // 2
     const cssToBreakpoints = [0, ...breakpoints]
@@ -77,13 +77,5 @@ export const createMediaQueries = (css) => {
     *            }
     *        ]
 *        ]
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
     * 
     */

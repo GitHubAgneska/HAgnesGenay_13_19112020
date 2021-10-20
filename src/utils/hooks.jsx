@@ -1,5 +1,32 @@
-import { useState, useRef, useEffect } from "react"
-import { useStore, useSelector } from "react-redux";
+/**
+* INITIALLY:  BEFORE REDUX IMPLEMENTATION IN THE PROJECT
+* this file gathering all crud operations using CUSTOM HOOKS was created
+* so that all api calls would happen outside from the components, as well as the state setting ('setState()')
+* to unload a maximum of responsibilities from them, components.
+* The components would then use these hooks by calling their exported functions only,
+* and then use their returned data locally, once the state has been set by the hook.
+*
+* ===> WITH the implementation of Redux:
+* If using this same logic but with a store (dispatching data at api response)
+* the main issue becomes the lag between asynchronous calls, 
+* ( e.g: 'userProfile' component loads and calls 'useFetchUserProfile()' async method, 
+* which dispatches new state for user => the data is retrieved, but the component is already loaded without the data).
+* => CHANGE IN IMPLEMENTATION :
+* This custom hooks file gets divided into separate 'features',
+* with a fetch method that is not a custom hook anymore (the component calls the method directly, not an exported version of it)
+* each fetch feature has a 'status' state (pending, rejected, etc) in store, 
+*  
+* the components are still in charge of calling api requests functions
+* but the returned data is dealt with by the Store ( using 'dispatch()', and as a whole object 'data' - 
+* (which consequently brings changes in actions/reducers/selectors/ --- )).
+* Once the component has called the function ( e.g 'FetchSignup()')
+* it can check the request's status ( which happens asynchronously) 
+* and only then, can retrieve locally the new data from the store.
+* The component retrieves the whole 'data' object and destructures it into props for its needs
+*/ 
+
+import { useState } from "react"
+import { useStore } from "react-redux";
 import { setToken, setConnected, setId, setEmail, setPassword, setFirstName, setLastName, setTotalAccounts, setAccounts } from '../state/Actions'
 import { devEnvironment } from '../utils/environment-dev'
 import { userModel } from '../models/userModel'
@@ -166,7 +193,6 @@ export function useFetchUserProfile(url, token) {
                 // mode: 'cors',
                 headers: {
                     'Authorization': 'Bearer' + token,
-                    /* 'Authorization': bearer + token, */
                     'x-api-key': 'tempAccess',          // necessary ?
                      Accept: "text/html",                //  ---- "
                     'Content-Type': 'application/json',

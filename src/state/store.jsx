@@ -1,5 +1,4 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import produce from "immer";
 import loginReducer from './reducers/login-reducer'
 import userPersonalDataReducer from './reducers/userPersonalData-reducer'
 import userAccountsDataReducer from './reducers/userAccountsData-reducer'
@@ -10,7 +9,10 @@ export const initialState = {
 
     Login: {     
         isConnected: false,
-        token: null
+        token: null,
+        // fetchLogin state
+        status: 'void',
+        error: null
     },
     UserPersonalData : {
         id: '', 
@@ -18,6 +20,10 @@ export const initialState = {
         password: '',
         firstName: '',
         lastName: '',
+        // fetchUserPersData state
+        status: 'void',
+        data: null,
+        error: null
     },
     UserAccountsData : {
         totaAccounts: null,
@@ -28,12 +34,18 @@ export const initialState = {
             balance: '',
             transactionsHistory: "last 10 days",
             transactions: [],
-        }
+        },
+        // fetchUserAccountsData state
+        status: 'void',
+        data: null,
+        error: null
     }
 }
-export const loginState = (initialState) => initialState.Login;
-export const userDataState = (initialState) => initialState.UserPersonalData;
-export const userAccountsDataState = (initialState) => initialState.UserAccountsData;
+
+// SELECTORS
+export const loginState = (state) => state.login;
+export const userDataState = (state) => state.userPersonalData;
+export const userAccountsDataState = (state) => state.userAccountsData;
 
 
 export const reducers = combineReducers({
@@ -41,7 +53,8 @@ export const reducers = combineReducers({
     userData: userPersonalDataReducer,
     userAccount : userAccountsDataReducer
 })
-
+// connect store to browser redux devtools extension
+// const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 export const store = createStore(reducers, {}, applyMiddleware(thunk));
 

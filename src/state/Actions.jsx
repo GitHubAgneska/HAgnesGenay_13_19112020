@@ -2,7 +2,8 @@
 import { 
     SET_TOKEN, SET_CONNECTED,
     SET_ID, SET_EMAIL, SET_PW, SET_FIRSTNAME, SET_LASTNAME,
-    SET_TOTALACCOUNTS, SET_ACCOUNTS
+    SET_TOTALACCOUNTS, SET_ACCOUNTS,
+    LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED
 } from './ActionTypes'
 
 // ......................................................
@@ -10,6 +11,11 @@ import {
 // ......................................................
 export const setToken = (token) => (dispatch) => (dispatch({ type: SET_TOKEN , payload: token  }));
 export const setConnected = (isConnected) => (dispatch) => (dispatch({ type: SET_CONNECTED, payload:isConnected  }));
+// .... fetch login actions ...
+export const loginFetching = () => ({type: LOGINFETCHING});
+export const loginResolved = (data) => ({type: LOGINRESOLVED, payload: data });
+export const loginRejected = (error) => ({ type: LOGINREJECTED, payload: error });
+
 
 // ......................................................
 // ACTIONS CREATORS : USER PERSONAL DATA

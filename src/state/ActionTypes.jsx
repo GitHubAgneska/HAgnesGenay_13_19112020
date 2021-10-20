@@ -8,3 +8,7 @@ export const SET_LASTNAME = 'SET_LASTNAME';
 export const SET_TOTALACCOUNTS = 'SET_TOTALACCOUNTS';
 export const SET_ACCOUNTS = 'SET_ACCOUNTS';
 
+export const LOGINFETCHING = 'login/fetching'; // syntax logic ? ---- 
+export const LOGINRESOLVED = 'login/resolved';
+export const LOGINREJECTED = 'login/rejected';
+
