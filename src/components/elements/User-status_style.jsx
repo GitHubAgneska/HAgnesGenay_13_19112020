@@ -8,6 +8,9 @@ export const StatusWrapper = styled.div`
 `;
 
 export const SignInWrapper = styled(StatusWrapper)`
+    
+    ${(isConnected) => !isConnected && `min-width: 100px;`}
+    
     justify-content: end;
     margin-left:1%;
     white-space: nowrap;

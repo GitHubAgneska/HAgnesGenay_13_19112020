@@ -1,21 +1,24 @@
 import { useHistory } from "react-router-dom";
-import { useStore, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { StatusWrapper, SignInWrapper} from './User-status_style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
-import { loginState, store } from '../../state/store'
+import { loginState } from '../../state/store'
+import { userDataState } from "../../state/store"
 
-/* ${() => isConnected && `min-width:70px`} */
-/* ${() => !isConnected && `min-width:0px`} */
 const UserId = styled(StatusWrapper)`
 
     justify-content: start;
     margin-right:1%;
     flex-basis:20%;
 
-        
+    ${(isConnected) => isConnected && `min-width:70px`}
+    ${(isConnected) => !isConnected && `min-width:0px`}
+    min-width: ${isConnected => isConnected && `70px`}
+    min-width: ${isConnected => !isConnected && `0px`}
+    
     p {
         white-space: nowrap;
         margin: 0;
@@ -26,7 +29,11 @@ const UserId = styled(StatusWrapper)`
 
 const Userstatus = () => {
 
-    const isConnected = loginState(store.getState()).isConnected;
+    const isConnected = useSelector(loginState).isConnected;
+    const user = useSelector(userDataState);
+    const profileData = user?.data ?? {} ;   // ------- ! very important for runtime ! (else data = null )
+    const  { firstName } = profileData
+    
     const history = useHistory();
     
     function signIn () { history.push("/signIn");}
@@ -39,16 +46,16 @@ const Userstatus = () => {
             
             <UserId $isConnected>
                 <FontAwesomeIcon icon={faUserCircle} />
-                { isConnected? <p>User name</p> : null }
+                { isConnected? <p>{firstName}</p> : null }
             </UserId>
 
             { isConnected?
-                    <SignInWrapper onClick={() => signOut()}>
+                    <SignInWrapper onClick={() => signOut()} $isConnected>
                         <FontAwesomeIcon icon={faArrowRight} />
                         <p>Sign out</p>
                     </SignInWrapper>
 
-                    :  <SignInWrapper onClick={() => signIn()}><p>Sign In</p></SignInWrapper>
+                    :  <SignInWrapper onClick={() => signIn()} $isConnected><p>Sign In</p></SignInWrapper>
             }
 
         </StatusWrapper>
