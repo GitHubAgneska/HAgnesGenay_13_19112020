@@ -5,7 +5,7 @@ import produce from 'immer'
 //  USER PERSONAL DATA EDIT REDUCER (takes care of state for user personal data editing (POST request) )
 // ......................................................
 // used when : user edit his first/lastName
-function userPersonalData_editReducer(state = initialState.UserPersonalData, action) {
+function userPersonalData_editReducer(state = initialState.UserData_editState, action) {
         return produce(state, (draft) => {
             switch (action.type) {
                 case USERPERSDATA_EDIT_FETCHING: {

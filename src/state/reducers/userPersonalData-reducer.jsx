@@ -1,4 +1,5 @@
-import { USERPERSDATAFETCHING, USERPERSDATARESOLVED, USERPERSDATAREJECTED, SET_ID, SET_EMAIL, SET_PW, SET_FIRSTNAME, SET_LASTNAME } from '../ActionTypes'
+import { USERPERSDATAFETCHING, USERPERSDATARESOLVED, USERPERSDATAREJECTED,
+    /* SET_ID, SET_EMAIL, SET_PW, SET_FIRSTNAME, SET_LASTNAME */ } from '../ActionTypes'
 import { initialState } from '../store'
 import produce from 'immer'
 // ......................................................

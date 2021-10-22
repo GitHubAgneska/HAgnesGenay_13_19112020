@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { validateEdit } from "../../utils/form_validation";
 import styled, {keyframes} from "styled-components"
+import { editUserData } from "../../features/userData-edit-feature"
+import { store, userDataState, userData_editState} from "../../state/store"
+import { fetchUserData } from '../../features/userData-feature'
 
 const formTransitionOpen = keyframes`
     from {
@@ -58,17 +61,13 @@ const InputWrapper = styled.div`
 const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
     
     const [values, setValues] = useState({ firstName: firstName, lastName:lastName });
-    
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
     
-    const handleChange = (event) => {
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
-
         setValues({ ...values, [name]: value });
         setTouched({ ...touched, [name]: true });
-        
-        console.log()
     }
 
     const handleBlur = (event) => {
@@ -115,6 +114,10 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
             && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
         ) {
             alert(JSON.stringify(values, null, 2));
+            // call put request with form values
+            editUserData(store, values);
+            // call fetch user data to refresh component
+            fetchUserData(store)
         }
     }
     
@@ -129,7 +132,7 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
                             name="firstName"
                             placeholder={firstName}
                             onBlur={handleBlur}
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             />
                         { touched.firstName && errors.firstName? <span>Please enter a valid first name<br /><small>(name must be at least 3 characters long)</small></span>: null }
                     </InputWrapper>
@@ -139,7 +142,7 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
                             name="lastName"
                             placeholder={lastName}
                             onBlur={handleBlur}
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             />
                         { touched.lastName && errors.lastName? <span>Please enter a valid last name<br /><small>(name must be at least 3 characters long)</small></span>: null }
                     </InputWrapper>

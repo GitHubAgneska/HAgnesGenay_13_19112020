@@ -33,7 +33,6 @@ const UserIntroDiv = styled.div`
     }
 `;
 
-// let user = { firstName:'Bojack' , lastName:'Horseman' };
 
 const UserIntro = ({firstName, lastName}) => {
 
@@ -41,7 +40,6 @@ const UserIntro = ({firstName, lastName}) => {
     const toggleForm = () => { SetFormDisplay(!formDisplay);}
 
     return (
-
         <UserIntroDiv>
             <h1>Welcome back <br /> {firstName} {lastName}!</h1>
             
@@ -52,7 +50,6 @@ const UserIntro = ({firstName, lastName}) => {
             }
 
         </UserIntroDiv>
-
     )
 }
 UserIntro.defaultProps = {

@@ -23,11 +23,13 @@ export const initialState = {
         // fetchUserPersData state
         status: 'void',
         data: null,
-        error: null,
+        error: null 
+    },
+    UserPersonalDataEdit: {
         // fetch UserPersData edit state
-        editStatus: 'void',
-        editData : null,
-        editError: null
+        status: 'void',
+        data : null,
+        error: null
     },
     UserAccountsData : {
         totaAccounts: null,
@@ -49,6 +51,7 @@ export const initialState = {
 // SELECTORS
 export const loginState = (state) => state.login;
 export const userDataState = (state) => state.userData;
+export const userData_editState = (state) => state.userDataEdit;
 export const userAccountsDataState = (state) => state.userAccount;
 
 

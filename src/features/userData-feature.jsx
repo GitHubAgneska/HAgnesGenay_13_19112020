@@ -46,7 +46,7 @@ export async function fetchUserData(store) {
             }
         });
         const apiResponse = await response.json();
-        console.log('apiResponse user data =', apiResponse);
+        // console.log('apiResponse user data =', apiResponse);
         store.dispatch(userPersDataResolved(apiResponse.body));
     }
     catch(error) {
