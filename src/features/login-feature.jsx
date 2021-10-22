@@ -1,6 +1,6 @@
 import { devEnvironment } from '../utils/environment-dev'
 import { loginState } from "../state/store"
-import { loginFetching, loginResolved, loginRejected } from '../state/Actions'
+import { loginFetching, loginResolved, loginRejected, setToken, setConnected, logout } from '../state/Actions'
 
 /**
 *  LOGIN : POST request
@@ -42,4 +42,9 @@ export async function fetchLogin(store, user) {
         // if error: request rejected status dispatched to store using loginRejected action
         store.dispatch(loginRejected(error))
     }
+}
+
+
+export function fetchLogout(store) {
+    store.dispatch(logout); // ---- why syntax different from 'store.dispatch(loginFetching())' --? 
 }

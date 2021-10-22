@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import { StatusWrapper, SignInWrapper} from './User-status_style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +7,8 @@ import { faArrowRight} from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 import { loginState } from '../../state/store'
 import { userDataState } from "../../state/store"
+import { fetchLogout } from "../../features/login-feature"
+import { useEffect } from "react";
 
 const UserId = styled(StatusWrapper)`
 
@@ -35,11 +37,17 @@ const Userstatus = () => {
     const  { firstName } = profileData
     
     const history = useHistory();
-    
+    const store = useStore()
     function signIn () { history.push("/signIn");}
+    
     function signOut () {
-        // requestLogout()
-        console.log('user requested to sign out'); }
+        fetchLogout(store);
+        window.location.reload();
+    }
+    // after logout, call for component update
+    useEffect(()=> {
+        
+    })
     
     return (
         <StatusWrapper>

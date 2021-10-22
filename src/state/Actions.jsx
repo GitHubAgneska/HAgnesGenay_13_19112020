@@ -3,8 +3,9 @@ import {
     SET_TOKEN, SET_CONNECTED,
     SET_ID, SET_EMAIL, SET_PW, SET_FIRSTNAME, SET_LASTNAME,
     SET_TOTALACCOUNTS, SET_ACCOUNTS,
-    LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED,
-    USERPERSDATAFETCHING, USERPERSDATARESOLVED, USERPERSDATAREJECTED
+    LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED,LOGOUT,
+    USERPERSDATAFETCHING, USERPERSDATARESOLVED, USERPERSDATAREJECTED,
+    USERPERSDATA_EDIT_FETCHING, USERPERSDATA_EDIT_RESOLVED, USERPERSDATA_EDIT_REJECTED
 } from './ActionTypes'
 
 // ......................................................
@@ -16,7 +17,8 @@ export const setConnected = (isConnected) => (dispatch) => (dispatch({ type: SET
 export const loginFetching = () => ({type: LOGINFETCHING});
 export const loginResolved = (data) => ({type: LOGINRESOLVED, payload: data });
 export const loginRejected = (error) => ({ type: LOGINREJECTED, payload: error });
-
+// .... logout actions ...
+export const logout = () => ({ type: LOGOUT });
 
 // ......................................................
 // ACTIONS CREATORS : USER PERSONAL DATA
@@ -34,6 +36,9 @@ export const userPersDataFetching = () => ({ type: USERPERSDATAFETCHING });
 export const userPersDataResolved = (data) => ({ type: USERPERSDATARESOLVED, payload: data });
 export const userPersDataRejected = (error) => ({ type: USERPERSDATAREJECTED , payload: error });
 
+export const userPersData_EditFetching = () => ({ type: USERPERSDATA_EDIT_FETCHING });
+export const userPersData_EditResolved = (data) => ({ type: USERPERSDATA_EDIT_RESOLVED, payload: data });
+export const userPersData_EditRejected = (error) => ({ type: USERPERSDATA_EDIT_REJECTED, payload: error });
 // ......................................................
 // ACTIONS CREATORS : USER ACCOUNTS DATA
 // ......................................................

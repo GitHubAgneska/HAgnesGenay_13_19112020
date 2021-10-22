@@ -5,7 +5,6 @@ import produce from 'immer'
 //  USER PERSONAL DATA REDUCER (takes care of state for user personal data)
 // ......................................................
 // used when : user has logged in ( email+password ) and user profile page requests user data
-// used when : user edit his first/lastName
 function userPersonalDataReducer(state = initialState.UserPersonalData, action) {
 
     return produce(state, (draft) => {

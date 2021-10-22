@@ -23,7 +23,11 @@ export const initialState = {
         // fetchUserPersData state
         status: 'void',
         data: null,
-        error: null
+        error: null,
+        // fetch UserPersData edit state
+        editStatus: 'void',
+        editData : null,
+        editError: null
     },
     UserAccountsData : {
         totaAccounts: null,
@@ -53,10 +57,16 @@ export const reducers = combineReducers({
     userData: userPersonalDataReducer,
     userAccount : userAccountsDataReducer
 })
+
+// adding of a 'rootReducer' allows a complete reset of all sub-reducers on logout
+export const rootReducer = (state, action) => {
+    return reducers(state, action)
+}
+
 // connect store to browser redux devtools extension
 // const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-
-export const store = createStore(reducers, {}, applyMiddleware(thunk));
+export const store = createStore(rootReducer, {}, applyMiddleware(thunk));
+// export const store = createStore(reducers, {}, applyMiddleware(thunk));
 
 store.subscribe(() => {
     console.log("Nouveau state:");
