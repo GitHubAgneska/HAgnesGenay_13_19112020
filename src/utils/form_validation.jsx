@@ -50,17 +50,18 @@ const rememberMeValidation = rememberMe => {
 /*  Currently used in : Edit UserName feature  */
 const nameValidation = (fieldName, fieldValue) => {
 
-    if (fieldValue.trim() === '') {
-        console.log( `${fieldName} is required`);
+
+   /*  if (fieldValue.trim() === '') { // can never be empty because placeholder is default value
+        return 'name cannot be empty'
         //return error.type = 'emptyField';
-    }
+    } */
     if (/[^a-zA-Z -]/.test(fieldValue)) {
-        console.log('Invalid characters');
         //return error.type = 'invalidChars';
+        return 'Invalid characters';
     }
-    if (fieldValue.trim().length < 3) {
-        console.log(`${fieldName} needs to be at least three characters`);
+    if (fieldValue.trim().length >=1 && fieldValue.trim().length < 3) {
         //return error.type = 'length';
+        return `${fieldName} needs to be at least three characters`;
     }
     else return null;
 };
@@ -113,6 +114,7 @@ export const validate = {
 */
 };
 
+// used to validate edit user name form
 export const validateEdit = {
     firstName: name => nameValidation('First Name', name),
     lastName: name => nameValidation('Last Name', name)

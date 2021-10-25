@@ -2,7 +2,7 @@ import { useState } from "react";
 import { validateEdit } from "../../utils/form_validation";
 import styled, {keyframes} from "styled-components"
 import { editUserData } from "../../features/userData-edit-feature"
-import { store, userDataState, userData_editState} from "../../state/store"
+import { store } from "../../state/store"
 import { fetchUserData } from '../../features/userData-feature'
 
 const formTransitionOpen = keyframes`
@@ -43,7 +43,15 @@ const FormBtnsWrapper = styled.div`
     flex-direction: row;
     width: 45%;
     margin: auto;
-    button:nth-child(1) { background-color:orange ; &:hover { background-color: salmon; }; transition: background-color 0.2s; }
+    
+    button:nth-child(1) {
+        
+        transition: background-color 0.2s; 
+       /*  background-color: ${(props) => props.disabled? `grey`: `orange`}; */
+       /*  &:hover { background-color: salmon; };  */
+    }
+    button:nth-child(1):not(disabled) { background-color: orange; }
+    button:nth-child(1):disabled { background-color: grey }
 `;
 
 const InputWrapper = styled.div`
@@ -53,16 +61,19 @@ const InputWrapper = styled.div`
     input {
         padding: 5px;
         font-size: 1.2rem;
-        color: lightgrey;
+        &:focus { font-weight: bold; }
     }
-    span { color: red; height: 50px;width:100%;}
+    ::placeholder { font-weight: light; opacity: 0.8; }  
+    span { color: red; height: 50px; width:100%;}
 `;
 
 const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
     
-    const [values, setValues] = useState({ firstName: firstName, lastName:lastName });
+    const [ values, setValues ] = useState({ firstName: firstName, lastName:lastName });
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
+    const [ disabled, setDisabled ] = useState(true);
+    const [ successMessage, setSuccessMessage ] = useState(false);
     
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -70,19 +81,21 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
         setTouched({ ...touched, [name]: true });
     }
 
-    const handleBlur = (event) => {
-        let placeholder = event.placeholder;
-        placeholder = '';
+    const handleBlur = (event) => {        
         const { name, value } = event.target;
         const { [name]: removedError, ...rest } = errors; // remove error msg if any
         const error = validateEdit[name](value); // check new error
         // validate field if val touched
         setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) });
+        if (! error ) { 
+            // if all ok : enable save btn
+            setDisabled(false);
+        } else {  setDisabled(true);}
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('FORM values=',values); // { userName: "agnes", userPassword: "xxxx", rememberMe: true }
+        // console.log('FORM values=',values); // { userName: "agnes", userPassword: "xxxx", rememberMe: true }
         
         const formValidation = Object.keys(values).reduce(
             (acc, key) => {
@@ -113,17 +126,23 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
             && Object.values(formValidation.touched).length === Object.values(values).length // all fields were touched
             && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
         ) {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+            // enable save btn
+            setDisabled(false);
             // call put request with form values
             editUserData(store, values);
-            // call fetch user data to refresh component
-            fetchUserData(store)
+            // call fetch user data to refresh component with new values
+            fetchUserData(store);
+            setSuccessMessage(true);
+            // close form after success message display
+            setTimeout(() => { toggleForm()}, 2000);
         }
     }
     
     return (
 
         <FormWrapper>
+            { successMessage && <span>Your informations were successfully updated</span> }
             <form onSubmit={handleSubmit} autoComplete="off">
                 <FormInputsWrapper>
                     <InputWrapper>
@@ -149,7 +168,7 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
                 </FormInputsWrapper>
 
                 <FormBtnsWrapper>
-                    <button>Save</button>
+                    <button disabled={disabled}>Save</button>
                     <button onClick={() => toggleForm()}>Cancel</button>
                 </FormBtnsWrapper>
             </form>
@@ -158,3 +177,7 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
 }
 
 export default UserNameform
+
+UserNameform.defaultProps = {
+    disabled: true
+}
