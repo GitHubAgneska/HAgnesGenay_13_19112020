@@ -22,7 +22,7 @@ export async function fetchLogin(store, user) {
             method: 'POST',
             withCredentials: true,
             credentials: "include",
-            // mode: 'cors',
+            mode: 'cors',
             headers: {
                 'Authorization': bearer,
                 'x-api-key': bearer,                // necessary ?

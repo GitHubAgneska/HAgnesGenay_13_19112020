@@ -1,7 +1,8 @@
 import React, {Fragment} from 'react'
 import { useSelector } from 'react-redux';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {Redirect} from 'react-router-dom/cjs/react-router-dom.min';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+/* import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+ */import {Redirect} from 'react-router-dom/cjs/react-router-dom.min';
 import PrivateRoute from './routing/private-route'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'

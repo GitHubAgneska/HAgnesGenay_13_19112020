@@ -9,18 +9,26 @@ There are two types of exports:
 
 ----
 
-### DEPLOY DIST TO GITHUBPAGES
-#### REACT WAY => https://create-react-app.dev/docs/deployment/#github-pages
------------
-if error 'fatal: A branch named 'gh-pages' already exists' 
--> manually delete node_modules/.cache/gh-pages
+### DEPLOY REACT APP (WITH CLIENT-SIDE ROUTING) TO GITHUBPAGES
 
------------
-` git subtree push --prefix dist origin gh-pages `
+1. `yarn add gh-pages`
+2. add two keys to scripts value in the package.json file: 
+        ` "predeploy": "npm run build", `
+        ` "deploy": "gh-pages -d build" `
 
-[ git see current state: ` git log --graph --decorate --oneline ` ]
+3. add to package.json file (as second entry) : ` "homepage": "." `
+4. Because GitHub Pages does not support browser history like a browser does, 
+in App.jsx => replace:
+    `import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'`
+    with:
+    `import {HashRouter as Router, Route, Switch} from 'react-router-dom'`
+
+5. deploy : `npm run deploy`
 
 ---
+
+
+
 ### CHROME FETCH CORS - iSSUE (to launch ghpages deploy)
 
 - Launch 'chrome://flags/#temporary-unexpire-flags-m87' from address bar.

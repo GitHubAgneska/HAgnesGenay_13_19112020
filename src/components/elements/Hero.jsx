@@ -2,19 +2,20 @@ import HeroContent from './Hero-content';
 // import bank_tree from '../../assets/imgs/bank_tree.jpeg'
 import styled from 'styled-components'
 import {createMediaQueries} from '../../style/media-queries'
+import bankTree from '../../assets/imgs/bank_tree.png'
 
 const WrapperDiv = styled.div(
     {   position: "relative",
         width: "100%",
         height: "300px",
-        background: "url(/assets/imgs/bank_tree.jpeg)",
+        backgroundImage: `url(${bankTree})`, // ====> PROD
+        /* background: "url(/assets/imgs/bank_tree.png)",  ===> DEV */
         backgroundRepeat: "no-repeat",
         backgroundPosition: "0 -50px",
         backgroundSize: "cover"
     },
     ({backgroundPosition, height}) => ({
         ...createMediaQueries([
-            
             {
                 property: "backgroundPosition",
                 values: backgroundPosition
