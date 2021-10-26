@@ -9,7 +9,6 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-
   /user/login:
     post:
       tags:
@@ -22,7 +21,7 @@ paths:
           description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/Login'
+            $ref: '#/definitions/LoginRequest'
       produces:
         - application/json
       responses:
@@ -54,7 +53,7 @@ paths:
         '200':
           description: Signup Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/LoginApiResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -114,7 +113,7 @@ paths:
         '500':
           description: Internal Server Error
 
-  /user/account/{accountIndex}:
+  /user/account/{accountId}:
     post:
       security:
         - Bearer: []
@@ -127,40 +126,17 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+        - in: body
+          name: body
+          description: User Account Request Payload
+          required: true
+          schema:
+            $ref: '#/definitions/AccountRequest'
       produces:
         - application/json
       responses:
         '200':
           description: User account retrieved Successfully
-          schema:
-            $ref: '#/definitions/UserAccountResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Account API
-      description: API for updating user account editable fields 
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-        - in: body
-          name: body
-          description: Update user account editable fields 
-          required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User Account retrieved Successfully
           schema:
             $ref: '#/definitions/UserAccountResponse'
         '400':
@@ -181,13 +157,19 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+        - in: body
+          name: body
+          description: Transaction Request Payload
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionRequest'
       produces:
         - application/json
       responses:
         '200':
           description: User transaction retrieved Successfully
           schema:
-            $ref: '#/definitions/UserAccountResponse'
+            $ref: '#/definitions/TransactionResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -209,14 +191,14 @@ paths:
           description: Update user transaction details
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: '#/definitions/TransactionUpdateRequest'
       produces:
         - application/json
       responses:
         '200':
           description: User transaction retrieved Successfully
           schema:
-            $ref: '#/definitions/UserAccountResponse'
+            $ref: '#/definitions/TransactionResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -246,7 +228,7 @@ definitions:
         type: string
         description: user last name
   
-  Login:
+  LoginRequest:
     properties:
       email:
         type: string
@@ -254,7 +236,8 @@ definitions:
       password:
         type: string
         description: user password
-  ApiResponse:
+  
+  LoginApiResponse:
     type: object
     properties:
       status:
@@ -276,14 +259,13 @@ definitions:
         type: string
   
   UserProfile:
-  type: object
-  properties:
-    firstName:
-      type: string
-    lastName:
-      type: string
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
   
-
   UserProfileResponse:
     type: object
     properties:
@@ -293,13 +275,26 @@ definitions:
         type: string
       accounts:
         type: array
-        account:
-          type: object
-          properties:
-            accountType: 
-              type: string
-            balance:
-              type: string
+        items:
+          $ref: '#/definitions/AccountShort'
+        
+  AccountShort:
+    type: object
+    properties:
+      id:
+        type: string
+      accountType: 
+        type: string
+      balance:
+        type: string
+
+  AccountRequest:
+    properties:
+        token:
+          type: string
+        accountId:
+          type: string
+          description: account id
 
   UserAccountResponse:
     type: object
@@ -309,28 +304,89 @@ definitions:
       message:
         type: string
       body:
-        accountType: 
+        type: object
+        properties:
+          id:
             type: string
-        balance:
+          accountType: 
+              type: string
+          balance:
+              type: string
+          transactionsRange:
+              type: string
+          transactions:
+              type: array
+              items:
+                $ref: '#/definitions/Transaction'
+  
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+      date:
+        type: string
+      transactionType:
+        type: string
+      category:
+        type: string
+      description:
+        type: string
+      amount:
+        type: string
+      notes: 
+        type: string
+
+  TransactionRequest:
+    properties:
+        token:
+          type: string
+        accountId:
+          type: string
+          description: account id
+        transactionId:
+          type: string
+          description: transaction id
+  
+  TransactionUpdateRequest:
+    properties:
+        token:
+          type: string
+        accountId:
+          type: string
+          description: account id
+        transactionId:
+          type: string
+          description: transaction id
+        notes:
+          type: string
+        category:
+          type: string
+
+
+  TransactionResponse:        
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
             type: string
-        transactions:
-            type: array
-            transaction:
-              type: object
-              properties:
-                id:
-                  type: string
-                date:
-                  type: string
-                transactionType:
-                  type: string
-                category:
-                  type: string
-                description:
-                  type: string
-                amount:
-                  type: string
-                notes: 
-                  type: string
+          date:
+            type: string
+          transactionType:
+            type: string
+          category:
+            type: string
+          description:
+            type: string
+          amount:
+            type: string
+          notes: 
+            type: string
 
 
