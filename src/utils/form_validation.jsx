@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 /* * BASE TEMPLATE FOR A CLASSIC FORM VALIDATION
 * ------------------------------------------------------

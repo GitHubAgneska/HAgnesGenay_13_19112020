@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import styled from "styled-components"
 
 const AccountSection = styled.section`
@@ -73,4 +74,5 @@ const Account = ({type, balance}) => {
         </AccountSection>
     )
 }
+Account.propTypes = { type: PropTypes.string, balance: PropTypes.string }
 export default Account

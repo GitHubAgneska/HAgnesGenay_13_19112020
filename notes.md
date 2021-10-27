@@ -16,14 +16,18 @@ There are two types of exports:
         ` "predeploy": "npm run build", `
         ` "deploy": "gh-pages -d build" `
 
-3. add to package.json file (as second entry) : ` "homepage": "." `
+3. add to package.json file (as second entry) : 
+  try : ` "homepage": "." `
+  or : project repo url ( ex: `"https://github.com/GitHubAgneska/HAgnesGenay_11_19112020"`)
 4. Because GitHub Pages does not support browser history like a browser does, 
 in App.jsx => replace:
     `import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'`
     with:
     `import {HashRouter as Router, Route, Switch} from 'react-router-dom'`
 
-5. deploy : `npm run deploy`
+5. make sure 'assets' has a copy in 'public'
+
+6. deploy : `npm run deploy`
 
 ---
 

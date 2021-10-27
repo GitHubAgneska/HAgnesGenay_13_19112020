@@ -4,6 +4,7 @@ import styled, {keyframes} from "styled-components"
 import { editUserData } from "../../features/userData-edit-feature"
 import { store } from "../../state/store"
 import { fetchUserData } from '../../features/userData-feature'
+import PropTypes from "prop-types"
 
 const formTransitionOpen = keyframes`
     from {
@@ -23,8 +24,6 @@ const FormWrapper = styled.div`
     animation: ${formTransitionOpen} 0.2s linear forwards;
     z-index:2;
     background-color: #12002b;
-    ${(formDisplay) => formDisplay && `opacity:1`}  /* ---- to review  */
-    ${(formDisplay) => !formDisplay && `opacity:0`} /* ----     ''     */
     transition: fade-out 300ms ease-in-out;
 `;
 
@@ -67,7 +66,7 @@ const InputWrapper = styled.div`
     span { color: red; height: 50px; width:100%;}
 `;
 
-const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
+const UserNameform = ({firstName,lastName, toggleForm} ) => {
     
     const [ values, setValues ] = useState({ firstName: firstName, lastName:lastName });
     const [ errors, setErrors ] = useState({});
@@ -178,6 +177,9 @@ const UserNameform = ({firstName,lastName, toggleForm, formDisplay} ) => {
 
 export default UserNameform
 
-UserNameform.defaultProps = {
-    disabled: true
+UserNameform.defaultProps = { disabled: true }
+UserNameform.propTypes = { 
+    firstName: PropTypes.string,
+    lastName:PropTypes.string,
+    toggleForm: PropTypes.func
 }

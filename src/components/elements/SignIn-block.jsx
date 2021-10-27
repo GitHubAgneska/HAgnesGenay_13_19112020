@@ -22,7 +22,8 @@ const SignInBlock = () => {
     const [values, setValues] = useState({email: '', password:'', rememberMe: false})
 
     const handleInputChange = (event) => {
-        const { name, value: newValue, type } = event.target;
+        /* const { name, value: newValue, type } = event.target; */
+        const { name } = event.target;
         const value = event.target.type === 'checkbox'? event.target.checked : event.target.value;
         setValues({ ...values, [name]: value });
         setTouched({ ...touched, [name]: true });

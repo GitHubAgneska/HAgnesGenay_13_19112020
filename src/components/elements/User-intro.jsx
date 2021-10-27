@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState } from "react"
+import PropTypes from "prop-types"
 import styled from "styled-components"
 import UserNameform from "./UserName-form"
 
@@ -53,7 +54,8 @@ const UserIntro = ({firstName, lastName}) => {
     )
 }
 UserIntro.defaultProps = {
-    formDisplay: false,
+    formDisplay: false
 }
+UserIntro.propTypes = { firstName: PropTypes.string, lastName: PropTypes.string }
 export default UserIntro
 

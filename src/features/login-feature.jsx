@@ -1,6 +1,6 @@
 import { devEnvironment } from '../utils/environment-dev'
 import { loginState } from "../state/store"
-import { loginFetching, loginResolved, loginRejected, setToken, setConnected, logout } from '../state/Actions'
+import { loginFetching, loginResolved, loginRejected, logout } from '../state/Actions'
 
 /**
 *  LOGIN : POST request

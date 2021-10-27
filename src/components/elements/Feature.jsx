@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import styled from 'styled-components'
 import iconChat from '../../assets/icons/icon-chat.png'
 import iconMoney from '../../assets/icons/icon-money.png'
@@ -41,5 +42,5 @@ const Feature = ({feature}) => {
 
     )
 }
-
+Feature.propTypes = { feature: PropTypes.object }
 export default Feature
