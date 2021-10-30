@@ -4,7 +4,7 @@ import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_styl
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import { useStore } from "react-redux";
+import { /* useSelector, */ useStore } from "react-redux";
 import { fetchLogin } from '../../features/login-feature'
 import { loginState } from "../../state/store";
 
@@ -14,8 +14,9 @@ const SignInBlock = () => {
     const [ touched, setTouched ] = useState({});
     const history = useHistory();
     const store = useStore();
+    // const loginStatus = useSelector(state =>state.login.status );
     // const _isMounted = useRef(true);  // tests for memory leak issue on navigate after state updated
-    
+    const [failureMessage, /* setFailureMessage  */] = useState(false);
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
@@ -70,15 +71,19 @@ const SignInBlock = () => {
             !Object.values(formValidation.errors).length // errors object = empty
             && Object.values(formValidation.touched).length === Object.values(values).length // all fields were touched
             && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
-        ) {
-            console.log(JSON.stringify(values, null, 2));
-            // postData(values);
-            // history.push("/user");   // ===> !! memory leak (see https://morioh.com/p/1ab552fdf028)
-            fetchLogin(store, values).then(
-                loginState.isConnected ?  history.push("/user"): (setTimeout(() => history.push("/user") ,2000))
-            )
-        }
+            ) {
+                // console.log(JSON.stringify(values, null, 2));
+                // postData(values);
+                // history.push("/user");   // ===> !! memory leak (see https://morioh.com/p/1ab552fdf028)
+                fetchLogin(store, values).then(
+                    // loginStatus === 'rejected'? setFailureMessage(true) : history.push("/user")
+                    // navigate()
+                    loginState.isConnected ? history.push("/user"): (setTimeout(() => history.push("/user") ,2000))
+                )
+            }
     }
+    // TO REVIEW ---> ASYNC with THUNK functionment... 
+    // const navigate = () => { loginStatus === 'rejected'? setFailureMessage(true) : history.push("/user") }
 
     /** ---------------------------------------------------------------------  */    
     /**   HANDLING INPUT DATA INDIVIDUALLY */
@@ -97,6 +102,7 @@ const SignInBlock = () => {
 
             <FontAwesomeIcon icon={faUserCircle} />
             <h1>Sign In</h1>
+            { failureMessage && <span>Authentication failed, please check your informations</span> }
             <form
                 onSubmit={handleSubmit}
                 autoComplete="off"

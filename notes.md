@@ -9,30 +9,19 @@ There are two types of exports:
 
 ----
 
-### DEPLOY REACT APP (WITH CLIENT-SIDE ROUTING) TO GITHUBPAGES
+### <s>DEPLOY DIST TO GITHUBPAGES
+#### REACT WAY => https://create-react-app.dev/docs/deployment/#github-pages
+-----------
+if error 'fatal: A branch named 'gh-pages' already exists' 
+-> manually delete node_modules/.cache/gh-pages
 
-1. `yarn add gh-pages`
-2. add two keys to scripts value in the package.json file: 
-        ` "predeploy": "npm run build", `
-        ` "deploy": "gh-pages -d build" `
+-----------
+` git subtree push --prefix dist origin gh-pages `
 
-3. add to package.json file (as second entry) : 
-  try : ` "homepage": "." `
-  or : project repo url ( ex: `"https://github.com/GitHubAgneska/HAgnesGenay_11_19112020"`)
-4. Because GitHub Pages does not support browser history like a browser does, 
-in App.jsx => replace:
-    `import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'`
-    with:
-    `import {HashRouter as Router, Route, Switch} from 'react-router-dom'`
+[ git see current state: ` git log --graph --decorate --oneline ` ]
 
-5. make sure 'assets' has a copy in 'public'
-
-6. deploy : `npm run deploy`
 
 ---
-
-
-
 ### CHROME FETCH CORS - iSSUE (to launch ghpages deploy)
 
 - Launch 'chrome://flags/#temporary-unexpire-flags-m87' from address bar.
@@ -41,7 +30,9 @@ in App.jsx => replace:
 - Launch 'chrome://flags/#allow-insecure-localhost'
 - It will be visible now, so simply enable it.
 - Restart Chrome again.
+</s>
 
+#### ===> (USELESS as project has a backend)
 ----
 
 ### GIT 
@@ -62,13 +53,20 @@ in App.jsx => replace:
 `git push origin --delete test`
 
 > DELETE LOCAL branch
-`git branch -D myBranch` 
+`git branch -D myBranch`
+
+>  CHECKOUT TO COMMIT AND BACK
+`git checkout <commit>`
+`git checkout master`
+
+> REVERT TO COMMIT WITHOUT KEEPING CHANGES
+`git reset --hard <commit>`
+
+> REVERT TO COMMIT AND KEEP CHANGES
+`git reset --soft <commit>`
+
 
 ```bash 
-# GIT CHECKOUT TO COMMIT AND BACK
-git checkout <commit n>
-git checkout master
-
 # .gitignore universal setup one-liner
 touch .gitignore && echo "node_modules/" >> .gitignore && git rm -r --cached node_modules ; git status
 

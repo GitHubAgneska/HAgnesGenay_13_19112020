@@ -1,3 +1,5 @@
+//  TO REVIEW --->  refactor to a single object
+
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_CONNECTED = 'SET_CONNECTED';
 export const SET_ID = 'SET_ID';

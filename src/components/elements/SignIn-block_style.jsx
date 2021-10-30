@@ -26,6 +26,7 @@ export const SignInSection = styled.section`
         background-color: #00bc77;
         color: #fff;
     }
+    span { color: red; height: 50px; width:100%;}
 `;
 
 export const InputWrapper = styled.div`

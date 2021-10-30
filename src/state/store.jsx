@@ -3,6 +3,7 @@ import loginReducer from './reducers/login-reducer'
 import userPersonalDataReducer from './reducers/userPersonalData-reducer'
 import userAccountsDataReducer from './reducers/userAccountsData-reducer'
 import thunk from 'redux-thunk'
+// import { configureStore } from '@reduxjs/toolkit'
 
 // INITIAL STATE ( sliced into features )
 export const initialState = {
@@ -66,10 +67,14 @@ export const rootReducer = (state, action) => {
     return reducers(state, action)
 }
 
-// connect store to browser redux devtools extension
+// TO REVIEW ---
+// connect store to browser redux devtools extension (is a boolean)
 // const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-export const store = createStore(rootReducer, {}, applyMiddleware(thunk));
-// export const store = createStore(reducers, {}, applyMiddleware(thunk));
+// => devtools allow 'CONFIGURESTORE(<store enhancer(s)> e.g THUNK) on top of standard 'createStore()'
+// => export const store = configureStore({ reducer: rootReducer })
+
+export const store = createStore(rootReducer, applyMiddleware(thunk));
+// export const store = createStore(reducers, applyMiddleware(thunk)); // ( 'reducers' replaced with 'rootReducer' to englobe all subreducers)
 
 store.subscribe(() => {
     console.log("Nouveau state:");
