@@ -126,7 +126,7 @@ const SignInBlock = () => {
                 <InputWrapper>
                     <label htmlFor="pw-input">Password
                         <input 
-                            type="text" 
+                            type="password" 
                             name="password"
                             id="pw-input"
                             required
