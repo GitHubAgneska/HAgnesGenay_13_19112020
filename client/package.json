@@ -2,6 +2,8 @@
   "name": "argent-bank",
   "version": "0.1.0",
   "private": true,
+  "homepage": "",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
