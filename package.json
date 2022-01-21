@@ -8,15 +8,15 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "watch": "nodemon server.js",
+    "start": "node ./server/server.js",
+    "watch": "nodemon ./server/server.js",
     "client": "cd client && npm start",
     "build": "cd client && npm run build ",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
+    "dev:server": "nodemon ./server/server.js",
     "db": "brew services start mongodb-community && npm run dev:server",
     "db-stop": "brew services stop mongodb-community",
-    "dev:server": "nodemon ./server/server.js",
     "populate-db": "node ./server/scripts/populateDatabase.js",
     "start-app": "npm run client && npm run db"
   },
