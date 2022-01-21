@@ -6,7 +6,7 @@ const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger2.yaml')
 // const swaggerDocs = yaml.load('./swagger.yaml')
 const path = require('path')
-const dbConnection = require('./database/connection')
+const dbConnection = require('./api/database/connection')
 
 dotEnv.config()
 
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }))
 
 
 // Handle custom routes
-app.use('/api/v1/user', require('./routes/userRoutes'))
+app.use('/api/v1/user', require('./api/routes/userRoutes'))
 
 // API Documentation
 /* if (process.env.NODE_ENV !== 'production') {
