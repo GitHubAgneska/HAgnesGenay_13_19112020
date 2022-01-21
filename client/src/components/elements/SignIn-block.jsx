@@ -12,6 +12,8 @@ const SignInBlock = () => {
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
+    const [ errorMessage, setErrorMessage ] = useState({});
+    
     const history = useHistory();
     const store = useStore();
     // const loginStatus = useSelector(state =>state.login.status );
@@ -78,7 +80,7 @@ const SignInBlock = () => {
                 fetchLogin(store, values).then(
                     // loginStatus === 'rejected'? setFailureMessage(true) : history.push("/user")
                     // navigate()
-                    loginState.isConnected ? history.push("/user"): (setTimeout(() => history.push("/user") ,2000))
+                    loginState.isConnected ? history.push("/user"): (setTimeout(() => history.push("/user") ,2000)) // --- TO REVIEW: action should be ASYNC
                 )
             }
     }
@@ -120,7 +122,7 @@ const SignInBlock = () => {
                             touched={touched}
                             errors={errors}
                             />    
-                            { touched.email && errors.email? <span>Please enter a valid user name(email)</span>: null }
+                            { touched.email && errors.email? <span>{errors.email}</span>: null }
                     </label>
                 </InputWrapper>
                 <InputWrapper>
@@ -136,7 +138,7 @@ const SignInBlock = () => {
                             errors={errors}
                             /* onBlur={handleUserPwChange} */
                             />
-                            { touched.password && errors.password ? <span>Please enter a valid password</span> : null }
+                            { touched.password && errors.password ? <span>{errors.password}</span> : null }
                     </label>
                 </InputWrapper>
 

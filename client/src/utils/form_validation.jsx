@@ -117,8 +117,8 @@ export const validate = {
 
 // used to validate edit user name form
 export const validateEdit = {
-    firstName: name => nameValidation('First Name', name),
-    lastName: name => nameValidation('Last Name', name)
+    firstName: name => nameValidation('firstName', firstName),
+    lastName: name => nameValidation('lastName', name)
 }
 
 

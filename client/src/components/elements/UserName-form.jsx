@@ -11,9 +11,15 @@ const UserNameform = ({firstName,lastName, toggleForm} ) => {
     const [ values, setValues ] = useState({ firstName: firstName, lastName:lastName });
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
-    const [ disabled, setDisabled ] = useState(true);
     const [ successMessage, setSuccessMessage ] = useState(false);
     
+    // const [ disabled, setDisabled ] = useState(true);
+    // => replaced with: 
+    const allFieldsOk =
+        Object.values(touched).every(t => t === true )
+        && Object.values(touched).length === Object.values(values).length
+        && Object.values(errors).every(t => t === null );
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setValues({ ...values, [name]: value });
@@ -26,10 +32,6 @@ const UserNameform = ({firstName,lastName, toggleForm} ) => {
         const error = validateEdit[name](value); // check new error
         // validate field if val touched
         setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) });
-        if (! error ) { 
-            // if all ok : enable save btn
-            setDisabled(false);
-        } else {  setDisabled(true);}
     }
 
     const handleSubmit = (event) => {
@@ -66,8 +68,8 @@ const UserNameform = ({firstName,lastName, toggleForm} ) => {
             && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
         ) {
             // alert(JSON.stringify(values, null, 2));
-            // enable save btn
-            setDisabled(false);
+                // enable save btn
+                // setDisabled(false);
             // call put request with form values
             editUserData(store, values);
             // call fetch user data to refresh component with new values
@@ -92,7 +94,7 @@ const UserNameform = ({firstName,lastName, toggleForm} ) => {
                             onBlur={handleBlur}
                             onChange={handleInputChange}
                             />
-                        { touched.firstName && errors.firstName? <span>Please enter a valid first name<br /><small>(name must be at least 3 characters long)</small></span>: null }
+                        { touched.firstName && errors.firstName? <span>{errors.firstName}</span>: null }
                     </InputWrapper>
                     <InputWrapper>
                         <input
@@ -102,12 +104,12 @@ const UserNameform = ({firstName,lastName, toggleForm} ) => {
                             onBlur={handleBlur}
                             onChange={handleInputChange}
                             />
-                        { touched.lastName && errors.lastName? <span>Please enter a valid last name<br /><small>(name must be at least 3 characters long)</small></span>: null }
+                        { touched.lastName && errors.lastName? <span>{errors.lastName}</span>: null }
                     </InputWrapper>
                 </FormInputsWrapper>
 
                 <FormBtnsWrapper>
-                    <button disabled={disabled}>Save</button>
+                    <button disabled={!allFieldsOk}>Save</button>
                     <button onClick={() => toggleForm()}>Cancel</button>
                 </FormBtnsWrapper>
             </form>

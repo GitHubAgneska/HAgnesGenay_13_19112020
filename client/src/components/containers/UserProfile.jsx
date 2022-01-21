@@ -25,7 +25,7 @@ const UserProfile = () => {
     // console.log('userData===', user);
 
     const profileData = user?.data ?? {} ;   // ------- ! very important for runtime ! (else data = null )
-    const  { firstName, lastName } = profileData
+    const { firstName, lastName } = profileData
 
     return (
         <UserPageSection>
