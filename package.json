@@ -2,22 +2,22 @@
   "name": "argentbank",
   "version": "1.0.0",
   "description": "banking app",
-  "main": "server/server.js",
+  "main": "api/server.js",
   "engines": {
     "node": "16.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js",
-    "watch": "nodemon server/server.js",
+    "start": "node api/server.js",
+    "watch": "nodemon api/server.js",
     "client": "cd client && npm start",
     "build": "cd client && npm run build ",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
-    "dev:server": "nodemon server/server.js",
+    "dev:server": "nodemon api/server.js",
     "db": "brew services start mongodb-community && npm run dev:server",
     "db-stop": "brew services stop mongodb-community",
-    "populate-db": "node server/scripts/populateDatabase.js",
+    "populate-db": "node api/scripts/populateDatabase.js",
     "start-app": "npm run client && npm run db"
   },
   "author": "HAG",
