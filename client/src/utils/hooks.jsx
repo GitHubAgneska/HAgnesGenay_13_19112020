@@ -28,10 +28,16 @@
 import { useState } from "react"
 import { useStore } from "react-redux";
 import { setToken, setConnected, setId, setEmail, setPassword, setFirstName, setLastName, setTotalAccounts, setAccounts } from '../state/Actions'
-import { devEnvironment } from '../utils/environment-dev'
+// import { devEnvironment } from '../utils/environment-dev'
 import { userModel } from '../models/userModel'
 import { store } from "../state/store";
-
+const devEnvironment = {
+    bearer: 'temp',
+    apiBaseUrl: 'http://localhost:3001/api/v1',
+    loginEndpoint: '/user/login',
+    signUpEndpoint: '/user/signup',
+    userProfileEndpoint: '/user/profile'
+}
 /**
 *  APP CRUD OPERATIONS
 * --------------------
