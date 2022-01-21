@@ -2,7 +2,7 @@
   "name": "argentbank",
   "version": "1.0.0",
   "description": "banking app",
-  "main": "server.js",
+  "main": "server/server.js",
   "engines": {
     "node": "16.x"
   },

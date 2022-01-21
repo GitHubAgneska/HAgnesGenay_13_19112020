@@ -33,9 +33,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 } */
 express.static(path.join(__dirname, '../client/build'))
 
-app.get('/', (_, res, next) => {
-  res.send('Hello from my Express server v2!')
-})
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)

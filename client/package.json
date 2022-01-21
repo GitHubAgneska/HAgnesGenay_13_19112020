@@ -2,7 +2,7 @@
   "name": "argent-bank",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": ".",
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@babel/core": "^7.15.8",
