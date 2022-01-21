@@ -60,23 +60,9 @@ npm run install-client
 ---
 ### => Run
 ---
-- to run the app locally, you'll need to open 2 terminal windows:
-    - 1st window: run the api: 
-        ```bash
-            # start db
-            brew services start mongodb-community
+- run the app locally: `npm run start-app`
 
-            # then
-            npm run dev:server
-
-            # Populate database with users that live in 'populateDatabase.js'
-            npm run populate-db
-        ``` 
-
-    - 2d window: run React client:
-        ```bash
-            npm run client
-        ```  
+- after you stop the app, run : `npm run db-stop` to close the db
 --- 
 
 #### More info on DB 

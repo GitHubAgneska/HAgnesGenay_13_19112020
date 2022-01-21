@@ -5,7 +5,7 @@
 ### 1 - API
 ---
  > https://github.com/GitHubAgneska/Project-10-Bank-API/tree/master
-- get API up and running (see README.md and README-appendix.md of api repository)
+- get API up and running (see README.md and MONGO_INSTALL-MACOS.md)
 
 ---
 ### 2 - APP

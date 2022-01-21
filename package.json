@@ -11,19 +11,30 @@
     "start": "node server.js",
     "watch": "nodemon server.js",
     "client": "cd client && npm start",
-    "build": "cd client && npm run build",
+    "build": "cd client && npm run build ",
     "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build"
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "db": "brew services start mongodb-community && npm run dev:server",
+    "db-stop": "brew services stop mongodb-community",
+    "dev:server": "nodemon ./server/server.js",
+    "populate-db": "node ./server/scripts/populateDatabase.js",
+    "start-app": "npm run client && npm run db"
   },
   "author": "HAG",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.25.0",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "idx": "^2.5.6",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.7",
     "request": "^2.88.2",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "swagger-ui-express": "^4.3.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
