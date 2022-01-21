@@ -26,5 +26,5 @@ yarn-error.log*
 notes.md
 .vscode
 
-environment-dev.jsx
+# environment-dev.jsx
 .env
