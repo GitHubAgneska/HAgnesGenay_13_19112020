@@ -28,11 +28,14 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1/user', require('./routes/userRoutes'))
 
 // API Documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 /* if (process.env.NODE_ENV !== 'production') {
 } */
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
 express.static(path.join(__dirname, '../client/build'))
 
+// send to '5000:/' ----------------------> /index.html
+app.get('/', (_, res) => { res.sendFile(__dirname, '/client/public/index.html') })
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)
