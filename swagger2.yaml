@@ -62,7 +62,7 @@ paths:
   /user/profile:
     post:
       security:
-        - Bearer: []
+        - Bearer: 'temp'
       tags:
         - User Module
       summary: User Profile API
@@ -85,7 +85,7 @@ paths:
           description: Internal Server Error
     put:
       security:
-        - Bearer: []
+        - Bearer: 'temp'
       tags:
         - User Module
       summary: User Profile API
@@ -116,7 +116,7 @@ paths:
   /user/account/{accountId}:
     post:
       security:
-        - Bearer: []
+        - Bearer: 'temp'
       tags:
         - User Module
       summary: User Account API
@@ -147,7 +147,7 @@ paths:
   /user/account/{accountId}/{transactionId}:
     post:
       security:
-        - Bearer: []
+        - Bearer: 'temp'
       tags:
         - User Module
       summary: User transaction API
@@ -176,7 +176,7 @@ paths:
           description: Internal Server Error
     put:
       security:
-        - Bearer: []
+        - Bearer: 'temp'
       tags:
         - User Module
       summary: User Account API
