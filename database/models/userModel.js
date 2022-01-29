@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema(
         return ret
       }
     }
-  }
+  },
+  { typeKey: '$type' }
 )
 
 module.exports = mongoose.model('User', userSchema)

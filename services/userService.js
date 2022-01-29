@@ -18,7 +18,8 @@ module.exports.createUser = async serviceData => {
 
     const newUser = new User({
       email: serviceData.email,
-      password: hashPassword,
+      password: serviceData.password,
+      /* password: hashPassword, */ 
       firstName: serviceData.firstName,
       lastName: serviceData.lastName
     })
