@@ -30,16 +30,26 @@ export const SignInSection = styled.section`
 `;
 
 export const InputWrapper = styled.div`
+    position: relative; 
     display: flex;
     flex-direction: column;
     text-align: left;
     margin-bottom: 1rem;
-    label { font-weight: bold; }
+    label { font-weight: bold;}
     input {
         padding: 5px;
         font-size: 1.2rem;
     }
     span { color: red; height: 50px;width:100%;}
+
+    i {
+        position: absolute;
+        top: 50%;
+        right: 0%;
+    }
+    i:hover {
+        color: #00fcb6;
+        cursor: pointer;
+    }
 `;
 export const RememberInput = styled.div` display: flex; label { margin-left: 0.25rem;}`;
-

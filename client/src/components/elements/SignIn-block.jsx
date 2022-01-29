@@ -1,18 +1,25 @@
 import { useState } from "react";
 import { validate } from "../../utils/form_validation";
-import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
+import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from "@fortawesome/free-solid-svg-icons"
 import { /* useSelector, */ useStore } from "react-redux";
 import { fetchLogin } from '../../features/login-feature'
 import { loginState } from "../../state/store";
+const eye = <FontAwesomeIcon icon={faEye} />
 
 const SignInBlock = () => {
 
     const [ errors, setErrors ] = useState({});
     const [ touched, setTouched ] = useState({});
     const [ errorMessage, setErrorMessage ] = useState({});
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePasswordVisiblity = () => {
+        setPasswordShown(passwordShown ? false : true);
+      };
+
     
     const history = useHistory();
     const store = useStore();
@@ -128,7 +135,7 @@ const SignInBlock = () => {
                 <InputWrapper>
                     <label htmlFor="pw-input">Password
                         <input 
-                            type="password" 
+                            type={passwordShown ? "text" : "password"}
                             name="password"
                             id="pw-input"
                             required
@@ -137,9 +144,9 @@ const SignInBlock = () => {
                             touched={touched}
                             errors={errors}
                             /* onBlur={handleUserPwChange} */
-                            />
+                            /> </label> 
+                            <i onClick={togglePasswordVisiblity}>{eye}</i>
                             { touched.password && errors.password ? <span>{errors.password}</span> : null }
-                    </label>
                 </InputWrapper>
 
                 <RememberInput>

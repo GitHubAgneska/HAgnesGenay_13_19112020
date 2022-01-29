@@ -9,16 +9,13 @@
     "client": "npm start --prefix client",
     "build": "npm run build --prefix client",
     "client-install": "npm install --prefix client",
-    
     "server": "nodemon server.js --exec babel-node --presets=@babel/env --ignore client",
-
     "db-start": "brew services start mongodb-community",
     "db-stop": "brew services stop mongodb-community",
     "populate-db": "node scripts/populateDatabase.js",
-
-
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start-app": "concurrently \"npm run db-start\" \"npm run server\" \"npm run client\""
+    "start-app": "concurrently \"npm run db-start\" \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "HAG",
   "license": "MIT",
@@ -34,6 +31,7 @@
     "express": "^4.17.2",
     "idx": "^2.5.6",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.2.2",
     "mongoose": "^6.1.7",
     "nodemon": "^2.0.15",
     "request": "^2.88.2",

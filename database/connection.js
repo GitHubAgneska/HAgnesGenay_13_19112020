@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const databaseUrl =
-  process.env.DATABASE_URL || 'mongodb://localhost/argentBankDB'
+const dbUrl = 'mongodb://127.0.0.1:27017/argentBankDB'
+const databaseUrl = process.env.DATABASE_URL || dbUrl
 
 module.exports = async () => {
   try {

@@ -28,26 +28,7 @@
 ---
 ### INSTALL & RUN
 ---
-#### => Prerequisites
----
 
-- [Node.js v12](https://nodejs.org/en/)
-- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
-
-Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
-
-```bash
-# Check Node.js version
-node --version
-
-# Check Mongo version
-mongo --version
-```
-- if you don't have MongoDB installed, please refer to instructions (MacOs only) => [MONGO_INSTALL-MACOS](MONGO_INSTALL-MACOS.md)
-
----
-### Install
----
 
 ```bash
 # clone repo
@@ -60,36 +41,6 @@ npm run install-client
 ---
 ### => Run
 ---
-- run the app locally: `npm run start-app`
+ `npm run start-app`
 
-- after you stop the app, run : `npm run db-stop` to close the db
 --- 
-
-#### More info on DB 
-after running `npm run populate-db`: 
-
-your server should now be running at http://locahost:3001 and you will now have two users in your MongoDB database!
-
-##### Populated Database Data
-
-Once you run the `populate-db` script, you should have two users in your database:
-
-##### Tony Stark
-
-- First Name: `Tony`
-- Last Name: `Stark`
-- Email: `tony@stark.com`
-- Password: `password123`
-
-##### Steve Rogers
-
-- First Name: `Steve`,
-- Last Name: `Rogers`,
-- Email: `steve@rogers.com`,
-- Password: `password456`
-
-#### API Documentation
-
-To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3001/api-docs
-
----

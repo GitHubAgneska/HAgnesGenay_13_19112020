@@ -1,1 +1,4 @@
-GET http://localhost:3001/api/v1/
+POST http://localhost:3001/api/v1/signup
+POST http://localhost:3001/api/v1/signup
+POST http://localhost:3001/api/v1/profile
+PUT http://localhost:3001/api/v1/profile
