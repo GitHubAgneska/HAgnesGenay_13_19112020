@@ -16,7 +16,6 @@ module.exports.createUser = async serviceData => {
     // => removing the 'await' keyword allows request to succeed (200 - user created)
     const hashPassword = bcrypt.hash(serviceData.password, 12)
 
-
     const newUser = new User({
       email: serviceData.email,
       password: hashPassword,
@@ -57,10 +56,10 @@ module.exports.loginUser = async serviceData => {
     if (!user) {
       throw new Error('User not found!')
     }
-
+    
     // SAME ISSUE AS MENTIONED ABOVE : 'await' make request fail
-    //const isValid = bcrypt.compare(serviceData.password, user.password)
-    const isValid = await bcrypt.compare(serviceData.password, user.password)
+    //const isValid = await bcrypt.compare(serviceData.password, user.password)
+    const isValid = bcrypt.compare(serviceData.password, user.password)
 
     if (!isValid) {
       throw new Error('Password is invalid')
@@ -75,6 +74,7 @@ module.exports.loginUser = async serviceData => {
     return { token }
   } catch (error) {
     console.error('Error in userService.js', error)
+    console.log('==COMPARING==', 'ServiceData.password=>', serviceData.password,'user.password=>', user.password )
     throw new Error(error)
   }
 }

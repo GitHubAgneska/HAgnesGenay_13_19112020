@@ -33,24 +33,23 @@ your server should now be running at http://locahost:3001 and you will now have 
 #####  PROD MODE => personal MONGODB
 
 ```bash
-
-Mongo credentials connection
-agneska.dev@gmail.com
-FpN3mfccEsEbwf
-
-ARGENTBANKDB —————————————————————————————————
-Credentials => argentbankDB => agneska qIabKYA9NqzBEhVO
-
 Mongo Connect to Cluster0 >
 $ mongosh "mongodb+srv://cluster0.o1p30.mongodb.net/argentbankDB” --username agneska
 
+$ ARGENTBANKDB  > show collections > users
+					> db.users.insertOne({ —})
+					> db.users.insertMany([ { — }, {—} ])
+		
+
 DB add user:
-db.argentbankDB.insertOne({ 
+db.users.insertOne({ 
 ...     firstName: 'Bojack',
 ...     lastName: 'Horseman',
 ...     email: 'bj@horseman.com',
 ...     password: 'password789'
 ...   })
+
+
 
 
 DATA API  URL Endpoint
@@ -59,8 +58,12 @@ https://data.mongodb-api.com/app/data-alrkq/endpoint/data/beta
 
 EXPRESS/APP CONNECTION STRING:
 mongodb+srv://agneska:<PASSWORD>@cluster0.o1p30.mongodb.net/<DBNAME>?retryWrites=true&w=majority
-
 (To use here => server.js >  mongoose.connect(<——>, {}) )
+
+DB API KEY access to the Data API
+Key name: argentbankapikey
+Key:  Ybn4LykuCFMzwYXJ0HjNz3hCiBvjm4QNqGN05kVzs6Ga6ICJJCbLMk9ywDlwjWhA
+
 
 ```
 

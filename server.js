@@ -7,13 +7,13 @@ const bodyParser = require('body-parser')
 const swaggerUi = require('swagger-ui-express')
 const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger2.yaml')
-// const swaggerDocs = yaml.load('./swagger.yaml')
 
 
-/* const dbConnection = require('./database/connection')
-dbConnection() */
+// orginal config for OC api/db => DEV
+// const dbConnection = require('./database/connection')
+// dbConnection()
 
-// DB Config
+// DB Config (personal DB) => PROD
 const mongoose = require('mongoose')
 const DBURL = process.env.DATABASE_URI_PROD
 // Connect to Mongo
@@ -38,12 +38,13 @@ app.use('/api/v1/user', userRoutes)
 
 // Serve the static if in production
 if ( process.env.NODE_ENV === 'production') {
-  //api doc
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
   // set static folder
   app.use(express.static('client/build/'))
   // any other request than '/api/' => load 'index.html'
   app.get('*', (_, res) => { res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))})
+} else { 
+  //api doc
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 }
 
 app.listen(PORT, () => { console.log(`Server listening on ${PORT}`)})
