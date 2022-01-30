@@ -1,4 +1,4 @@
-import { devEnvironment } from '../utils/environment-dev'
+import { devEnvironment, prodEnvironment } from '../utils/environment-dev'
 import { loginState } from "../state/store"
 import { loginFetching, loginResolved, loginRejected, logout } from '../state/Actions'
 
@@ -10,8 +10,9 @@ import { loginFetching, loginResolved, loginRejected, logout } from '../state/Ac
 */
 export async function fetchLogin(store, user) {
 
-    const url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
-    const bearer = devEnvironment.bearer;
+    // const url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
+    const url = prodEnvironment.apiBaseUrl + prodEnvironment.loginEndpoint;
+    const bearer = prodEnvironment.bearer;
     const status = loginState(store.getState()).status;
     
     if ( status === 'pending' || status === 'updating' ) { return }
