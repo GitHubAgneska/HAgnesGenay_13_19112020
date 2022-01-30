@@ -62,9 +62,7 @@ module.exports.loginUser = async serviceData => {
     //const isValid = await bcrypt.compare(serviceData.password, user.password)
     const isValid = bcrypt.compare(serviceData.password, user.password)
 
-    if (!isValid) {
-      throw new Error('Password is invalid')
-    }
+    if (!isValid) { throw new Error('Password is invalid') }
 
     const token = jwt.sign(
       { id: user._id },
@@ -75,7 +73,7 @@ module.exports.loginUser = async serviceData => {
     return { token }
   } catch (error) {
     console.error('Error in userService.js', error)
-    console.log('==COMPARING==', 'ServiceData.password=>', serviceData.password,'user.password=>', user.password )
+    // console.log('==COMPARING==', 'ServiceData.password=>', serviceData.password,'user.password=>', user.password )
     throw new Error(error)
   }
 }
