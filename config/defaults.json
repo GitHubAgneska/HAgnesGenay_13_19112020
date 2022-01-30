@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://agneska:qIabKYA9NqzBEhVO@cluster0.o1p30.mongodb.net/argentbankDB?retryWrites=true&w=majority",
+    "jwtSecret": "sl_myJwtSecret"
+}

@@ -8,7 +8,11 @@ const swaggerUi = require('swagger-ui-express')
 const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger2.yaml')
 
-
+const app = express()
+app.use(bodyParser.json())
+app.use(express.json())
+app.use(cors())
+app.use(express.urlencoded({ extended: true }))
 // orginal config for OC api/db => DEV
 // const dbConnection = require('./database/connection')
 // dbConnection()
@@ -23,13 +27,6 @@ mongoose
   }) // Adding new mongo url parser
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
-
-
-const app = express()
-app.use(bodyParser.json())
-app.use(express.json())
-app.use(cors())
-app.use(express.urlencoded({ extended: true }))
 
 
 const userRoutes =require('./routes/userRoutes');
