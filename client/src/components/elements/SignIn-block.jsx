@@ -29,7 +29,8 @@ const SignInBlock = () => {
     /** ---------------------------------------------------------------------  */  
     /**  HANDLING INPUT DATA ALTOGETHER  */
     /** ---------------------------------------------------------------------  */
-    const [values, setValues] = useState({email: '', password:'', rememberMe: false})
+    const [values, setValues] = useState({email: '', password:''})
+//    const [values, setValues] = useState({email: '', password:'', rememberMe: false})
 
     const handleInputChange = (event) => {
         /* const { name, value: newValue, type } = event.target; */

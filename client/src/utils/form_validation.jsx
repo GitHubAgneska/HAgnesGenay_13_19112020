@@ -105,7 +105,7 @@ const createPasswordValidation = password => {
 export const validate = {
     email: emailValidation,
     password: passwordValidation,
-    rememberMe: rememberMeValidation
+    /* rememberMe: rememberMeValidation */
 
 /*  Currently unused fields validations  */
 /*  firstName: name => nameValidation('First Name', name),
