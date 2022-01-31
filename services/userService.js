@@ -71,6 +71,7 @@ module.exports.loginUser = async serviceData => {
     )
 
     return { token }
+  
   } catch (error) {
     console.error('Error in userService.js', error)
     // console.log('==COMPARING==', 'ServiceData.password=>', serviceData.password,'user.password=>', user.password )

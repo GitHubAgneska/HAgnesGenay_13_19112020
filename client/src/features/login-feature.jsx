@@ -8,18 +8,19 @@ import { loginFetching, loginResolved, loginRejected, logout } from '../state/Ac
 * @param {store}
 * @param {object} user - payload : values from form  @example of params => { email:'xxxxx', password:'xxxxx', rememberMe:true } : The user to be identified
 */
+// const url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
+const apiUrl = prodEnvironment.apiBaseUrl
+const bearer = prodEnvironment.bearer;
+
 export async function fetchLogin(store, user) {
 
-    // const url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
-    const url = prodEnvironment.apiBaseUrl + prodEnvironment.loginEndpoint;
-    const bearer = prodEnvironment.bearer;
     const status = loginState(store.getState()).status;
     
     if ( status === 'pending' || status === 'updating' ) { return }
     // dispatch 'loginFetching' action : request is ongoing
     store.dispatch(loginFetching());
     try {
-        const response = await fetch(url, { 
+        const response = await fetch(apiUrl+'/login', { 
             method: 'POST',
             withCredentials: true,
             credentials: "include",
@@ -34,8 +35,8 @@ export async function fetchLogin(store, user) {
             body: JSON.stringify(user)
         });
         const apiResponse = await response.json();
-        // console.log('api response=', apiResponse);
-
+        console.log('api response===>', apiResponse);
+        
         // request successful: data dispatched to store using loginResolved action        
         store.dispatch(loginResolved(apiResponse.body));
     }

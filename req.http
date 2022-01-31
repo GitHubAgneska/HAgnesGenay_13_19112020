@@ -1,4 +1,4 @@
-POST http://localhost:3001/api/v1/signup
-POST http://localhost:3001/api/v1/signup
-POST http://localhost:3001/api/v1/profile
-PUT http://localhost:3001/api/v1/profile
+POST http://localhost:3001/api/v1/user/login
+POST http://localhost:3001/api/v1/user/signup
+GET  http://localhost:3001/api/v1/user/profile
+PUT  http://localhost:3001/api/v1/user/profile
