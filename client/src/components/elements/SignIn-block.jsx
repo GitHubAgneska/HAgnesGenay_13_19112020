@@ -16,9 +16,7 @@ const SignInBlock = () => {
     const [ touched, setTouched ] = useState({});
     const [ errorMessage, setErrorMessage ] = useState({});
     const [passwordShown, setPasswordShown] = useState(false);
-    const togglePasswordVisiblity = () => {
-        setPasswordShown(passwordShown ? false : true);
-      };
+    const togglePasswordVisiblity = () => { setPasswordShown(passwordShown ? false : true); };
 
     
     const history = useHistory();

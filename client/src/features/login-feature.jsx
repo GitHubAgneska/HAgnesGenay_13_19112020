@@ -37,8 +37,10 @@ export async function fetchLogin(store, user) {
         const apiResponse = await response.json();
         console.log('api response===>', apiResponse);
         
-        // request successful: data dispatched to store using loginResolved action        
-        store.dispatch(loginResolved(apiResponse.body));
+        if (apiResponse.status === 200 && apiResponse.body ) {
+            // request successful: data dispatched to store using loginResolved action        
+            store.dispatch(loginResolved(apiResponse.body));
+        }
     }
     catch (error) {
         // if error: request rejected status dispatched to store using loginRejected action
