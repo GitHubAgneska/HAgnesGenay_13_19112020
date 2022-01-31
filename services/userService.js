@@ -64,11 +64,12 @@ module.exports.loginUser = async serviceData => {
 
     if (!isValid) { throw new Error('Password is invalid') }
 
-    const token =   jwt.sign(
+    const token = 'ABCDEF'
+   /*  const token = jwt.sign(
       { id: user._id },
       'abcdefg123',
       { expiresIn: '1d' }
-    )
+    ) */
 
     return { token }
   } catch (error) {
