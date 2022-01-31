@@ -28,6 +28,9 @@ mongoose
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
+  const db = mongoose.connection
+  db.on('error', console.error.bind(console, 'DB connection error:'))
+  db.once('open', function() { console.log("DB Connection Successful!"); });
 
 const userRoutes =require('./routes/userRoutes');
 app.use('/api/v1/user', userRoutes)

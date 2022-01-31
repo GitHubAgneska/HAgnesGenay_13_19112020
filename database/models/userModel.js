@@ -5,11 +5,12 @@ const userSchema = new mongoose.Schema(
     email: String,
     password: String,
     firstName: String,
-    lastName: String
+    lastName: String,
+    token: String
   },
   {
     timestamps: true,
-    toJSON: {
+    toObject: {
       transform: (doc, ret, options) => {
         ret.id = ret._id
         delete ret._id

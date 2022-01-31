@@ -57,22 +57,20 @@ module.exports.loginUser = async serviceData => {
     if (!user) {
       throw new Error('User not found!')
     }
-    console.log('USER FOUND ===> ID=',user._id )
+    
     // SAME ISSUE AS MENTIONED ABOVE : 'await' make request fail
     //const isValid = await bcrypt.compare(serviceData.password, user.password)
     const isValid = bcrypt.compare(serviceData.password, user.password)
 
     if (!isValid) { throw new Error('Password is invalid') }
 
-
-    const token = jwt.sign(
+    const token =   jwt.sign(
       { id: user._id },
-        'abcdefg123',
+      'abcdefg123',
       { expiresIn: '1d' }
     )
 
     return { token }
-  
   } catch (error) {
     console.error('Error in userService.js', error)
     // console.log('==COMPARING==', 'ServiceData.password=>', serviceData.password,'user.password=>', user.password )
