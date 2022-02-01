@@ -3,7 +3,7 @@ const router = express.Router()
 const userKontroller = require('../controllers/userController')
 const tokeNValidation = require('../middleware/tokenValidation')
 
-router.post('/signup', userKontroller.createUser)
+router.post('/signup', userKontroller.createUser) /* should be ASYNC ??  */
 
 router.post('/login', userKontroller.loginUser)
 
