@@ -1,13 +1,14 @@
 import styled from 'styled-components'
 
 export const SignUpSection = styled.section`
-box-sizing: border-box;
-background-color: white;
-width: 300px;
-margin: 0 auto;
-margin-top: 0px;
-margin-top: 3rem;
-padding: 2rem;
+    box-sizing: border-box;
+    background-color: white;
+    width: 300px;
+    margin: 0 auto;
+    @media screen and (max-width:600px) {  margin-top: 1rem; }   
+    @media screen and (min-width:600px) {  margin-top: 3rem;} 
+
+    padding: 2rem;
     h1 {
         display: block;
         font-size: 1.5em;
@@ -23,9 +24,15 @@ padding: 2rem;
         font-size: 1.1rem;
         font-weight: bold;
         margin-top: 1rem;
-        border-color: #00bc77;
+    }
+    #signup-btn {
         background-color: #00bc77;
         color: #fff;
+    }
+    #cancel-btn {
+        border: 1px solid #00bc77;
+        background-color: white;
+        color: #00bc77;
     }
     span { color: red; height: 50px; width:100%;}
 `

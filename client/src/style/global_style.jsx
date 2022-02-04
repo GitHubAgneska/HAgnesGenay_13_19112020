@@ -1,5 +1,8 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
+// main green #00bc77
+// 
+
 export const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
@@ -22,11 +25,12 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
         min-height: 100vh;
     }
-    a { text-decoration: none; }
     /* input { border: transparent; } */
     ul { margin: 0; padding: 0;}
     ul li { list-style: none; }
     button { display: block; border: none; }
+    
+    /*  user icon */
     .svg-inline--fa.fa-w-16 {
         height: 2em !important;
     }

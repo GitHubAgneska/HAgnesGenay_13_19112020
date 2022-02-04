@@ -5,15 +5,18 @@ export const SignInSection = styled.section`
     background-color: white;
     width: 300px;
     margin: 0 auto;
-    margin-top: 0px;
     margin-top: 3rem;
+    
     padding: 2rem;
+
+    /* user icon */
+    .svg-inline--fa.fa-w-16 { width: 2em; }
+    
     h1 {
         display: block;
         font-size: 1.5em;
         font-weight: bold;
-        margin-block-start: .83em;
-        margin-block-end: .83em;
+        margin-top:1%;
     }
     button { 
         display: block;

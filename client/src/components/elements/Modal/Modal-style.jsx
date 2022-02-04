@@ -21,7 +21,7 @@ export const PageModalWrapper = styled.div`
     z-index: 2; top: 0;
     display: flex; align-items: center; justify-content: center;
     
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(49,9,121,0.8561625333727241) 0%, rgba(255,13,252,0.8561625333727241) 100%);
+    background: linear-gradient(0deg, rgba(1,33,27,1) 0%, rgba(0,188,119,1) 100%);
     font-size: 1em;
 `
 
@@ -49,7 +49,7 @@ export const ModalContent = styled.div`
     font-size: 1em;
     text-transform: capitalize;
     p { margin: 2% auto; }
-    p:first-child{ color: darkblue; }
+    p:first-child{ color: #00bc77; }
     p:nth-child(2){ color: darkviolet; }
 `
 
@@ -58,7 +58,9 @@ export const ModalBtnsWrapper = styled.div`
     display: flex; flex-flow: row nowrap;
     justify-content: space-between;
     margin: 0% 5%;
-    border-top: 3px solid gray;
+    border-top: 3px solid green;
+    
+    width: 100%; margin: auto;
 `
 
 

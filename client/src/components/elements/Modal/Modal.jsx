@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
-// import Button from '../Button/Button'
+import Button from "../Button/Button"
 import { PageModalWrapper, ModalWrapper, ModalBody, ModalContent, ModalBtnsWrapper } from './Modal-style'
 
 const ModalComp = ({ modalType, props, isShowing, content}) => {
@@ -11,7 +11,6 @@ const ModalComp = ({ modalType, props, isShowing, content}) => {
         message,
         modalBtns
     } = props
-    // console.log('CONTENT=', content)
 
     return (
         isShowing ? ReactDOM.createPortal(
@@ -21,10 +20,9 @@ const ModalComp = ({ modalType, props, isShowing, content}) => {
                 <ModalWrapper>
                     <ModalBody>
                         <p>{message}</p>
-                        { content?.department && 
+                        { content?.lastName && 
                             <ModalContent>
                                 <p>{content.firstName} {content.lastName}</p>
-                                <p>{content.department} department</p>
                             </ModalContent>
                         }
                         <p>{action} {modalData}</p>
@@ -32,14 +30,14 @@ const ModalComp = ({ modalType, props, isShowing, content}) => {
 
                     <ModalBtnsWrapper buttonsWrapperWidth={buttonsWrapperWidth}>
                         { modalBtns.map(b => (
-                            <button
+                            <Button
                             btntype={b.btntype}
                             key={Math.random()}
-                            onClick={b.action}
+                            handleClick={b.action}
                             disabled={false}
                             btnName={b.name}
                             width="40%;"
-                            >{b.name}</button>
+                            >{b.name}</Button>
                         ))}
                     </ModalBtnsWrapper>
                 </ModalWrapper>

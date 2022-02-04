@@ -93,7 +93,6 @@ const SignUpBlock = () => {
             Object.values(formValidation.touched).every(t => t === true) // every touched field is true
     ) {
       let newUser = {...values}
-      console.log('newUser=>', newUser)
       dispatch(createEmployee(newUser))
           .then(response => handleRes(response))
     }
@@ -111,8 +110,8 @@ const SignUpBlock = () => {
     else { setErrorCreation({error: myRes.message}); }
     setIsLoading(false)
   }
-  const navigateToList = () => {
-    history.push('./user')
+  const navigateToSignIn = () => {
+    history.push('./signIn')
   }
 
   const handleCancel = event => {
@@ -126,7 +125,7 @@ const SignUpBlock = () => {
       setValues(() => initialState)
       setJustCreated(null)
       setExisting({...initialState})
-      setErrorCreation({error: '', firstName: '', lastName:'', department: ''})
+      setErrorCreation({error: '', firstName: '', lastName:'', email: '', password: ''})
       setErrors({})
       setTouched({})
   }
@@ -144,21 +143,19 @@ const SignUpBlock = () => {
   const { isShowing: isModalSuccessShowed, toggle: toggleSuccessModal } = useModal();
   let confirmSuccessModal = {
       modalType: 'success',
-      message: `New employee successfully created`,
-      action: 'Would you like to create another employee?',
+      message: `Your account creation was successful!`,
       modalBtns: [
-          { btntype: 'action', name: 'create', action: () => confirmReset() },
-          { btntype: 'cancel', name: 'go to list', action: () => navigateToList() }
+          { btntype: 'action', name: 'go to sign in', action: () => navigateToSignIn() }
       ]
   }
   const { isShowing: isWarningModalShowed, toggle: toggleWarningModal } = useModal();
   let warningModal = {
       modalType: 'warning',
-      message: `We found an existing employee with this name:`,
-      action: 'Please create a different employee',
+      message: `We found an existing account with this name:`,
+      action: 'Please create a different account',
       modalBtns: [
           { btntype: 'action', name: 'create', action: () => confirmReset() },
-          { btntype: 'cancel', name: 'go to list', action: () => navigateToList() }
+          { btntype: 'cancel', name: 'sign in', action: () => navigateToSignIn() }
       ]
   }
   const { isShowing: isModalConfirmShowed, toggle: toggleConfirmModal } = useModal();
@@ -175,13 +172,12 @@ const SignUpBlock = () => {
   if ( isLoading ) { return ('loading...') }
 
 
-
   return (
     <SignUpSection>
       
       <h1>Sign up</h1>
       {failureMessage && <span>Authentication failed, please check your informations</span>}
-      <form
+      <form id='myform'
         onSubmit={handleSubmit}
         autoComplete='off'
       >
@@ -247,9 +243,9 @@ const SignUpBlock = () => {
           {touched.password && errors.password ? <span>{errors.password}</span> : null}
         </InputWrapper>
 
-        <button onClick={handleSubmit} >Sign up!</button>
+        <button id='signup-btn' onClick={handleSubmit} >Sign up!</button>
         { formDirty && 
-          <button onClick={handleCancel}></button>
+          <button id='cancel-btn' onClick={handleCancel}>Cancel</button>
         }
 
       </form>
@@ -260,7 +256,7 @@ const SignUpBlock = () => {
                     content={justCreated}
                     isShowing={isModalSuccessShowed}
                     confirmReset={confirmReset}
-                    /* navigateToList={navigateToList} */
+                    navigateToSignIn={navigateToSignIn}
                     />
                 }
                 { errorCreation && 
@@ -269,7 +265,7 @@ const SignUpBlock = () => {
                     content={errorCreation}
                     isShowing={isWarningModalShowed}
                     confirmReset={confirmReset}
-                    /* navigateToList={navigateToList} */
+                    navigateToSignIn={navigateToSignIn}
                 />
                 }
                 
