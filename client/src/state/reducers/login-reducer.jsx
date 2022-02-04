@@ -21,7 +21,6 @@ function loginReducer (state = initialState.Login, action) {
           draft.status = 'updating' // ongoing request but presence of data
           return
         }
-        // else action ignored
         return
       }
       case LOGINRESOLVED: {
@@ -32,7 +31,6 @@ function loginReducer (state = initialState.Login, action) {
           draft.isConnected = true
           return
         }
-        // else action ignored
         return
       }
       case LOGINREJECTED: {
@@ -44,9 +42,7 @@ function loginReducer (state = initialState.Login, action) {
           draft.data = null
         }
         return
-        // else action ignored
       }
-      // any other case (invalid action or initialisation) : return state without modification
       default:
         return state;
     }

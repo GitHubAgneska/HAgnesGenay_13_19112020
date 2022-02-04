@@ -17,9 +17,9 @@ export const setToken = (token) => (dispatch) => (dispatch({ type: SET_TOKEN, pa
 export const setConnected = (isConnected) => (dispatch) => (dispatch({ type: SET_CONNECTED, payload: isConnected }))
 // .... fetch login actions ...
 // export const loginFetching = () => (dispatch) => (dispatch({type: LOGINFETCHING}));  // TO REVIEW ---> ASYNC with THUNK functionment...
-export const loginFetching = () => ({ type: LOGINFETCHING })
-export const loginResolved = (data) => ({ type: LOGINRESOLVED, payload: data })
-export const loginRejected = (error) => ({ type: LOGINREJECTED, payload: error })
+export const loginFetching = (data) =>(dispatch) => (dispatch({ type: LOGINFETCHING, payload: data  }))
+export const loginResolved = (data) => (dispatch) => (dispatch({ type: LOGINRESOLVED, payload: data }))
+export const loginRejected = (error) => (dispatch) => (dispatch({ type: LOGINREJECTED, payload: error }))
 // .... logout actions ...
 export const logout = () => ({ type: LOGOUT })
 

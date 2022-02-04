@@ -8,7 +8,7 @@ import { loginFetching, loginResolved, loginRejected, logout } from '../state/Ac
 * @param {store}
 * @param {object} user - payload : values from form  @example of params => { email:'xxxxx', password:'xxxxx', rememberMe:true } : The user to be identified
 */
-// const url = devEnvironment.apiBaseUrl + devEnvironment.loginEndpoint;
+
 const apiUrl = prodEnvironment.apiBaseUrl
 const bearer = prodEnvironment.bearer
 
@@ -25,24 +25,28 @@ export function fetchLogin (user) {
         method: 'POST',
         withCredentials: true,
         credentials: 'include',
-        mode: 'cors',
         headers: {
           Authorization: bearer,
-          'x-api-key': bearer, // necessary ?
           Accept: 'text/html', //  ---- "
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*' //  ---- "
+          'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify(user)
       })
       const apiResponse = await response.json()
       console.log('api response===>', apiResponse)
-  
-      dispatch(loginResolved(apiResponse.body))
+
+      if (apiResponse === 200) {
+        dispatch(loginResolved(apiResponse.body))
+      } else {
+        dispatch(loginRejected(apiResponse.message))
+    }
+    return apiResponse
+
     } catch (error) {
       dispatch(loginRejected(error))
+      return error
     }
-    
   }
 }
 

@@ -9,16 +9,14 @@ module.exports.createUser = async serviceData => {
     if (user) {
       throw new Error('Email already exists')
     }
-
-    // removing the 'await' keyword allows request to succeed (200 - user created)
-    const hashPassword = bcrypt.hash(serviceData.password, 12)
+    const hashPassword = bcrypt.hash(serviceData.password, 12) // no 'await' -> no issue
 
     const newUser = new User({
       firstName: serviceData.firstName,
       lastName: serviceData.lastName,
       email: serviceData.email,
       password: serviceData.password
-      /* password: hashPassword, */ 
+      /* password: hashPassword, */  // no 'bcrypt'->  no issue
     })
 
     let result = await newUser.save()

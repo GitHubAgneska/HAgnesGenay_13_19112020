@@ -41,10 +41,11 @@ function userPersonalData_editReducer (state = initialState.UserData_editState, 
           draft.error = action.payload
           draft.data = null
         }
+        return
         // else action ignored
       }
       // any other case (invalid action or initialisation) : return state without modification
-      default:
+        default: return state
     }
   })
 }

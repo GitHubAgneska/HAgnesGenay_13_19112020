@@ -34,7 +34,7 @@ const App = () => {
               <Route exact path='/' render={() => <Redirect to='/home' />} />
               <Route exact path='/home' component={Home} />
               <Route exact path='/signIn' component={SignIn} />
-              <Route exact path='/signUp' component={SignUpPage} />
+              <Route exact path='/signup' component={SignUpPage} />
 
               <PrivateRoute path='/user/:id' component={UserProfile} isConnected={isConnected} />
               <Route component={NotFoundPage} />

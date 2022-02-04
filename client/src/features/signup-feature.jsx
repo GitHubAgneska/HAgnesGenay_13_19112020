@@ -39,8 +39,7 @@ export function createEmployee (user) {
         const responseObj = await response.json() // => status / message / body
 
         if (responseObj === 200) {
-            dispatch(userPersData_createResolved(responseObj)) // => set post status to resolved + update collection
-            // dispatch(changeEntriesAmount(15))
+            dispatch(userPersData_createResolved(responseObj))
         } else {
             dispatch(userPersData_createRejected(responseObj.message))
         }
