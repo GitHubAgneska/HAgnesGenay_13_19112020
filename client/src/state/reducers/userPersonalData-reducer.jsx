@@ -74,6 +74,8 @@ function userPersonalDataReducer (state = initialState.UserPersonalData, action)
         if (draft.status === 'pending' || draft.status === 'updating') {
           draft.status = 'resolved'
           draft.data = action.payload
+          draft.firstName = action.payload.body.firstName
+          draft.lastName = action.payload.body.lastName
           return
         }
         // else action ignored

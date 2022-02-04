@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from "react-redux"
-import { fetchLogin } from '../../features/login-feature'
 import { Link } from 'react-router-dom'
 
+import { loginState, userDataState } from '../../state/store'
+import { fetchLogin } from '../../features/login-feature'
 import {validate} from '../../utils/form_validation'
 
 import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
@@ -79,17 +80,19 @@ const SignInBlock = () => {
 
   const handleResponse = (res) => {
     console.log('HANDLING response=>', res)
-    if (res.status === 200) { 
+    if (res.status === 200) {
       setLoginSuccessMessage('Login successful')
-      navigateToUser()
     }
     else {
       setErrorMessage({error: res.message })
+      return
     }
     setIsLoading(false)
+    navigateToUser(res.body.id)
   } 
 
   const navigateToUser = (userId) => {
+    console.log('ID=>',userId )
     history.push('./user/'+ userId)
   }
 

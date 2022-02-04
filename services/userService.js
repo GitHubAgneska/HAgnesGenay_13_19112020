@@ -33,6 +33,7 @@ module.exports.getUserProfile = async serviceData => {
   try {
     const jwtToken = serviceData.headers.authorization.split('Bearer')[1].trim()
     const decodedJwtToken = jwt.decode(jwtToken)
+
     const user = await User.findOne({ _id: decodedJwtToken.id}, 'firstName lastName')
 
     if (!user) { throw new Error('User not found!') }
@@ -65,8 +66,9 @@ module.exports.loginUser = async serviceData => {
       process.env.SECRET_KEY || 'default-secret-key',
       { expiresIn: '1d' }
     )
+    const id = user._id
 
-    return { token }
+    return { token, id }
   
   } catch (error) {
       console.error('Error in userService.js', error)

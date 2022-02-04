@@ -1,5 +1,9 @@
 import { loginState, userDataState } from '../state/store'
-import { userPersDataFetching, userPersDataResolved, userPersDataRejected } from '../state/Actions'
+import { 
+  userPersDataFetching, userPersDataResolved, userPersDataRejected,
+  setFirstName, setLastName
+
+} from '../state/Actions'
 
 import { devEnvironment, prodEnvironment } from '../utils/environment-dev'
 const apiUrl = prodEnvironment.apiBaseUrl
@@ -24,18 +28,19 @@ const bearer = devEnvironment.bearer
                 }
             }
 */
-export function fetchUserData (userId) {
+export function fetchUserData () {
 
   return async function fetchUserDataThunk (dispatch, getState) {
     const status = userDataState(getState()).status
     if ( status === 'pending' || status === 'updading') { return }
     
     const token = loginState(getState()).token
+    const id = loginState(getState()).id
 
     dispatch(userPersDataFetching(token))
 
     try {
-      const response = await fetch(apiUrl + '/profile/' + userId, {
+      const response = await fetch(apiUrl + '/profile/' +id, {
         method: 'POST',
         withCredentials: true,
         credentials: 'include',
@@ -54,6 +59,8 @@ export function fetchUserData (userId) {
 
       if (responseObj.status === 200) {
           dispatch(userPersDataResolved(responseObj)) // => set post status to resolved + update collection
+          dispatch(setFirstName(responseObj.body.firstName))
+          dispatch(setLastName(responseObj.body.lastName))
       } else {
           dispatch(userPersDataRejected(responseObj.message))
       }

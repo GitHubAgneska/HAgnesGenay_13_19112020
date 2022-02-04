@@ -25,9 +25,10 @@ function loginReducer (state = initialState.Login, action) {
       }
       case LOGINRESOLVED: {
         localStorage.setItem('token', action.payload.token); // remember me
-        if (draft.status === 'pending' || draft.status === 'updating') {
+        if (draft.status === 'pending' || draft.status === 'updating' ||  draft.status === 'loading') {
           draft.status = 'resolved'
-          draft.token = action.payload.token
+          draft.token = action.payload.body.token
+          draft.id = action.payload.body.id
           draft.isConnected = true
           return
         }

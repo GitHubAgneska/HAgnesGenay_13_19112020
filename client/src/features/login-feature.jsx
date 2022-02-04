@@ -1,6 +1,6 @@
 import { devEnvironment, prodEnvironment } from '../utils/environment-dev'
 import { loginState } from '../state/store'
-import { loginFetching, loginResolved, loginRejected, logout } from '../state/Actions'
+import { setId, loginFetching, loginResolved, loginRejected, logout } from '../state/Actions'
 
 /**
 *  LOGIN : POST request
@@ -36,10 +36,9 @@ export function fetchLogin (user) {
       const apiResponse = await response.json()
       console.log('api response===>', apiResponse)
 
-      if (apiResponse === 200) {
-        dispatch(loginResolved(apiResponse.body))
-      } else {
-        dispatch(loginRejected(apiResponse.message))
+      if (apiResponse.status === 200) {
+        dispatch(loginResolved(apiResponse))
+        dispatch(setId(apiResponse.body.id))
     }
     return apiResponse
 

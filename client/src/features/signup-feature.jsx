@@ -25,7 +25,7 @@ export function createEmployee (user) {
     dispatch(userPersData_createFetching(user))
 
     try {
-        const response = await fetch(apiUrl + '/users', {
+        const response = await fetch(apiUrl + '/signup', {
             method: 'POST',
             withCredentials: false,
             headers: {

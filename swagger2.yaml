@@ -59,7 +59,7 @@ paths:
         '500':
           description: Internal Server Error
 
-  /user/profile:
+  /user/profile/{id}:
     post:
       security:
         - Bearer: 'temp'
@@ -256,6 +256,8 @@ definitions:
     type: object
     properties:
       token:
+        type: string
+      id:
         type: string
   
   UserProfile:

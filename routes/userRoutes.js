@@ -14,6 +14,8 @@ router.post('/signup', userKontroller.createUser)
  * @route   POST api/login
  * @desc    Post login request
  * @access  Public
+ * @returns token
+ * @returns userId
  */
 router.post('/login', userKontroller.loginUser)
 
@@ -23,7 +25,7 @@ router.post('/login', userKontroller.loginUser)
  * @param   userId
  * @access  Private (token)
  */
-router.get('/profile/:id', userId, tokeNValidation.validateToken, userKontroller.getUserProfile)
+router.post('/profile/:id', tokeNValidation.validateToken, userKontroller.getUserProfile)
 
 /**
  * @route   PUT api/profile/:id

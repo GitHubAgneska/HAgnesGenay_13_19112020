@@ -38,7 +38,7 @@ module.exports.loginUser = async (req, res) => {
 // GET USER PERSO INFO REQUEST
 module.exports.getUserProfile = async (req, res) => {
   let response = {}
-
+  
   try {
     const responseFromService = await userService.getUserProfile(req)
     response.status = 200

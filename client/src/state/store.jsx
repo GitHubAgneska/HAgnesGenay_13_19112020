@@ -13,7 +13,8 @@ export const initialState = {
     token: null,
     // fetchLogin state
     status: 'void',
-    error: null
+    error: null,
+    id: ''
   },
   UserPersonalData: {
     id: '',

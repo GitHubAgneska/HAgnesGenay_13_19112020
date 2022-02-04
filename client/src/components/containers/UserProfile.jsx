@@ -20,14 +20,18 @@ const UserProfile = (userId) => {
 
   const dispatch = useDispatch()
   const user = useSelector(userDataState)
-
+  
   useEffect(() => {
     dispatch(fetchUserData(userId))
-  }, [dispatch])
+    
+    
+  }, [userId])
 
 
   const profileData = user?.data ?? {} // ------- ! very important for runtime ! (else data = null )
-  const { firstName, lastName } = profileData
+  
+  const firstName = useSelector(initialState => initialState.UserPersonalData.firstName)
+  const lastName = useSelector(initialState => initialState.UserPersonalData.lastName)
 
   return (
     <UserPageSection>
