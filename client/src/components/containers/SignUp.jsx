@@ -1,11 +1,18 @@
 import SignUpBlock from "../elements/SignUp-block"
+import styled from 'styled-components'
+
+const SignUpPageSection = styled.main`
+    background-color: #12002b;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+`
 
 const SignUpPage = () => {
     return (
 
-        <main>
+        <SignUpPageSection>
             <SignUpBlock />
-        </main>
+        </SignUpPageSection>
     )
 }
 export default SignUpPage

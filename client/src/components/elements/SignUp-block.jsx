@@ -7,7 +7,7 @@ import { userDataState } from '../../state/store'
 
 import { validateCreate } from '../../utils/form_validation'
 
-import { SignInSection, InputWrapper } from './SignIn-block_style'
+import { SignUpSection, InputWrapper } from './SignUp-block_style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faEye } from '@fortawesome/free-solid-svg-icons'
 
@@ -177,9 +177,8 @@ const SignUpBlock = () => {
 
 
   return (
-    <SignInSection>
-
-      <FontAwesomeIcon icon={faUserCircle} />
+    <SignUpSection>
+      
       <h1>Sign up</h1>
       {failureMessage && <span>Authentication failed, please check your informations</span>}
       <form
@@ -249,7 +248,9 @@ const SignUpBlock = () => {
         </InputWrapper>
 
         <button onClick={handleSubmit} >Sign up!</button>
-        <button onClick={handleCancel} disabled={!formDirty}></button>
+        { formDirty && 
+          <button onClick={handleCancel}></button>
+        }
 
       </form>
 
@@ -279,7 +280,7 @@ const SignUpBlock = () => {
                     confirmReset={confirmReset}
                 />
 
-    </SignInSection>
+    </SignUpSection>
   )
 }
 SignUpBlock.propTypes = {}

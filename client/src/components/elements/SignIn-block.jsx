@@ -146,7 +146,7 @@ const SignInBlock = () => {
 
         <button>Sign In</button>
       </form>
-        <Link to='/signup'>Sign Up</Link>
+      <Link to='/signup'>Sign Up</Link>
 
     </SignInSection>
   )
