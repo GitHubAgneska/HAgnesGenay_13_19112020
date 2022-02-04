@@ -110,6 +110,7 @@ const SignUpBlock = () => {
     else { setErrorCreation({error: myRes.message}); }
     setIsLoading(false)
   }
+  
   const navigateToSignIn = () => {
     history.push('./signIn')
   }

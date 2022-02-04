@@ -87,9 +87,10 @@ function userPersonalDataReducer (state = initialState.UserPersonalData, action)
           draft.data = null
         }
         // else action ignored
+        return
       }
       // any other case (invalid action or initialisation) : return state without modification
-      default:
+      default: return state
     }
   })
 }

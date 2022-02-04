@@ -1,39 +1,37 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from "react-redux"
+import { fetchLogin } from '../../features/login-feature'
 import { Link } from 'react-router-dom'
 
-import { fetchLogin } from '../../features/login-feature'
-import { loginState } from '../../state/store'
-import Button from './Button/Button'
-import { validate } from '../../utils/form_validation'
+import {validate} from '../../utils/form_validation'
 
 import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faEye } from '@fortawesome/free-solid-svg-icons'
-import { /* useSelector, */ useStore } from 'react-redux'
+
 const eye = <FontAwesomeIcon icon={faEye} />
 
 const SignInBlock = () => {
+
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const [ isLoading, setIsLoading ] = useState(false)
+
+  // form
+  const [values, setValues] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
-
-  const [errorMessage, setErrorMessage] = useState({})
-
   const [passwordShown, setPasswordShown] = useState(false)
   const togglePasswordVisiblity = () => { setPasswordShown(!passwordShown) }
 
-  const history = useHistory()
-  const store = useStore()
-  // const loginStatus = useSelector(state =>state.login.status );
-  // const _isMounted = useRef(true);  // tests for memory leak issue on navigate after state updated
-  const [failureMessage] = useState(false)
-
-  const [values, setValues] = useState({ email: '', password: '' })
-  //  const [values, setValues] = useState({email: '', password:'', rememberMe: false})
+  // error login
+  const [loginErrorMessage, setErrorMessage] = useState('')
+  const [loginSuccessMessage, setLoginSuccessMessage] = useState('')
 
   const handleInputChange = (event) => {
-    /* const { name, value: newValue, type } = event.target; */
     const { name } = event.target
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
     setValues({ ...values, [name]: value })
@@ -50,46 +48,49 @@ const SignInBlock = () => {
   }
 
   const handleSubmit = (event) => {
+    
     event.preventDefault()
-    // console.log('FORM values=',values); // { userName: "agnes", userPassword: "xxxx", rememberMe: true }
-
+    setIsLoading(true)
+  
     const formValidation = Object.keys(values).reduce(
       (acc, key) => {
         const newError = validate[key](values[key]) // key = fieldName / values[key] = fieldValue
         const newTouched = { [key]: true }
         return {
-          errors: {
-            ...acc.errors,
-            ...(newError && {[key]: newError })
-          },
-          touched: {
-            ...acc.touched,
-            ...newTouched
+            errors: { ...acc.errors, ...(newError && {[key]: newError }) },
+            touched: { ...acc.touched, ...newTouched }
           }
-        }
       },
-      {
-        errors: { ...errors },
-        touched: { ...touched }
-      }
+      { errors: { ...errors }, touched: { ...touched }}
     )
     setErrors(formValidation.errors)
     setTouched(formValidation.touched)
 
     if (
-      !Object.values(formValidation.errors).length && // errors object = empty
-            Object.values(formValidation.touched).length === Object.values(values).length && // all fields were touched
-            Object.values(formValidation.touched).every(t => t === true) // every touched field is true
+        !Object.values(formValidation.errors).length // errors object = empty
+        && Object.values(formValidation.touched).length === Object.values(values).length // all fields were touched
+        && Object.values(formValidation.touched).every(t => t === true) // every touched field is true
     ) {
-      // console.log(JSON.stringify(values, null, 2));
-      // postData(values);
-      // history.push("/user");   // ===> !! memory leak (see https://morioh.com/p/1ab552fdf028)
-      fetchLogin(store, values).then(
-        // loginStatus === 'rejected'? setFailureMessage(true) : history.push("/user")
-        // navigate()
-        loginState.isConnected ? history.push('/user') : (setTimeout(() => history.push('/user'), 2000)) // --- TO REVIEW: action should be ASYNC
-      )
+      let userInfo = {...values}
+      dispatch(fetchLogin(userInfo))
+      .then( response => handleResponse(response))
     }
+  }
+
+  const handleResponse = (res) => {
+    console.log('HANDLING response=>', res)
+    if (res.status === 200) { 
+      setLoginSuccessMessage('Login successful')
+      navigateToUser()
+    }
+    else {
+      setErrorMessage({error: res.message })
+    }
+    setIsLoading(false)
+  } 
+
+  const navigateToUser = (userId) => {
+    history.push('./user/'+ userId)
   }
 
   return (
@@ -97,13 +98,14 @@ const SignInBlock = () => {
 
       <FontAwesomeIcon icon={faUserCircle} />
       <h1>Sign In</h1>
-      {failureMessage && <span>Authentication failed, please check your informations</span>}
+      {loginErrorMessage && <span>{loginErrorMessage}</span>}
+      {loginSuccessMessage && <span>{loginSuccessMessage}</span>}
       <form
         onSubmit={handleSubmit}
         autoComplete='off'
       >
         <InputWrapper>
-          <label htmlFor='userName-input'>UserName
+          <label htmlFor='userName-input'>User email
             <input
               type='text'
               name='email'

@@ -12,37 +12,40 @@ import { loginFetching, loginResolved, loginRejected, logout } from '../state/Ac
 const apiUrl = prodEnvironment.apiBaseUrl
 const bearer = prodEnvironment.bearer
 
-export async function fetchLogin (store, user) {
-  const status = loginState(store.getState()).status
+export function fetchLogin (user) {
+  return async function fetchLoginThunk(dispatch, getState) {
+    
+    const status = loginState(getState()).status
+    if (status === 'pending' || status === 'updating') { return }
 
-  if (status === 'pending' || status === 'updating') { return }
-  // dispatch 'loginFetching' action : request is ongoing
-  store.dispatch(loginFetching())
-  try {
-    const response = await fetch(apiUrl + '/login', {
-      method: 'POST',
-      withCredentials: true,
-      credentials: 'include',
-      mode: 'cors',
-      headers: {
-        Authorization: bearer,
-        'x-api-key': bearer, // necessary ?
-        Accept: 'text/html', //  ---- "
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*' //  ---- "
-      },
-      body: JSON.stringify(user)
-    })
-    const apiResponse = await response.json()
-    console.log('api response===>', apiResponse)
+    dispatch(loginFetching())
 
-    store.dispatch(loginResolved(apiResponse.body))
-  } catch (error) {
-    // if error: request rejected status dispatched to store using loginRejected action
-    store.dispatch(loginRejected(error))
+    try {
+      const response = await fetch(apiUrl + '/login', {
+        method: 'POST',
+        withCredentials: true,
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          Authorization: bearer,
+          'x-api-key': bearer, // necessary ?
+          Accept: 'text/html', //  ---- "
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*' //  ---- "
+        },
+        body: JSON.stringify(user)
+      })
+      const apiResponse = await response.json()
+      console.log('api response===>', apiResponse)
+  
+      dispatch(loginResolved(apiResponse.body))
+    } catch (error) {
+      dispatch(loginRejected(error))
+    }
+    
   }
 }
 
 export function fetchLogout (store) {
-  store.dispatch(logout) // ---- why syntax different from 'store.dispatch(loginFetching())' --?
+  store.dispatch(logout)
 }

@@ -1,5 +1,7 @@
 const userService = require('../services/userService')
 
+
+// CREATE USER REQUEST
 module.exports.createUser = async (req, res) => {
   let response = {}
 
@@ -13,10 +15,10 @@ module.exports.createUser = async (req, res) => {
     response.status = 400
     response.message = error.message
   }
-
   return res.status(response.status).send(response)
 }
 
+// POST USER LOGIN REQUEST
 module.exports.loginUser = async (req, res) => {
   let response = {}
 
@@ -30,10 +32,10 @@ module.exports.loginUser = async (req, res) => {
     response.status = 400
     response.message = error.message
   }
-
   return res.status(response.status).send(response)
 }
 
+// GET USER PERSO INFO REQUEST
 module.exports.getUserProfile = async (req, res) => {
   let response = {}
 
@@ -47,10 +49,10 @@ module.exports.getUserProfile = async (req, res) => {
     response.status = 400
     response.message = error.message
   }
-
   return res.status(response.status).send(response)
 }
 
+// EDIT USER PERS INFO REQUEST
 module.exports.updateUserProfile = async (req, res) => {
   let response = {}
 
@@ -64,6 +66,5 @@ module.exports.updateUserProfile = async (req, res) => {
     response.status = 400
     response.message = error.message
   }
-
   return res.status(response.status).send(response)
 }

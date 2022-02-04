@@ -1,6 +1,10 @@
-import { devEnvironment } from '../utils/environment-dev'
 import { loginState, userDataState } from '../state/store'
 import { userPersDataFetching, userPersDataResolved, userPersDataRejected } from '../state/Actions'
+
+import { devEnvironment, prodEnvironment } from '../utils/environment-dev'
+const apiUrl = prodEnvironment.apiBaseUrl
+const bearer = devEnvironment.bearer
+
 
 /**
 *  FETCH USERDATA : POST request
@@ -20,7 +24,51 @@ import { userPersDataFetching, userPersDataResolved, userPersDataRejected } from
                 }
             }
 */
+export function fetchUserData (userId) {
+
+  return async function fetchUserDataThunk (dispatch, getState) {
+    const status = userDataState(getState()).status
+    if ( status === 'pending' || status === 'updading') { return }
+    
+    const token = loginState(getState()).token
+
+    dispatch(userPersDataFetching(token))
+
+    try {
+      const response = await fetch(apiUrl + '/profile/' + userId, {
+        method: 'POST',
+        withCredentials: true,
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          Authorization: 'Bearer' + token,
+          'x-api-key': bearer, // necessary ?
+          Accept: 'text/html', //  ---- "
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*' //  ---- "
+        }
+      })
+
+      const responseObj = await response.json() // => status / message / body
+      console.log('RESPONSE TO CLIENT FETCH=>', responseObj)
+
+      if (responseObj.status === 200) {
+          dispatch(userPersDataResolved(responseObj)) // => set post status to resolved + update collection
+      } else {
+          dispatch(userPersDataRejected(responseObj.message))
+      }
+      return responseObj
+      
+      } catch (error) {
+          dispatch(userPersDataRejected(error))
+          return error
+      }
+    }
+}
+/* 
+
 export async function fetchUserData (store) {
+
   const url = devEnvironment.apiBaseUrl + devEnvironment.userProfileEndpoint
   const bearer = devEnvironment.bearer
   const status = userDataState(store.getState()).status
@@ -52,4 +100,4 @@ export async function fetchUserData (store) {
     store.dispatch(userPersDataRejected(error))
   }
   // finally { setLoading(false);} // ------- TO REVIEW
-}
+} */

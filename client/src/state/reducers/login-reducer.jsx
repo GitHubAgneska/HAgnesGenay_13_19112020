@@ -25,6 +25,7 @@ function loginReducer (state = initialState.Login, action) {
         return
       }
       case LOGINRESOLVED: {
+        localStorage.setItem('token', action.payload.token); // remember me
         if (draft.status === 'pending' || draft.status === 'updating') {
           draft.status = 'resolved'
           draft.token = action.payload.token
@@ -35,16 +36,19 @@ function loginReducer (state = initialState.Login, action) {
         return
       }
       case LOGINREJECTED: {
+        localStorage.removeItem('token');
         if (draft.status === 'pending' || draft.status === 'updating') {
           // set to rejected, save error, delete data
           draft.status = 'rejected'
           draft.error = action.payload
           draft.data = null
         }
+        return
         // else action ignored
       }
       // any other case (invalid action or initialisation) : return state without modification
       default:
+        return state;
     }
   })
 }

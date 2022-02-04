@@ -36,7 +36,7 @@ const App = () => {
               <Route exact path='/signIn' component={SignIn} />
               <Route exact path='/signUp' component={SignUpPage} />
 
-              <PrivateRoute path='/user' component={UserProfile} isConnected={isConnected} />
+              <PrivateRoute path='/user/:id' component={UserProfile} isConnected={isConnected} />
               <Route component={NotFoundPage} />
             </Switch>
           </>

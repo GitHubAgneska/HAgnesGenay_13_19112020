@@ -2,6 +2,7 @@ const User = require('../database/models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+// CREATE USER REQUEST
 module.exports.createUser = async serviceData => {
   try {
     const user = await User.findOne({ email: serviceData.email })
@@ -29,30 +30,31 @@ module.exports.createUser = async serviceData => {
   }
 }
 
+// GET USER PERSO INFO REQUEST
 module.exports.getUserProfile = async serviceData => {
   try {
     const jwtToken = serviceData.headers.authorization.split('Bearer')[1].trim()
     const decodedJwtToken = jwt.decode(jwtToken)
-    const user = await User.findOne({ _id: decodedJwtToken.id })
+    const user = await User.findOne({ _id: decodedJwtToken.id}, 'firstName lastName')
 
-    if (!user) {
-      throw new Error('User not found!')
-    }
+    if (!user) { throw new Error('User not found!') }
 
+    const userId = serviceData.userId
+    
     return user.toObject()
+
   } catch (error) {
     console.error('Error in userService.js', error)
     throw new Error(error)
   }
 }
 
+// POST USER LOGIN REQUEST
 module.exports.loginUser = async serviceData => {
   try {
     const user = await User.findOne({ email: serviceData.email })
 
-    if (!user) {
-      throw new Error('User not found!')
-    }
+    if (!user) { throw new Error('User not found!') }
     
     // SAME ISSUE AS MENTIONED ABOVE : 'await' make request fail
     //const isValid = await bcrypt.compare(serviceData.password, user.password)
@@ -60,21 +62,22 @@ module.exports.loginUser = async serviceData => {
 
     if (!isValid) { throw new Error('Password is invalid') }
 
-    const token = 'ABCDEF'
-   /*  const token = jwt.sign(
+    const token = jwt.sign(
       { id: user._id },
-      'abcdefg123',
+      process.env.SECRET_KEY || 'default-secret-key',
       { expiresIn: '1d' }
-    ) */
+    )
 
     return { token }
+  
   } catch (error) {
-    console.error('Error in userService.js', error)
-    // console.log('==COMPARING==', 'ServiceData.password=>', serviceData.password,'user.password=>', user.password )
-    throw new Error(error)
+      console.error('Error in userService.js', error)
+      throw new Error(error)
   }
 }
 
+
+// EDIT USER PERS INFO REQUEST
 module.exports.updateUserProfile = async serviceData => {
   try {
     const jwtToken = serviceData.headers.authorization.split('Bearer')[1].trim()
@@ -88,13 +91,12 @@ module.exports.updateUserProfile = async serviceData => {
       { new: true }
     )
 
-    if (!user) {
-      throw new Error('User not found!')
-    }
+    if (!user) { throw new Error('User not found!') }
 
     return user.toObject()
+
   } catch (error) {
-    console.error('Error in userService.js', error)
-    throw new Error(error)
+      console.error('Error in userService.js', error)
+      throw new Error(error)
   }
 }
