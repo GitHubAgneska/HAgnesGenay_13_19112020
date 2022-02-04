@@ -1,11 +1,11 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const SignInSection = styled.section`
     box-sizing: border-box;
     background-color: white;
     width: 300px;
     margin: 0 auto;
-        margin-top: 0px;
+    margin-top: 0px;
     margin-top: 3rem;
     padding: 2rem;
     h1 {
@@ -27,7 +27,7 @@ export const SignInSection = styled.section`
         color: #fff;
     }
     span { color: red; height: 50px; width:100%;}
-`;
+`
 
 export const InputWrapper = styled.div`
     position: relative; 
@@ -51,5 +51,5 @@ export const InputWrapper = styled.div`
         color: #00fcb6;
         cursor: pointer;
     }
-`;
-export const RememberInput = styled.div` display: flex; label { margin-left: 0.25rem;}`;
+`
+export const RememberInput = styled.div` display: flex; label { margin-left: 0.25rem;}`

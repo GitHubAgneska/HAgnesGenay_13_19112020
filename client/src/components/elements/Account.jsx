@@ -1,5 +1,5 @@
-import PropTypes from "prop-types"
-import styled from "styled-components"
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const AccountSection = styled.section`
     width: 80%;
@@ -17,7 +17,7 @@ const AccountSection = styled.section`
     box-sizing: border-box;
     text-align: left;
 
-`;
+`
 const AccountContentWrapper = styled.div`
     width: 100%;
     flex: 1;
@@ -33,7 +33,7 @@ const AccountContentWrapper = styled.div`
         font-size: 2.5rem;
         font-weight: bold;
     }
-`;
+`
 const AccountContentWrapperBottom = styled.div`
     width: 100%;
     flex: 1;
@@ -57,22 +57,22 @@ const AccountContentWrapperBottom = styled.div`
             width: 200px;
         }
     }
-`;
+`
 
-const Account = ({type, balance}) => { 
-    return (
-        <AccountSection>
-            <AccountContentWrapper>
-                <h3>Argent Bank {type} (x8349)</h3>
-                <p>${balance}</p>
-                <p>Available Balance</p>
-            </AccountContentWrapper>
+const Account = ({ type, balance }) => {
+  return (
+    <AccountSection>
+      <AccountContentWrapper>
+        <h3>Argent Bank {type} (x8349)</h3>
+        <p>${balance}</p>
+        <p>Available Balance</p>
+      </AccountContentWrapper>
 
-            <AccountContentWrapperBottom>
-                <button>View transactions</button>
-            </AccountContentWrapperBottom>
-        </AccountSection>
-    )
+      <AccountContentWrapperBottom>
+        <button>View transactions</button>
+      </AccountContentWrapperBottom>
+    </AccountSection>
+  )
 }
 Account.propTypes = { type: PropTypes.string, balance: PropTypes.string }
 export default Account

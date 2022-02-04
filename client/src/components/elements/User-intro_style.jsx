@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const UserIntroDiv = styled.div`
     flex: 1;
@@ -29,4 +29,4 @@ export const UserIntroDiv = styled.div`
         &:active { background-color: #12002b;}
         transition: background-color 2s;
     }
-`;
+`

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {SrOnlyH2} from '../../style/global_style'
+import { SrOnlyH2 } from '../../style/global_style'
 
 const HeroSection = styled.section`
     position: relative;
@@ -33,17 +33,17 @@ const HeroSection = styled.section`
         p:nth-child(5) {font-size: 1.2rem;}
 
     }
-`;
+`
 
 const HeroContent = () => {
-    return (
-        <HeroSection>
-            <SrOnlyH2>Promoted Content</SrOnlyH2>
-            <p>No fees.</p>
-            <p>No minimum deposit.</p>
-            <p>High interest rates.</p>
-            <p>Open a savings account with Argent Bank today!</p>
-        </HeroSection>
-    )
+  return (
+    <HeroSection>
+      <SrOnlyH2>Promoted Content</SrOnlyH2>
+      <p>No fees.</p>
+      <p>No minimum deposit.</p>
+      <p>High interest rates.</p>
+      <p>Open a savings account with Argent Bank today!</p>
+    </HeroSection>
+  )
 }
 export default HeroContent

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const FooterSection = styled.section`
     display: flex;
@@ -9,13 +9,13 @@ const FooterSection = styled.section`
         margin: 0;
         padding: 0;
     }
-`;
+`
 
-const Footer = () => { 
-    return (
-        <FooterSection>
-            <p>Copyright 2020 Argent Bank</p>
-        </FooterSection>
-    )
+const Footer = () => {
+  return (
+    <FooterSection>
+      <p>Copyright 2020 Argent Bank</p>
+    </FooterSection>
+  )
 }
 export default Footer

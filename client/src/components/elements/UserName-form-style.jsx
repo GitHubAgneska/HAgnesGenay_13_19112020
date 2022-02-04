@@ -1,4 +1,4 @@
-import styled, {keyframes} from "styled-components"
+import styled, { keyframes } from 'styled-components'
 
 const formTransitionOpen = keyframes`
     from {
@@ -9,7 +9,7 @@ const formTransitionOpen = keyframes`
         transform: opacity(1);
         transform: translateY(-55px);
     }
-`;
+`
 
 export const FormWrapper = styled.div`
     padding: 2%;
@@ -19,7 +19,7 @@ export const FormWrapper = styled.div`
     z-index:2;
     background-color: #12002b;
     transition: fade-out 300ms ease-in-out;
-`;
+`
 
 export const FormInputsWrapper = styled.div`
     display: flex;
@@ -28,7 +28,7 @@ export const FormInputsWrapper = styled.div`
     justify-content: center;
     width: 65%;
     margin: auto;
-`;
+`
 
 export const FormBtnsWrapper = styled.div`
     display: flex;
@@ -39,12 +39,12 @@ export const FormBtnsWrapper = styled.div`
     button:nth-child(1) {
         
         transition: background-color 0.2s; 
-    /*  background-color: ${(props) => props.disabled? `grey`: `orange`}; */
+    /*  background-color: ${(props) => props.disabled ? 'grey' : 'orange'}; */
     /*  &:hover { background-color: salmon; };  */
     }
     button:nth-child(1):not(disabled) { background-color: orange; }
     button:nth-child(1):disabled { background-color: grey }
-`;
+`
 
 export const InputWrapper = styled.div`
     width: 100%;
@@ -57,4 +57,4 @@ export const InputWrapper = styled.div`
     }
     ::placeholder { font-weight: light; opacity: 0.8; }  
     span { color: red; height: 50px; width:100%;}
-`;
+`

@@ -1,5 +1,4 @@
-import {createGlobalStyle} from 'styled-components'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
     * {
@@ -28,6 +27,9 @@ export const GlobalStyle = createGlobalStyle`
     ul { margin: 0; padding: 0;}
     ul li { list-style: none; }
     button { display: block; border: none; }
+    .svg-inline--fa.fa-w-16 {
+        height: 2em !important;
+    }
 
 `
 /* accessibility - .sr-only class */
@@ -43,7 +45,7 @@ export const SrOnlyH1 = styled.h1`
     position: absolute !important;
     width: 1px !important;
     white-space: nowrap !important; /* 3 */
-`;
+`
 
 export const SrOnlyH2 = styled.h2`
     border: 0 !important;
@@ -57,6 +59,4 @@ export const SrOnlyH2 = styled.h2`
     position: absolute !important;
     width: 1px !important;
     white-space: nowrap !important; /* 3 */
-`;
-
-
+`

@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import iconChat from '../../assets/icons/icon-chat.png'
 import iconMoney from '../../assets/icons/icon-money.png'
@@ -26,21 +26,21 @@ const FeatureItem = styled.div`
         margin-block-start: 1em;
         margin-block-end: 1em;
     }
-`;
+`
 
-const Feature = ({feature}) => {
+const Feature = ({ feature }) => {
+  return (
+    <FeatureItem>
+      {feature.icon === 'iconChat'
+        ? <img src={iconChat} alt='chat icon' />
+        : feature.icon === 'iconMoney'
+          ? <img src={iconMoney} alt='chat icon' />
+          : <img src={iconSecurity} alt='security icon' />}
+      <h3>{feature.title}</h3>
+      <p>{feature.text}</p>
+    </FeatureItem>
 
-    return (
-        <FeatureItem>
-            { feature.icon === 'iconChat' ?  <img src={iconChat} alt="chat icon" /> 
-                :feature.icon === 'iconMoney' ?  <img src={iconMoney} alt="chat icon" />
-                :  <img src={iconSecurity} alt="security icon" />
-            }
-            <h3>{feature.title}</h3>
-            <p>{feature.text}</p>
-        </FeatureItem>
-
-    )
+  )
 }
 Feature.propTypes = { feature: PropTypes.object }
 export default Feature

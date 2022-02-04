@@ -1,159 +1,286 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { /* useSelector, */ useStore } from "react-redux";
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux"
 
-import { fetchLogin } from '../../features/login-feature'
-import { loginState } from "../../state/store";
+import { createEmployee } from '../../features/signup-feature'
+import { userDataState } from '../../state/store'
 
-import { validate } from "../../utils/form_validation";
+import { validateCreate } from '../../utils/form_validation'
 
-import { SignInSection, InputWrapper, RememberInput } from './SignIn-block_style'
+import { SignInSection, InputWrapper } from './SignIn-block_style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import { faEye } from "@fortawesome/free-solid-svg-icons"
+import { faUserCircle, faEye } from '@fortawesome/free-solid-svg-icons'
+
+import ModalComp from '../elements/Modal/Modal'
+import useModal from '../elements/Modal/useModal'
 
 const eye = <FontAwesomeIcon icon={faEye} />
 
+
 const SignUpBlock = () => {
 
-    const [ errors, setErrors ] = useState({});
-    const [ touched, setTouched ] = useState({});
-    const [ errorMessage, setErrorMessage ] = useState({});
-    const [passwordShown, setPasswordShown] = useState(false);
-    const togglePasswordVisiblity = () => { setPasswordShown(passwordShown ? false : true); };
+  const dispatch = useDispatch()
+  const history = useHistory()
+  
+  const initialState = {firstName: '', lastName:'', email:'', password: '' };
+  const [values, setValues] = useState({ firstName: '', lastName: '', email: '', password: '' })
+  const [touched, setTouched] = useState({})
+  const [errors, setErrors] = useState({})
+  const [ isLoading, setIsLoading ] = useState(false)
+  const [ justCreated, setJustCreated ] = useState({})
+  const [ existing, setExisting ] = useState({ ...initialState})
+  const [ errorCreation, setErrorCreation ] = useState({error: '', firstName: '', lastName:'', department: ''})
 
-    
-    const history = useHistory();
-    const store = useStore();
+  const [passwordShown, setPasswordShown] = useState(false)
+  const togglePasswordVisiblity = () => { setPasswordShown(!passwordShown) }
 
-    const [failureMessage, /* setFailureMessage  */] = useState(false);
+  const [failureMessage] = useState(false)
 
-    const [values, setValues] = useState({firstName: '', lastName: '', email: '', password:''})
+  const allFieldsOk = // acts on submit disabled/!disabled
+        Object.values(touched).every(t => t === true )
+        && Object.values(touched).length === Object.values(values).length
+        && Object.values(errors).every(t => t === null );
 
+  const formDirty = Object.values(touched).some(t => t === true );
 
-    const handleInputChange = (event) => {
-        const { name } = event.target;
-        const value = event.target.value;
-        setValues({ ...values, [name]: value });
-        setTouched({ ...touched, [name]: true });
-    }
+  const handleInputChange = (event) => {
+    /* const { name, value: newValue, type } = event.target; */
+    const { name } = event.target
+    const value = event.target.value
+    setValues({ ...values, [name]: value })
+    setTouched({ ...touched, [name]: true })
+  }
 
-    const handleBlur = (event) => { 
-        const { name, value } = event.target;
-        const { [name]: removedError, ...rest } = errors; // remove error msg if any
-        const error = validate[name](value); // check new error
-        if ( error )console.log('error ==', error)
-        // validate field if val touched
-        setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) });
-    }
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+    const {[name]: removedError, ...rest } = errors // remove error msg if any
+    const error = validateCreate[name](value) // check new error
+    // validate field if val touched
+    setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) })
+  }
 
-    const handleSubmit = (event) => { 
-        event.preventDefault();
-        //console.log('FORM values=',values); // { userName: "agnes", userPassword: "xxxx", rememberMe: true }
-        
-        const formValidation = Object.keys(values).reduce(
-            (acc, key) => {
-                    
-                    const newError = validate[key](values[key]); // key = fieldName / values[key] = fieldValue
-                    const newTouched = { [key]: true };
-                    return { 
-                        errors: {
-                            ...acc.errors,
-                            ...(newError && { [key]: newError })
-                        },
-                        touched: {
-                            ...acc.touched,
-                            ...newTouched
-                        }
-                }
-            },
-            {
-                errors: { ...errors },
-                touched: { ...touched }
-            }
-        );
-        setErrors(formValidation.errors);
-        setTouched(formValidation.touched);
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    console.log('FORM values=',values)
+    setIsLoading(true)
 
-        if (
-            !Object.values(formValidation.errors).length // errors object = empty
-            && Object.values(formValidation.touched).length === Object.values(values).length // all fields were touched
-            && Object.values(formValidation.touched).every(t => t === true ) // every touched field is true
-            ) {
-                // console.log(JSON.stringify(values, null, 2));
-                // postData(values);
-                // history.push("/user");   // ===> !! memory leak (see https://morioh.com/p/1ab552fdf028)
-                fetchLogin(store, values).then(
-                    // loginStatus === 'rejected'? setFailureMessage(true) : history.push("/user")
-                    // navigate()
-                    loginState.isConnected ? history.push("/user"): (setTimeout(() => history.push("/user") ,2000)) // --- TO REVIEW: action should be ASYNC
-                )
-            }
-    }
-    // TO REVIEW ---> ASYNC with THUNK functionment... 
-    // const navigate = () => { loginStatus === 'rejected'? setFailureMessage(true) : history.push("/user") }
-
-    return (
-        <SignInSection>
-
-            <FontAwesomeIcon icon={faUserCircle} />
-            <h1>Sign In</h1>
-            { failureMessage && <span>Authentication failed, please check your informations</span> }
-            <form
-                onSubmit={handleSubmit}
-                autoComplete="off"
-            >
-                <InputWrapper>
-                    <label htmlFor="userName-input">UserName
-                        <input 
-                            type="text"
-                            name="email"
-                            id="userName-input"
-                            required
-                            onBlur={handleBlur}
-                            onChange={handleInputChange}
-                            /* onBlur={handleUserNameChange} */
-                            touched={touched}
-                            errors={errors}
-                            />    
-                            { touched.email && errors.email? <span>{errors.email}</span>: null }
-                    </label>
-                </InputWrapper>
-                <InputWrapper>
-                    <label htmlFor="pw-input">Password
-                        <input 
-                            type={passwordShown ? "text" : "password"}
-                            name="password"
-                            id="pw-input"
-                            required
-                            onBlur={handleBlur}
-                            onChange={handleInputChange}
-                            touched={touched}
-                            errors={errors}
-                            /* onBlur={handleUserPwChange} */
-                            /> </label> 
-                            <i onClick={togglePasswordVisiblity}>{eye}</i>
-                            { touched.password && errors.password ? <span>{errors.password}</span> : null }
-                </InputWrapper>
-
-                <RememberInput>
-                    <label>Remember me
-                        <input 
-                            type="checkbox" 
-                            name="rememberMe"
-                            onChange={handleInputChange}
-                            /* onChange={handleRememberMe} */
-                            /* onChange={handleInputChange} */
-                            >
-                        </input>
-                    </label>
-                </RememberInput>
-
-                <button>Sign In</button>
-            </form>
-
-        </SignInSection>
+    const formValidation = Object.keys(values).reduce(
+      (acc, key) => {
+        const newError = validateCreate[key](values[key]) // key = name / values[key] = fieldValue
+        const newTouched = { [key]: true }
+        return {
+          errors: {
+            ...acc.errors,
+            ...(newError && {[key]: newError })
+          },
+          touched: {
+            ...acc.touched,
+            ...newTouched
+          }
+        }
+      },
+      {
+        errors: { ...errors },
+        touched: { ...touched }
+      }
     )
+    setErrors(formValidation.errors)
+    setTouched(formValidation.touched)
+
+    if (
+      !Object.values(formValidation.errors).length && // errors object = empty
+            Object.values(formValidation.touched).length === Object.values(values).length && // all fields were touched
+            Object.values(formValidation.touched).every(t => t === true) // every touched field is true
+    ) {
+      let newUser = {...values}
+      console.log('newUser=>', newUser)
+      dispatch(createEmployee(newUser))
+          .then(response => handleRes(response))
+    }
+  }
+
+  const handleRes = (myRes)  => {
+    // console.log('MYRES==>', myRes)
+    if (myRes.status === 200) { setJustCreated({...values});  confirmCreation(); }
+
+    else if (myRes.status === 400) { 
+        setExisting({...values});
+        setErrorCreation({error: 'exists', firstName:values.firstName, lastName:values.lastName })
+        toggleWarningModal()
+    }
+    else { setErrorCreation({error: myRes.message}); }
+    setIsLoading(false)
+  }
+  const navigateToList = () => {
+    history.push('./user')
+  }
+
+  const handleCancel = event => {
+    event.preventDefault()
+    toggleConfirmModal()
+  }
+
+  // cancel form modal : confirm yes (reset form)
+  const resetForm = () => { 
+      document.getElementById('myform').reset()
+      setValues(() => initialState)
+      setJustCreated(null)
+      setExisting({...initialState})
+      setErrorCreation({error: '', firstName: '', lastName:'', department: ''})
+      setErrors({})
+      setTouched({})
+  }
+
+  const cancelReset = () => { toggleConfirmModal() }
+      const confirmReset = () => { 
+          resetForm()
+          isModalSuccessShowed? toggleSuccessModal()
+          : isModalConfirmShowed? toggleConfirmModal()
+          : toggleWarningModal()
+  }
+  // modal successful creation
+  const confirmCreation = () => { toggleSuccessModal() }
+
+  const { isShowing: isModalSuccessShowed, toggle: toggleSuccessModal } = useModal();
+  let confirmSuccessModal = {
+      modalType: 'success',
+      message: `New employee successfully created`,
+      action: 'Would you like to create another employee?',
+      modalBtns: [
+          { btntype: 'action', name: 'create', action: () => confirmReset() },
+          { btntype: 'cancel', name: 'go to list', action: () => navigateToList() }
+      ]
+  }
+  const { isShowing: isWarningModalShowed, toggle: toggleWarningModal } = useModal();
+  let warningModal = {
+      modalType: 'warning',
+      message: `We found an existing employee with this name:`,
+      action: 'Please create a different employee',
+      modalBtns: [
+          { btntype: 'action', name: 'create', action: () => confirmReset() },
+          { btntype: 'cancel', name: 'go to list', action: () => navigateToList() }
+      ]
+  }
+  const { isShowing: isModalConfirmShowed, toggle: toggleConfirmModal } = useModal();
+  let modalConfirmReset = {
+      modalType: 'confirmResetForm',
+      message: `Are you sure you want to`,
+      action: 'reset the form?',
+      modalBtns: [
+          { btntype: 'action', name: 'reset', action: () => confirmReset()  },
+          { btntype: 'cancel', name: 'cancel',action: () => cancelReset() }
+      ]
+  }
+
+  if ( isLoading ) { return ('loading...') }
+
+
+
+  return (
+    <SignInSection>
+
+      <FontAwesomeIcon icon={faUserCircle} />
+      <h1>Sign up</h1>
+      {failureMessage && <span>Authentication failed, please check your informations</span>}
+      <form
+        onSubmit={handleSubmit}
+        autoComplete='off'
+      >
+        <InputWrapper>
+          <label htmlFor='userFirsrName-input'>First name
+            <input
+              type='text'
+              name='firstName'
+              id='userFirsrName-input'
+              required
+              onBlur={handleBlur}
+              onChange={handleInputChange}
+              touched={touched}
+              errors={errors}
+            />
+            {touched.firstName && errors.firstName ? <span>{errors.firstName}</span> : null}
+          </label>
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor='userLastName-input'>Last name
+            <input
+              type='text'
+              name='lastName'
+              id='userLastName-input'
+              required
+              onBlur={handleBlur}
+              onChange={handleInputChange}
+              touched={touched}
+              errors={errors}
+            />
+            {touched.lastName && errors.lastName ? <span>{errors.lastName}</span> : null}
+          </label>
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor='userEmail-input'>Email
+            <input
+              type='text'
+              name='email'
+              id='userEmail-input'
+              required
+              onBlur={handleBlur}
+              onChange={handleInputChange}
+              touched={touched}
+              errors={errors}
+            />
+            {touched.email && errors.email ? <span>{errors.email}</span> : null}
+          </label>
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor='pw-input'>Choose a password
+            <input
+              type={passwordShown ? 'text' : 'password'}
+              name='password'
+              id='pw-input'
+              required
+              onBlur={handleBlur}
+              onChange={handleInputChange}
+              touched={touched}
+              errors={errors}
+            />
+          </label>
+          <i onClick={togglePasswordVisiblity}>{eye}</i>
+          {touched.password && errors.password ? <span>{errors.password}</span> : null}
+        </InputWrapper>
+
+        <button onClick={handleSubmit} >Sign up!</button>
+        <button onClick={handleCancel} disabled={!formDirty}></button>
+
+      </form>
+
+      { justCreated?.firstName && 
+                    <ModalComp
+                    props={confirmSuccessModal}
+                    content={justCreated}
+                    isShowing={isModalSuccessShowed}
+                    confirmReset={confirmReset}
+                    /* navigateToList={navigateToList} */
+                    />
+                }
+                { errorCreation && 
+                    <ModalComp
+                    props={warningModal}
+                    content={errorCreation}
+                    isShowing={isWarningModalShowed}
+                    confirmReset={confirmReset}
+                    /* navigateToList={navigateToList} */
+                />
+                }
+                
+                <ModalComp
+                    props={modalConfirmReset}
+                    isShowing={isModalConfirmShowed}
+                    cancelReset={cancelReset}
+                    confirmReset={confirmReset}
+                />
+
+    </SignInSection>
+  )
 }
 SignUpBlock.propTypes = {}
 export default SignUpBlock

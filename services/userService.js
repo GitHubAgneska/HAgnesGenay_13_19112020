@@ -9,19 +9,15 @@ module.exports.createUser = async serviceData => {
       throw new Error('Email already exists')
     }
 
-    // ISSUE HERE : 'await' makes password NULL and prevents request to succeed
-    // Postman err : '400 - Error: data and salt arguments required' 
-    // ( see https://stackoverflow.com/questions/45015613/error-data-and-salt-arguments-required/45015918)
-    // const hashPassword = await bcrypt.hash(serviceData.password, 12)
-    // => removing the 'await' keyword allows request to succeed (200 - user created)
+    // removing the 'await' keyword allows request to succeed (200 - user created)
     const hashPassword = bcrypt.hash(serviceData.password, 12)
 
     const newUser = new User({
-      email: serviceData.email,
-      password: serviceData.password,
-      /* password: hashPassword, */ 
       firstName: serviceData.firstName,
-      lastName: serviceData.lastName
+      lastName: serviceData.lastName,
+      email: serviceData.email,
+      password: serviceData.password
+      /* password: hashPassword, */ 
     })
 
     let result = await newUser.save()

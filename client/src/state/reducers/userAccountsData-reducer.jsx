@@ -6,19 +6,19 @@ import produce from 'immer'
 // ......................................................
 // used when: user profile page requests user accounts data
 // used when: user clicks 'view transactions' on user profile page
-function userAccountsDataReducer(state = initialState.UserAccountsData, action) {
-    switch(action.type) {
-        case SET_TOTALACCOUNTS:
-            return produce(state, (draft) => { 
-                draft.totalAccounts = action.payload
-            });
-        case SET_ACCOUNTS:
-            return produce(state, (draft) => {
-                draft.accounts = action.payload
-            });
-        default:
-            return state;
-    }
+function userAccountsDataReducer (state = initialState.UserAccountsData, action) {
+  switch (action.type) {
+    case SET_TOTALACCOUNTS:
+      return produce(state, (draft) => {
+        draft.totalAccounts = action.payload
+      })
+    case SET_ACCOUNTS:
+      return produce(state, (draft) => {
+        draft.accounts = action.payload
+      })
+    default:
+      return state
+  }
 }
 
 export default userAccountsDataReducer

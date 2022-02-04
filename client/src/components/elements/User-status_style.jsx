@@ -5,11 +5,11 @@ export const StatusWrapper = styled.div`
     display: flex; flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-`;
+`
 
 export const SignInWrapper = styled(StatusWrapper)`
     
-    ${(isConnected) => !isConnected && `min-width: 100px;`}
+    ${(isConnected) => !isConnected && 'min-width: 100px;'}
     
     justify-content: end;
     margin-left:1%;
@@ -20,5 +20,5 @@ export const SignInWrapper = styled(StatusWrapper)`
         font-weight: bold;
         &:hover { text-decoration: underline; }
     }
-    svg { margin-right:2%; }
-`;
+    svg { margin-right:2%; }
+`
