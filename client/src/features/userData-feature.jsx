@@ -55,7 +55,7 @@ export function fetchUserData () {
       })
 
       const responseObj = await response.json() // => status / message / body
-      console.log('RESPONSE TO CLIENT FETCH=>', responseObj)
+      // console.log('RESPONSE TO CLIENT FETCH=>', responseObj)
 
       if (responseObj.status === 200) {
           dispatch(userPersDataResolved(responseObj)) // => set post status to resolved + update collection

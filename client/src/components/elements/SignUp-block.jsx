@@ -61,7 +61,7 @@ const SignUpBlock = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log('FORM values=',values)
+    // console.log('FORM values=',values)
     setIsLoading(true)
 
     const formValidation = Object.keys(values).reduce(

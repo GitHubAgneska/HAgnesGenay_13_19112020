@@ -8,7 +8,6 @@ import { setId, loginFetching, loginResolved, loginRejected, logout } from '../s
 * @param {store}
 * @param {object} user - payload : values from form  @example of params => { email:'xxxxx', password:'xxxxx', rememberMe:true } : The user to be identified
 */
-
 const apiUrl = prodEnvironment.apiBaseUrl
 const bearer = prodEnvironment.bearer
 
@@ -34,7 +33,7 @@ export function fetchLogin (user) {
         body: JSON.stringify(user)
       })
       const apiResponse = await response.json()
-      console.log('api response===>', apiResponse)
+      // console.log('api response===>', apiResponse)
 
       if (apiResponse.status === 200) {
         dispatch(loginResolved(apiResponse))

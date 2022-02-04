@@ -21,7 +21,7 @@ export const loginFetching = (data) =>(dispatch) => (dispatch({ type: LOGINFETCH
 export const loginResolved = (data) => (dispatch) => (dispatch({ type: LOGINRESOLVED, payload: data }))
 export const loginRejected = (error) => (dispatch) => (dispatch({ type: LOGINREJECTED, payload: error }))
 // .... logout actions ...
-export const logout = () => ({ type: LOGOUT })
+export const logout = () => (dispatch) => dispatch({ type: LOGOUT })
 
 // ......................................................
 // ACTIONS CREATORS : USER PERSONAL DATA

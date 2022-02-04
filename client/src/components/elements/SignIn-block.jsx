@@ -43,7 +43,7 @@ const SignInBlock = () => {
     const { name, value } = event.target
     const { [name]: removedError, ...rest } = errors // remove error msg if any
     const error = validate[name](value) // check new error
-    if (error)console.log('error ==', error)
+    if (error)//console.log('error ==', error)
     // validate field if val touched
     setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) })
   }
