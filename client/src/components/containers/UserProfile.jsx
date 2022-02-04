@@ -19,19 +19,16 @@ const UserPageSection = styled.main`
 const UserProfile = (userId) => {
 
   const dispatch = useDispatch()
+  const userDataStatus = useSelector(userDataState => userDataState.status)
   const user = useSelector(userDataState)
   
   useEffect(() => {
-    dispatch(fetchUserData(userId))
-    
-    
-  }, [userId])
+    if (userDataStatus !== 'resolved') dispatch(fetchUserData(userId))
+  }, [])
 
 
   const profileData = user?.data ?? {} // ------- ! very important for runtime ! (else data = null )
-  
-  const firstName = useSelector(initialState => initialState.UserPersonalData.firstName)
-  const lastName = useSelector(initialState => initialState.UserPersonalData.lastName)
+  const { firstName, lastName } = profileData
 
   return (
     <UserPageSection>
