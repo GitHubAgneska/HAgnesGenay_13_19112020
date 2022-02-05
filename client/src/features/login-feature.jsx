@@ -5,7 +5,6 @@ import { setId, loginFetching, loginResolved, loginRejected, logout } from '../s
 /**
 *  LOGIN : POST request
 * @function fetchLogin
-* @param {store}
 * @param {object} user - payload : values from form  @example of params => { email:'xxxxx', password:'xxxxx', rememberMe:true } : The user to be identified
 */
 const apiUrl = prodEnvironment.apiBaseUrl

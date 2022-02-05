@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { createEmployee } from '../../features/signup-feature'
-import { userDataState } from '../../state/store'
+// import { userDataState } from '../../state/store'
 
 import { validateCreate } from '../../utils/form_validation'
 
 import { SignUpSection, InputWrapper } from './SignUp-block_style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 import ModalComp from '../elements/Modal/Modal'
 import useModal from '../elements/Modal/useModal'

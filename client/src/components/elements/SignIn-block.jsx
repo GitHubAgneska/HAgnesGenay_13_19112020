@@ -103,6 +103,7 @@ const SignInBlock = () => {
       <h1>Sign In</h1>
       {loginErrorMessage && <span>{loginErrorMessage}</span>}
       {loginSuccessMessage && <span>{loginSuccessMessage}</span>}
+      {isLoading && 'LOADING...'}
       <form
         onSubmit={handleSubmit}
         autoComplete='off'

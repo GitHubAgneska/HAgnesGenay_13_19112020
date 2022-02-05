@@ -1,19 +1,11 @@
-// import { devEnvironment } from '../utils/environment-dev'
+import { devEnvironment, prodEnvironment } from '../utils/environment-dev'
 import { loginState, userDataState } from '../state/store'
-import { userPersData_EditFetching, userPersData_EditResolved, userPersData_EditRejected } from '../state/Actions'
-
-const devEnvironment = {
-  bearer: 'temp',
-  apiBaseUrl: 'http://localhost:3001/api/v1',
-  loginEndpoint: '/user/login',
-  signUpEndpoint: '/user/signup',
-  userProfileEndpoint: '/user/profile'
-}
-
+import { userPersData_EditFetching, userPersData_EditResolved, userPersData_EditRejected, setFirstName, setLastName, userPersDataFetching } from '../state/Actions'
+const apiUrl = prodEnvironment.apiBaseUrl
+const bearer = prodEnvironment.bearer
 /**
 *  EDIT USERDATA : PUT request
 * @function editUserData
-* @param {store}
 * @param {string} token - user token to identify request to api ---> necessary as param or can be done here?
 * @param {object} userObject (firstName+lastName )
 * api response @example {
@@ -25,36 +17,46 @@ const devEnvironment = {
                             }
                         }
 */
-export async function editUserData (store, user) {
-  const url = devEnvironment.apiBaseUrl + devEnvironment.userProfileEndpoint
-  const bearer = devEnvironment.bearer
-  const status = userDataState(store.getState()).editStatus
-  const token = loginState(store.getState()).token
+export function editUserData (user) {
 
-  if (status === 'pending' || status === 'updating') { return }
-  // dispatch 'userPersDataFetching' action : request is ongoing
-  store.dispatch(userPersData_EditFetching())
+  return async function editUserDataThunk (dispatch, getState) {
 
-  try {
-    const response = await fetch(url, {
-      method: 'PUT',
-      withCredentials: true,
-      credentials: 'include',
-      // mode: 'cors',
-      headers: {
-        Authorization: 'Bearer' + token,
-        'x-api-key': bearer, // necessary ?
-        Accept: 'text/html', //  ---- "
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*' //  ---- "
-      },
-      body: JSON.stringify(user)
-    })
-    const apiResponse = await response.json()
-    // console.log('api response=', apiResponse);
-    store.dispatch(userPersData_EditResolved(apiResponse.body))
-  } catch (error) {
-    // if error: request rejected status dispatched to store using loginRejected action
-    store.dispatch(userPersData_EditRejected(error))
+    const status = userDataState(getState()).editStatus
+    const token = loginState(getState()).token
+    const id = loginState(getState()).id
+  
+    if (status === 'pending' || status === 'updating') { return }
+
+    dispatch(userPersData_EditFetching())
+  
+    try {
+      const response = await fetch(apiUrl + '/profile/' +id, {
+        method: 'PUT',
+        withCredentials: true,
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          Authorization: 'Bearer' + token,
+          'x-api-key': bearer, // necessary ?
+          Accept: 'text/html', //  ---- "
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*' //  ---- "
+        },
+        body: JSON.stringify(user)
+      })
+      const apiResponse = await response.json()
+      console.log('PUT api response=', apiResponse);
+      if (apiResponse.status === 200) {
+        dispatch(userPersData_EditResolved(apiResponse.body))
+        dispatch(setFirstName(user.firstName))
+        dispatch(setLastName(user.lastName))
+      } else {
+        dispatch(userPersData_EditRejected(apiResponse.message))
+    }
+    return apiResponse
+
+    } catch (error) {
+      dispatch(userPersData_EditRejected(error))
+    }
   }
 }
