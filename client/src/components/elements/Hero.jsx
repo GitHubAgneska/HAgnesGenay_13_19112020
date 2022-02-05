@@ -1,16 +1,15 @@
 import HeroContent from './Hero-content'
-// import bank_tree from '../../assets/imgs/bank_tree.jpeg'
 import styled from 'styled-components'
 import { createMediaQueries } from '../../style/media-queries'
 import bankTree from '../../assets/imgs/bank_tree.png'
 
+// dynamic media queries
 const WrapperDiv = styled.div(
   {
     position: 'relative',
     width: '100%',
     height: '300px',
-    backgroundImage: `url(${bankTree})`, // ====> PROD
-    /* background: "url(/assets/imgs/bank_tree.png)",  ===> DEV */
+    backgroundImage: `url(${bankTree})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '0 -50px',
     backgroundSize: 'cover'

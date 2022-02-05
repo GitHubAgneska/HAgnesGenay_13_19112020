@@ -26,7 +26,7 @@ const Header = () => {
   return (
     <StyledNav>
       <MainLogoWrapper>
-        <Link to='/'><MainLogo src={logo_main} alt='Argent Bank Logo' /></Link>
+        <Link to='/'><MainLogo src={logo_main} alt='Argent Bank Logo' loading='lazy' /></Link>
         <SrOnlyH1>Argent Bank</SrOnlyH1>
       </MainLogoWrapper>
       <Userstatus />

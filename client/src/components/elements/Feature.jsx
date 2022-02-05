@@ -32,10 +32,10 @@ const Feature = ({ feature }) => {
   return (
     <FeatureItem>
       {feature.icon === 'iconChat'
-        ? <img src={iconChat} alt='chat icon' />
+        ? <img src={iconChat} alt='chat icon' loading='lazy'/>
         : feature.icon === 'iconMoney'
-          ? <img src={iconMoney} alt='chat icon' />
-          : <img src={iconSecurity} alt='security icon' />}
+          ? <img src={iconMoney} alt='chat icon' loading='lazy'/>
+          : <img src={iconSecurity} alt='security icon' loading='lazy'/>}
       <h3>{feature.title}</h3>
       <p>{feature.text}</p>
     </FeatureItem>
