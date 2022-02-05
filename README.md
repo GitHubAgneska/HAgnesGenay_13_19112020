@@ -42,21 +42,15 @@ npm run install-client
 
 --- 
 --- 
-
 ```
-+----------------------------+
-| ARGENT BANK DATA FLOW      |
-+----------------------------+
++------------------+
+| ABANK DATA FLOW  |
++------------------+
 
     +----------------------------------------------------------------------+
     |                           MONGODB                                    |
-    |                                                                      |
     +-------------------------------+--------------------------------------+
     |  DB (MONGO) OC : DEV          |   DB (MONGO) PRIVATE : PROD          |
-    +-------------------------------+--------------------------------------+
-    | add user: 'populate-db'script |   add user: $db > insertOne(---)     |
-    |                               |                                      |
-    |                               |                                      |
     +----------------^--------------+----------------^---------------------+
                      |                               |
                  +---+-------------------------------+---+
@@ -92,11 +86,13 @@ npm run install-client
  |           -----------------/signup                                         |
  |           -----------------/user/:id  --->FETCH USERDATA : POST request    |
  |           -----------------/user/:id  --->EDIT  USERDATA : PUT  request    |
+ |                                                                            |
  |        + not yet implemented:                                              |
  |           ----------------/user/:id/account/:id                            |
  |                        |--->FETCH USER_ACCOUNT : POST request              |
  |                                                                            |
- |                        |--->FETCH USER_ACCOUNT_TRANSACTION : POST request  |
  |           ----------------/user/:id/account/:id/transaction/:id            |
+ |                        |--->FETCH USER_ACCOUNT_TRANSACTION : POST request  |
+ |                                                                            |
  +----------------------------------------------------------------------------+
 ```
