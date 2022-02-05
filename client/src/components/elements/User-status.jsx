@@ -6,7 +6,6 @@ import { faUserCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 import { loginState, userDataState } from '../../state/store'
 import { fetchLogout } from '../../features/login-feature'
-import { useEffect } from 'react'
 
 const UserId = styled(StatusWrapper)`
 
@@ -35,16 +34,13 @@ const Userstatus = () => {
 
   const history = useHistory()
   const store = useStore()
-  function signIn () { history.push('/signIn') }
+  const navigateTosignIn = () =>{ history.push('/signIn') }
 
-  function signOut () {
+  const signOut = () => {
     fetchLogout(store)
-    window.location.reload()
+    navigateTosignIn()
   }
-  // after logout, call for component update
-  useEffect(() => {
 
-  })
 
   return (
     <StatusWrapper>
@@ -60,7 +56,7 @@ const Userstatus = () => {
           <p>Sign out</p>
         </SignInWrapper>
 
-        : <SignInWrapper onClick={() => signIn()} $isConnected><p>Sign In</p></SignInWrapper>}
+        : <SignInWrapper onClick={() => navigateTosignIn()} $isConnected><p>Sign In</p></SignInWrapper>}
 
     </StatusWrapper>
   )
