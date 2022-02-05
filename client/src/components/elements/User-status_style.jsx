@@ -22,3 +22,21 @@ export const SignInWrapper = styled(StatusWrapper)`
     }
     svg { margin-right:2%; }
 `
+export const UserId = styled(StatusWrapper)`
+
+    justify-content: start;
+    margin-right:1%;
+    flex-basis:20%;
+
+    ${(isConnected) => isConnected && 'min-width:70px'}
+    ${(isConnected) => !isConnected && 'min-width:0px'}
+    min-width: ${isConnected => isConnected && '70px'}
+    min-width: ${isConnected => !isConnected && '0px'}
+    
+    p {
+        white-space: nowrap;
+        margin: 0;
+        font-weight: bold;
+    }
+    svg { margin-right:2%; }
+`

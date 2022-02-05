@@ -1,7 +1,7 @@
 import { devEnvironment, prodEnvironment } from '../utils/environment-dev'
 import { loginState } from '../state/store'
 import { setId, loginFetching, loginResolved, loginRejected, logout } from '../state/Actions'
-
+import { fetchUserData } from './userData-feature'
 /**
 *  LOGIN : POST request
 * @function fetchLogin
@@ -47,6 +47,11 @@ export function fetchLogin (user) {
   }
 }
 
-export function fetchLogout (store) {
-  store.dispatch(logout)
+export function fetchLogout () {
+  return async function fetchLogoutThunk (dispatch, getState) {
+    const loggedIn = loginState(getState()).isConnected
+    if (loggedIn) {
+      dispatch(logout())
+    } 
+  }
 }

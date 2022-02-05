@@ -1,44 +1,31 @@
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { useSelector, useStore } from 'react-redux'
-import { StatusWrapper, SignInWrapper } from './User-status_style'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import styled from 'styled-components'
 import { loginState, userDataState } from '../../state/store'
+
 import { fetchLogout } from '../../features/login-feature'
 
-const UserId = styled(StatusWrapper)`
+import { StatusWrapper, SignInWrapper, UserId } from './User-status_style'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
-    justify-content: start;
-    margin-right:1%;
-    flex-basis:20%;
-
-    ${(isConnected) => isConnected && 'min-width:70px'}
-    ${(isConnected) => !isConnected && 'min-width:0px'}
-    min-width: ${isConnected => isConnected && '70px'}
-    min-width: ${isConnected => !isConnected && '0px'}
-    
-    p {
-        white-space: nowrap;
-        margin: 0;
-        font-weight: bold;
-    }
-    svg { margin-right:2%; }
-`
 
 const Userstatus = () => {
+
+  const dispatch = useDispatch()
+  const history = useHistory()
+
   const isConnected = useSelector(loginState).isConnected
+
   const user = useSelector(userDataState)
   const profileData = user?.data ?? {} // ------- ! very important for runtime ! (else data = null )
   const { firstName } = profileData
 
-  const history = useHistory()
-  const store = useStore()
-  const navigateTosignIn = () =>{ history.push('/signIn') }
+
+  const navigateTosignIn = () => { history.push('/signIn') }
 
   const signOut = () => {
-    fetchLogout(store)
-    navigateTosignIn()
+    dispatch(fetchLogout())
+    
   }
 
 

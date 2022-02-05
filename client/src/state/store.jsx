@@ -3,6 +3,7 @@ import loginReducer from './reducers/login-reducer'
 import userPersonalDataReducer from './reducers/userPersonalData-reducer'
 import userAccountsDataReducer from './reducers/userAccountsData-reducer'
 import thunk from 'redux-thunk'
+import { LOGOUT } from './ActionTypes'
 // import { configureStore } from '@reduxjs/toolkit'
 
 // INITIAL STATE ( sliced into features )
@@ -66,9 +67,16 @@ export const reducers = combineReducers({
   userAccount: userAccountsDataReducer
 })
 
-// adding of a 'rootReducer' allows a complete reset of all sub-reducers on logout
-export const rootReducer = (state, action) => {
+export const appReducer = (state, action) => {
   return reducers(state, action)
+}
+
+// adding of a 'rootReducer' allows a complete reset of all sub-reducers on logout
+const rootReducer = (state, action) => {
+  if (action.type === LOGOUT ) {
+    return appReducer(undefined, action)
+  }
+  return appReducer(state, action)
 }
 
 // TO REVIEW ---

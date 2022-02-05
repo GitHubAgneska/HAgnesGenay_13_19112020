@@ -1,4 +1,4 @@
-import { LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED, LOGOUT } from '../ActionTypes'
+import { LOGINFETCHING, LOGINRESOLVED, LOGINREJECTED } from '../ActionTypes'
 import { initialState } from '../store'
 import produce from 'immer'
 // ......................................................
@@ -43,9 +43,6 @@ function loginReducer (state = initialState.Login, action) {
           draft.data = null
         }
         return
-      }
-      case LOGOUT: {
-        return initialState
       }
       default:
         return state;
